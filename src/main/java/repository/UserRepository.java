@@ -32,4 +32,17 @@ public class UserRepository {
             }
         }
     }
+
+    public boolean superAdminExists(String email) throws SQLException {
+        String query = "SELECT COUNT(*) FROM user WHERE role = 'SUPER_ADMIN' AND email = ?";
+        try (PreparedStatement stmt = DBConnector.getConnection().prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
 }

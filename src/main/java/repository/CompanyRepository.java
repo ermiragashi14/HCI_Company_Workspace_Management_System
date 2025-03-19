@@ -5,6 +5,8 @@ import utils.DBConnector;
 
 import java.sql.*;
 
+import static utils.DBConnector.getConnection;
+
 public class CompanyRepository {
 
     public int registerCompany(Company company) throws SQLException {
@@ -30,4 +32,30 @@ public class CompanyRepository {
             return -1;
         }
     }
+
+    public boolean companyExists(String name, String email) throws SQLException {
+        String query = "SELECT COUNT(*) FROM company WHERE name = ? OR email = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(query)) {
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
+    public boolean companyDomainExists(String domain) throws SQLException {
+        String query = "SELECT COUNT(*) FROM company WHERE email LIKE ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(query)) {
+            stmt.setString(1, "%" + domain);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
 }

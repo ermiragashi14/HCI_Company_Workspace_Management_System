@@ -1,0 +1,6 @@
+use workspacemanagement;
+DROP TABLE session;
+
+ALTER TABLE user
+    DROP COLUMN last_login,
+    ADD COLUMN salt VARCHAR(255) NOT NULL AFTER password_hash;

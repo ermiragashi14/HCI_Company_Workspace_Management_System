@@ -4,3 +4,5 @@ DROP TABLE session;
 ALTER TABLE user
     DROP COLUMN last_login,
     ADD COLUMN salt VARCHAR(255) NOT NULL AFTER password_hash;
+
+ALTER TABLE company ADD CONSTRAINT unique_company_name UNIQUE (name);

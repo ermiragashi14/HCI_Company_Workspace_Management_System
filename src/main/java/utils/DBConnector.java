@@ -10,16 +10,22 @@ public class DBConnector {
     private static String PASSWORD = "1234";
     private static Connection connection = null;
 
-    public static Connection getConnection(){
-        if(connection == null){
-            try {
-                connection = DriverManager.getConnection(
-                        URL, USER, PASSWORD
-                );
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+    public static Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Database connection established.");
         }
         return connection;
+    }
+
+    public static void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Database connection closed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR closing database connection: " + e.getMessage());
+        }
     }
 }

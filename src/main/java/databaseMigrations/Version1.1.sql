@@ -83,3 +83,6 @@ select * from workspace;
 DELETE FROM workspace WHERE id = 2;
 
 DELETE FROM company WHERE id = 1;
+-------------------------------------
+ALTER TABLE reservation MODIFY status ENUM('CONFIRMED', 'CANCELED', 'COMPLETED') DEFAULT 'CONFIRMED';
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane minHeight="600.0" minWidth="700.0" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminDashboardController">
+
+    <!-- Navbar on the Left -->
+    <left>
+        <VBox fx:id="navbarContainer" />
+    </left>
+
+    <!-- Dashboard Content -->
+    <center>
+        <VBox spacing="20">
+            <HBox spacing="20">
+                <Label text="Total Users:" />
+                <Label fx:id="totalUsersLabel" text="0" />
+                <Label text="Total Workspaces:" />
+                <Label fx:id="totalWorkspacesLabel" text="0" />
+                <Label text="Active Reservations:" />
+                <Label fx:id="totalActiveReservationsLabel" text="0" />
+            </HBox>
+
+            <!-- Charts -->
+            <HBox spacing="20">
+                <PieChart fx:id="workspaceUsageChart" prefWidth="300" prefHeight="300" />
+                <LineChart fx:id="reservationTrendsChart">
+                    <xAxis>
+                        <CategoryAxis fx:id="xAxis" label="Months" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="yAxis" label="Reservations" />
+                    </yAxis>
+                </LineChart>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

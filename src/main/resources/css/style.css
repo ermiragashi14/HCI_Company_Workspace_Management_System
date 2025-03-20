@@ -1,0 +1,26 @@
+/* Navbar Styling */
+
+.navbar-container {
+    -fx-background-color: #2C3E50; /* Dark Blue Background */
+    -fx-padding: 10px;
+    -fx-spacing: 15px;
+}
+
+.navbar-button {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-background-color: transparent;
+    -fx-padding: 10px 10px;
+    -fx-alignment: center-left;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.navbar-button:hover {
+    -fx-background-color: #34495E; /* Lighter blue on hover */
+}
+
+.navbar-button:pressed {
+    -fx-background-color: #1A252F; /* Even darker blue when pressed */
+}
+

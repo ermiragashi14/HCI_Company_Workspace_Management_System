@@ -1,26 +1,54 @@
-/* Navbar Styling */
+/*
+#2C3E50  navy
+#F5EFE7 beige
+#A6CDC6 baby blue
+#5B99C2 blue
+
+*/
+/* Navbar */
 
 .navbar-container {
-    -fx-background-color: #2C3E50; /* Dark Blue Background */
+    -fx-background-color: #2C3E50;
     -fx-padding: 10px;
     -fx-spacing: 15px;
 }
 
 .navbar-button {
     -fx-text-fill: white;
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-background-color: transparent;
-    -fx-padding: 10px 10px;
+    -fx-padding: 5px 5px;
     -fx-alignment: center-left;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
 }
 
 .navbar-button:hover {
-    -fx-background-color: #34495E; /* Lighter blue on hover */
+    -fx-background-color: #34495E;
 }
 
 .navbar-button:pressed {
-    -fx-background-color: #1A252F; /* Even darker blue when pressed */
+    -fx-background-color: #1A252F;
 }
 
+/* Admin Dashboard */
+.admin-container{
+    -fx-background-color: #F5EFE7;
+
+
+}
+.admin-h{
+    -fx-background-color: #5B99C2;
+}
+.admin-labels{
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+
+}
+/* Ribbon */
+.ribbon{
+    -fx-background-color: #2C3E50;
+}
+.ribbon-button{
+    -fx-background-color: transparent;
+}

@@ -56,6 +56,6 @@
          </children>
       </Pane>
       <Hyperlink fx:id="backToLoginLink" layoutX="447.0" layoutY="384.0" onAction="#backToLogin" text="Back to Login" />
-      <ComboBox fx:id="languageSelector" layoutX="650.0" layoutY="1.0" onAction="#changeLanguage" prefHeight="25.0" prefWidth="41.0" />
+      <ComboBox fx:id="languageSelector" layoutX="650.0" layoutY="1.0" prefHeight="25.0" prefWidth="41.0" />
    </children>
 </AnchorPane>

@@ -6,8 +6,8 @@ import javafx.scene.text.Text;
 import repository.UserRepository;
 import service.OTPService;
 import service.PasswordHasher;
-import utils.LanguageManager;
 import utils.Navigator;
+import utils.TranslationUtils;
 import utils.ValidationUtils;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -28,27 +28,13 @@ public class PasswordResetController {
 
     @FXML
     private void initialize() {
-        languageSelector.getItems().addAll("English", "Shqip");
-        languageSelector.setValue(LanguageManager.getCurrentLanguage().equals("sq") ? "Shqip" : "English");
-
-        updateLanguage();
-
-        languageSelector.setOnAction(event -> changeLanguage());
-    }
-
-    @FXML
-    private void changeLanguage() {
-        String selectedLang = languageSelector.getValue();
-        if (selectedLang.equals("English")) {
-            LanguageManager.setLanguage("en");
-        } else if (selectedLang.equals("Shqip")) {
-            LanguageManager.setLanguage("sq");
-        }
+        TranslationUtils.setupLanguageSelector(languageSelector, this::updateLanguage);
         updateLanguage();
     }
+
 
     private void updateLanguage() {
-        ResourceBundle bundle = LanguageManager.getBundle();
+        ResourceBundle bundle = TranslationUtils.getBundle();
 
         titleText.setText(bundle.getString("passwordreset.title"));
         emailLabel.setText(bundle.getString("passwordreset.email"));
@@ -141,7 +127,7 @@ public class PasswordResetController {
     }
 
     private void showAlert(Alert.AlertType alertType, String titleKey, String messageKey) {
-        ResourceBundle bundle = LanguageManager.getBundle();
+        ResourceBundle bundle = TranslationUtils.getBundle();
         Alert alert = new Alert(alertType);
         alert.setTitle(bundle.getString(titleKey));
         alert.setContentText(bundle.getString(messageKey));

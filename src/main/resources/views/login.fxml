@@ -40,6 +40,6 @@
       <Text fx:id="welcomeText" layoutX="335.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" />
       <Hyperlink fx:id="forgotYourPasswordLink" layoutX="402.0" layoutY="341.0" onAction="#passwordReset" text="Forgot your password?" />
       <Hyperlink fx:id="register" layoutX="475.0" layoutY="365.0" onAction="#goToRegister" text="Register" />
-      <ComboBox fx:id="languageSelector" layoutX="645.0" layoutY="1.0" onAction="#changeLanguage" prefHeight="25.0" prefWidth="49.0" />
+      <ComboBox fx:id="languageSelector" layoutX="645.0" layoutY="1.0" prefHeight="25.0" prefWidth="49.0" />
    </children>
 </AnchorPane>

@@ -9,8 +9,8 @@ import repository.CompanyRepository;
 import repository.UserRepository;
 import service.PasswordHasher;
 import service.SessionManager;
-import utils.LanguageManager;
 import utils.Navigator;
+import utils.TranslationUtils;
 import utils.ValidationUtils;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -34,27 +34,12 @@ public class LogInController {
 
     @FXML
     private void initialize() {
-        languageSelector.getItems().addAll("English", "Shqip");
-        languageSelector.setValue(LanguageManager.getCurrentLanguage().equals("sq") ? "Shqip" : "English");
-
-        updateLanguage();
-
-        languageSelector.setOnAction(event -> changeLanguage());
-    }
-
-    @FXML
-    private void changeLanguage() {
-        String selectedLang = languageSelector.getValue();
-        if (selectedLang.equals("English")) {
-            LanguageManager.setLanguage("en");
-        } else if (selectedLang.equals("Shqip")) {
-            LanguageManager.setLanguage("sq");
-        }
+        TranslationUtils.setupLanguageSelector(languageSelector, this::updateLanguage);
         updateLanguage();
     }
 
     private void updateLanguage() {
-        ResourceBundle bundle = LanguageManager.getBundle();
+        ResourceBundle bundle = TranslationUtils.getBundle();
 
         titleText.setText(bundle.getString("app.title"));
         welcomeText.setText(bundle.getString("login.welcome"));
@@ -69,7 +54,7 @@ public class LogInController {
     @FXML
     private void login() {
 
-        ResourceBundle bundle = LanguageManager.getBundle();
+        ResourceBundle bundle = TranslationUtils.getBundle();
 
         String email = EmailField.getText().trim();
         String password = PasswordField.getText().trim();

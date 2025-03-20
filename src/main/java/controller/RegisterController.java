@@ -9,17 +9,17 @@ import repository.UserRepository;
 import service.PasswordHasher;
 import service.SessionManager;
 import utils.Navigator;
-
+import utils.ValidationUtils;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class RegisterController {
 
     @FXML private TextField companyNameField, companyEmailField, companyPhoneField;
     @FXML private TextField superadminNameField, superadminEmailField, superadminPhoneField;
-    @FXML private PasswordField superadminPasswordField;
+    @FXML private PasswordField superadminPasswordField, confirmPasswordField;
     @FXML private Button registerButton;
+    @FXML private Hyperlink backToLoginLink;
 
     private final CompanyRepository companyRepository = new CompanyRepository();
     private final UserRepository userRepository = new UserRepository();
@@ -38,17 +38,16 @@ public class RegisterController {
             String adminEmail = superadminEmailField.getText().trim();
             String adminPhone = superadminPhoneField.getText().trim();
             String adminPassword = superadminPasswordField.getText().trim();
+            String adminConfirmPassword = confirmPasswordField.getText().trim();
 
-            if (!validateSuperAdmin(adminName, adminEmail, adminPhone, adminPassword, companyEmail)) return;
+            if (!validateSuperAdmin(adminName, adminEmail, adminPhone, adminPassword, adminConfirmPassword, companyEmail)) return;
 
             int companyId = companyRepository.registerCompany(new Company(0, companyName, companyEmail, companyPhone, null));
 
             String salt = PasswordHasher.generateSalt();
             String hashedPassword = PasswordHasher.generateSaltedHash(adminPassword, salt);
 
-            int superAdminId = userRepository.registerSuperAdmin(
-                    new User(companyId, "SUPER_ADMIN", hashedPassword, salt, adminName, adminEmail, adminPhone, "ACTIVE")
-            );
+            int superAdminId = userRepository.registerUser(new User(companyId, "SUPER_ADMIN", hashedPassword, salt, adminName, adminEmail, adminPhone, "ACTIVE"));
 
             SessionManager.getInstance().setLoggedInUser(superAdminId, "SUPER_ADMIN");
 
@@ -65,8 +64,14 @@ public class RegisterController {
 
     @FXML
     private void backToLogin() {
-        Navigator.navigateTo("login.fxml", registerButton);
+        if (backToLoginLink == null) {
+            System.err.println("⚠ Error: backToLoginLink is null!");
+            return;
+        }
+
+        Navigator.navigateTo("login.fxml", backToLoginLink);
     }
+
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -81,12 +86,12 @@ public class RegisterController {
             return false;
         }
 
-        if (!isValidEmail(email)) {
+        if (!ValidationUtils.isValidEmail(email)) {
             showAlert(Alert.AlertType.ERROR, "Invalid Email", "Please enter a valid company email.");
             return false;
         }
 
-        if (!isValidPhoneNumber(phone)) {
+        if (!ValidationUtils.isValidPhoneNumber(phone)) {
             showAlert(Alert.AlertType.ERROR, "Invalid Phone Number", "Please enter a valid phone number.");
             return false;
         }
@@ -96,7 +101,7 @@ public class RegisterController {
             return false;
         }
 
-        String companyDomain = getEmailDomain(email);
+        String companyDomain = ValidationUtils.getEmailDomain(email);
         if (companyRepository.companyDomainExists(companyDomain)) {
             showAlert(Alert.AlertType.ERROR, "Error", "A company with this email domain already exists.");
             return false;
@@ -106,64 +111,41 @@ public class RegisterController {
     }
 
 
-    private boolean validateSuperAdmin(String name, String email, String phone, String password, String companyEmail) throws SQLException {
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+    private boolean validateSuperAdmin(String name, String email, String phone, String password, String confirmPassword,String companyEmail) throws SQLException {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()|| confirmPassword.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error", "Super Admin fields cannot be empty.");
             return false;
         }
 
-        if (!isValidEmail(email)) {
+        if (!ValidationUtils.isValidEmail(email)) {
             showAlert(Alert.AlertType.ERROR, "Invalid Email", "Please enter a valid Super Admin email.");
             return false;
         }
 
-        if (!email.endsWith(getEmailDomain(companyEmail))) {
+        if (!email.endsWith(ValidationUtils.getEmailDomain(companyEmail))) {
             showAlert(Alert.AlertType.ERROR, "Invalid Domain", "Super Admin's email must belong to the same domain as the company email.");
             return false;
         }
 
-        if (!isValidPhoneNumber(phone)) {
+        if (!ValidationUtils.isValidPhoneNumber(phone)) {
             showAlert(Alert.AlertType.ERROR, "Invalid Phone Number", "Please enter a valid phone number.");
             return false;
         }
 
-        if (!isValidPassword(password)) {
-            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 8 characters long, contain a digit, an uppercase letter, a lowercase letter, and a special character.");
+        if (!ValidationUtils.isValidPassword(password)) {
+            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 8 characters long and contain at least one digit, uppercase letter, lowercase letter, and special character.");
             return false;
         }
 
-        if (userRepository.superAdminExists(email)) {
+        if (!ValidationUtils.doPasswordsMatch(password, confirmPassword)) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match.");
+            return false;
+        }
+
+        if (userRepository.userExists(email)) {
             showAlert(Alert.AlertType.ERROR, "Error", "A Super Admin with this email is already registered.");
             return false;
         }
         return true;
     }
-
-
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
-    private String getEmailDomain(String email) {
-        return email.substring(email.indexOf("@"));
-    }
-
-    private boolean isValidPhoneNumber(String phone) {
-        String phoneRegex = "^\\+?[0-9]{9,15}$";
-        Pattern pattern = Pattern.compile(phoneRegex);
-        Matcher matcher = pattern.matcher(phone);
-        return matcher.matches();
-    }
-
-    private boolean isValidPassword(String password) {
-        if (password.length() < 8) return false;
-        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$";
-        Pattern pattern = Pattern.compile(passwordRegex);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
-
 }

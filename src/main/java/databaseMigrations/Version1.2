@@ -6,3 +6,9 @@ ALTER TABLE user
     ADD COLUMN salt VARCHAR(255) NOT NULL AFTER password_hash;
 
 ALTER TABLE company ADD CONSTRAINT unique_company_name UNIQUE (name);
+
+
+-- new update in 20/03/2025 at 03:16 :)
+ALTER TABLE user
+ADD COLUMN otp_code VARCHAR(10),
+ADD COLUMN otp_expiry DATETIME;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -27,16 +28,16 @@
                <children>
                   <Label prefHeight="17.0" prefWidth="77.0" text="Your email:" />
                   <Label prefHeight="17.0" prefWidth="79.0" text="Password:" GridPane.rowIndex="1" />
-                  <TextField fx:id="superAdminEmailField" prefWidth="105.0" GridPane.columnIndex="1" />
-                  <PasswordField fx:id="superAdminPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="EmailField" prefWidth="105.0" GridPane.columnIndex="1" />
+                  <PasswordField fx:id="PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <Button fx:id="loginButton" layoutX="143.0" layoutY="165.0" mnemonicParsing="false" onAction="#login" text="Log In" />
          </children>
       </Pane>
-      <Text fx:id="forgotYourPassword" layoutX="404.0" layoutY="354.0" onMouseClicked="#passwordReset" strokeType="OUTSIDE" strokeWidth="0.0" text="Forgot your password?" wrappingWidth="127.93231201171875" />
-      <Text fx:id="register" layoutX="472.0" layoutY="377.0" onMouseClicked="#goToRegister" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" wrappingWidth="49.017578125" />
       <Text layoutX="245.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Company Workspace Management System" wrappingWidth="229.99992879231763" />
       <Text layoutX="335.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" />
+      <Hyperlink fx:id="forgotYourPasswordLink" layoutX="402.0" layoutY="341.0" onAction="#passwordReset" text="Forgot your password?" />
+      <Hyperlink fx:id="register" layoutX="475.0" layoutY="365.0" onAction="#goToRegister" text="Register" />
    </children>
 </AnchorPane>

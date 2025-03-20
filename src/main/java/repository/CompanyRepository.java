@@ -4,6 +4,7 @@ import model.Company;
 import utils.DBConnector;
 
 import java.sql.*;
+import java.util.Optional;
 
 import static utils.DBConnector.getConnection;
 
@@ -56,6 +57,28 @@ public class CompanyRepository {
             }
         }
         return false;
+    }
+
+    public Optional<Company> getCompanyByDomain(String domain) throws SQLException {
+        String query = "SELECT * FROM company WHERE email LIKE ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%@" + domain);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return Optional.of(new Company(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("phone_number"),
+                        rs.getTimestamp("created_at")
+                ));
+            }
+        }
+        return Optional.empty();
     }
 
 }

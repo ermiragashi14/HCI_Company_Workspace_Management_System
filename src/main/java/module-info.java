@@ -6,12 +6,13 @@ module com.example.hci_company_workspace_management_system {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires mysql.connector.j;
+    requires jakarta.mail;
 
     // ✅ FIX: Allow JavaFX to access `RegisterController`
     opens controller to javafx.fxml;
 
     // ✅ Ensure main package is accessible
-    opens com.example.hci_company_workspace_management_system to javafx.fxml, javafx.graphics;
 
     // ✅ Export required packages
     exports controller;

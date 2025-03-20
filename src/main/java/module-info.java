@@ -11,7 +11,7 @@ module com.example.hci_company_workspace_management_system {
     opens controller to javafx.fxml;
 
     // ✅ Ensure main package is accessible
-    opens com.example.hci_company_workspace_management_system to javafx.fxml, javafx.graphics;
+    opens views to javafx.fxml, javafx.graphics;
 
     // ✅ Export required packages
     exports controller;

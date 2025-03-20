@@ -2,15 +2,18 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import model.Company;
 import model.User;
 import repository.CompanyRepository;
 import repository.UserRepository;
 import service.PasswordHasher;
 import service.SessionManager;
+import utils.LanguageManager;
 import utils.Navigator;
 import utils.ValidationUtils;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 
 public class RegisterController {
@@ -20,6 +23,48 @@ public class RegisterController {
     @FXML private PasswordField superadminPasswordField, confirmPasswordField;
     @FXML private Button registerButton;
     @FXML private Hyperlink backToLoginLink;
+    @FXML private ComboBox<String> languageSelector;
+    @FXML private Text titleText;
+    @FXML private Label companyNameLabel, companyEmailLabel, companyPhoneLabel;
+    @FXML private Label superadminNameLabel, superadminEmailLabel, superadminPhoneLabel;
+    @FXML private Label passwordLabel, confirmPasswordLabel;
+
+    @FXML
+    private void initialize() {
+        languageSelector.getItems().addAll("English", "Shqip");
+        languageSelector.setValue(LanguageManager.getCurrentLanguage().equals("sq") ? "Shqip" : "English");
+        updateLanguage();
+        languageSelector.setOnAction(event -> changeLanguage());
+    }
+
+    @FXML
+    private void changeLanguage() {
+        String selectedLang = languageSelector.getValue();
+        if (selectedLang.equals("English")) {
+            LanguageManager.setLanguage("en");
+        } else if (selectedLang.equals("Shqip")) {
+            LanguageManager.setLanguage("sq");
+        }
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        ResourceBundle bundle = LanguageManager.getBundle();
+
+        titleText.setText(bundle.getString("register.title"));
+        companyNameLabel.setText(bundle.getString("register.companyName"));
+        companyEmailLabel.setText(bundle.getString("register.companyEmail"));
+        companyPhoneLabel.setText(bundle.getString("register.companyPhone"));
+        superadminNameLabel.setText(bundle.getString("register.superadminName"));
+        superadminEmailLabel.setText(bundle.getString("register.superadminEmail"));
+        superadminPhoneLabel.setText(bundle.getString("register.superadminPhone"));
+        passwordLabel.setText(bundle.getString("register.password"));
+        confirmPasswordLabel.setText(bundle.getString("register.confirmPassword"));
+        registerButton.setText(bundle.getString("register.button.submit"));
+        backToLoginLink.setText(bundle.getString("register.button.back"));
+        languageSelector.setPromptText(bundle.getString("register.label.language"));
+    }
+
 
     private final CompanyRepository companyRepository = new CompanyRepository();
     private final UserRepository userRepository = new UserRepository();
@@ -41,7 +86,6 @@ public class RegisterController {
             String adminConfirmPassword = confirmPasswordField.getText().trim();
 
             if (!validateSuperAdmin(adminName, adminEmail, adminPhone, adminPassword, adminConfirmPassword, companyEmail)) return;
-
             int companyId = companyRepository.registerCompany(new Company(0, companyName, companyEmail, companyPhone, null));
 
             String salt = PasswordHasher.generateSalt();
@@ -73,37 +117,38 @@ public class RegisterController {
     }
 
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
+    private void showAlert(Alert.AlertType alertType, String titleKey, String messageKey) {
+        ResourceBundle bundle = LanguageManager.getBundle();
         Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setContentText(message);
+        alert.setTitle(bundle.getString(titleKey));
+        alert.setContentText(bundle.getString(messageKey));
         alert.showAndWait();
     }
 
     private boolean validateCompany(String name, String email, String phone) throws SQLException {
         if (name.isEmpty() || email.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Company fields cannot be empty.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.empty_fields");
             return false;
         }
 
         if (!ValidationUtils.isValidEmail(email)) {
-            showAlert(Alert.AlertType.ERROR, "Invalid Email", "Please enter a valid company email.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_email");
             return false;
         }
 
         if (!ValidationUtils.isValidPhoneNumber(phone)) {
-            showAlert(Alert.AlertType.ERROR, "Invalid Phone Number", "Please enter a valid phone number.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_phone");
             return false;
         }
 
         if (companyRepository.companyExists(name, email)) {
-            showAlert(Alert.AlertType.ERROR, "Error", "A company with this name or email is already registered.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.company_exists");
             return false;
         }
 
         String companyDomain = ValidationUtils.getEmailDomain(email);
         if (companyRepository.companyDomainExists(companyDomain)) {
-            showAlert(Alert.AlertType.ERROR, "Error", "A company with this email domain already exists.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.company_domain_exists");
             return false;
         }
 
@@ -113,37 +158,37 @@ public class RegisterController {
 
     private boolean validateSuperAdmin(String name, String email, String phone, String password, String confirmPassword,String companyEmail) throws SQLException {
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()|| confirmPassword.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Super Admin fields cannot be empty.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.empty_superadmin_fields");
             return false;
         }
 
         if (!ValidationUtils.isValidEmail(email)) {
-            showAlert(Alert.AlertType.ERROR, "Invalid Email", "Please enter a valid Super Admin email.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_superadmin_email");
             return false;
         }
 
         if (!email.endsWith(ValidationUtils.getEmailDomain(companyEmail))) {
-            showAlert(Alert.AlertType.ERROR, "Invalid Domain", "Super Admin's email must belong to the same domain as the company email.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_superadmin_domain");
             return false;
         }
 
         if (!ValidationUtils.isValidPhoneNumber(phone)) {
-            showAlert(Alert.AlertType.ERROR, "Invalid Phone Number", "Please enter a valid phone number.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_phone");
             return false;
         }
 
         if (!ValidationUtils.isValidPassword(password)) {
-            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 8 characters long and contain at least one digit, uppercase letter, lowercase letter, and special character.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.weak_password");
             return false;
         }
 
         if (!ValidationUtils.doPasswordsMatch(password, confirmPassword)) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.passwords_no_match");
             return false;
         }
 
         if (userRepository.userExists(email)) {
-            showAlert(Alert.AlertType.ERROR, "Error", "A Super Admin with this email is already registered.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.user_exists");
             return false;
         }
         return true;

@@ -1,5 +1,6 @@
 package utils;
 
+import controller.HelpController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -29,5 +30,23 @@ public class Navigator {
             e.printStackTrace();
         }
     }
+
+    public static void openHelpWindow(String section) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Navigator.class.getResource("/views/help.fxml"));
+            Parent root = loader.load();
+
+            HelpController helpController = loader.getController();
+            helpController.setHelpSection(section);
+
+            Stage stage = new Stage();
+            stage.setTitle("Help");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

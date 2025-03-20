@@ -28,6 +28,7 @@ public class LogInController {
     @FXML private Label yourPasswordLabel;
     @FXML private Text welcomeText;
     @FXML private Text titleText;
+    @FXML private Button helpButton;
 
     private final UserRepository userRepository = new UserRepository();
     private final CompanyRepository companyRepository = new CompanyRepository();
@@ -49,6 +50,8 @@ public class LogInController {
         forgotYourPasswordLink.setText(bundle.getString("login.button.forgot"));
         register.setText(bundle.getString("login.button.register"));
         languageSelector.setPromptText(bundle.getString("login.label.language"));
+        helpButton.setText(bundle.getString("help.button.help"));
+
     }
 
     @FXML
@@ -119,6 +122,12 @@ public class LogInController {
             showAlert(Alert.AlertType.ERROR, bundle.getString("error.database"), bundle.getString("error.login_failed") + e.getMessage());
         }
     }
+
+    @FXML
+    private void openHelp() {
+        Navigator.openHelpWindow("login");
+    }
+
 
     @FXML
     private void passwordReset() {

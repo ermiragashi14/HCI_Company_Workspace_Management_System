@@ -2,12 +2,15 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import repository.UserRepository;
 import service.OTPService;
 import service.PasswordHasher;
+import utils.LanguageManager;
 import utils.Navigator;
 import utils.ValidationUtils;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class PasswordResetController {
 
@@ -18,6 +21,46 @@ public class PasswordResetController {
     @FXML private Button sendOtpButton;
     @FXML private Button submitButton;
     @FXML private Hyperlink goBackToLoginLink;
+    @FXML private ComboBox<String> languageSelector;
+    @FXML private Text titleText;
+    @FXML private Label emailLabel, otpLabel, newPasswordLabel, confirmPasswordLabel;
+
+
+    @FXML
+    private void initialize() {
+        languageSelector.getItems().addAll("English", "Shqip");
+        languageSelector.setValue(LanguageManager.getCurrentLanguage().equals("sq") ? "Shqip" : "English");
+
+        updateLanguage();
+
+        languageSelector.setOnAction(event -> changeLanguage());
+    }
+
+    @FXML
+    private void changeLanguage() {
+        String selectedLang = languageSelector.getValue();
+        if (selectedLang.equals("English")) {
+            LanguageManager.setLanguage("en");
+        } else if (selectedLang.equals("Shqip")) {
+            LanguageManager.setLanguage("sq");
+        }
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        ResourceBundle bundle = LanguageManager.getBundle();
+
+        titleText.setText(bundle.getString("passwordreset.title"));
+        emailLabel.setText(bundle.getString("passwordreset.email"));
+        otpLabel.setText(bundle.getString("passwordreset.otp"));
+        newPasswordLabel.setText(bundle.getString("passwordreset.newPassword"));
+        confirmPasswordLabel.setText(bundle.getString("passwordreset.confirmPassword"));
+        sendOtpButton.setText(bundle.getString("passwordreset.sendOtp"));
+        submitButton.setText(bundle.getString("passwordreset.submit"));
+        goBackToLoginLink.setText(bundle.getString("passwordreset.backToLogin"));
+        languageSelector.setPromptText(bundle.getString("passwordreset.language"));
+    }
+
 
     private final UserRepository userRepository = new UserRepository();
 
@@ -26,26 +69,26 @@ public class PasswordResetController {
         String email = emailField.getText().trim();
 
         if (email.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please enter your email.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.enter_email");
             return;
         }
         try {
 
             boolean userExists = userRepository.getUserByEmail(email).isPresent();
             if (!userExists) {
-                showAlert(Alert.AlertType.ERROR, "Error", "This email is not registered.");
+                showAlert(Alert.AlertType.ERROR, "error.title", "error.email_not_registered");
                 return;
             }
 
             boolean otpSent = OTPService.sendOtpToUser(email);
             if (!otpSent) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to send OTP. Please try again later.");
+                showAlert(Alert.AlertType.ERROR, "error.title", "error.otp_send_failed");
                 return;
             }
-            showAlert(Alert.AlertType.INFORMATION, "OTP Sent", "An OTP has been sent to your email.");
+            showAlert(Alert.AlertType.INFORMATION, "success.title", "success.otp_sent");
 
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Error checking email: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "error.database", "error.email_check_failed");
         }
     }
 
@@ -57,19 +100,19 @@ public class PasswordResetController {
         String confirmPassword = confirmPasswordField.getText();
 
         if (email.isEmpty() || otp.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "All fields must be filled.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.empty_fields");
             return;
         }
 
         if (!ValidationUtils.doPasswordsMatch(newPassword, confirmPassword)) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match.");
+            showAlert(Alert.AlertType.ERROR, "error.title", "error.passwords_no_match");
             return;
         }
 
         try {
             boolean isOtpValid = OTPService.verifyOTP(email, otp);
             if (!isOtpValid) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Invalid or expired OTP.");
+                showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_otp");
                 return;
             }
 
@@ -78,16 +121,17 @@ public class PasswordResetController {
 
             boolean passwordUpdated = userRepository.updateUserPassword(email, hashedPassword, salt);
             if (!passwordUpdated) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to update password.");
+                showAlert(Alert.AlertType.ERROR, "error.title", "error.password_update_failed");
                 return;
             }
 
             OTPService.removeOTP(email);
-            showAlert(Alert.AlertType.INFORMATION, "Success", "Password has been reset successfully. You can now log in.");
+            showAlert(Alert.AlertType.INFORMATION, "success.title", "success.password_reset");
             Navigator.navigateTo("login.fxml", submitButton);
 
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Password reset failed: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "error.database", "error.password_reset_failed");
+
         }
     }
 
@@ -96,10 +140,11 @@ public class PasswordResetController {
         Navigator.navigateTo("login.fxml", goBackToLoginLink);
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
+    private void showAlert(Alert.AlertType alertType, String titleKey, String messageKey) {
+        ResourceBundle bundle = LanguageManager.getBundle();
         Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setContentText(message);
+        alert.setTitle(bundle.getString(titleKey));
+        alert.setContentText(bundle.getString(messageKey));
         alert.showAndWait();
     }
 }

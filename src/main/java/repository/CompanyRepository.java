@@ -65,7 +65,7 @@ public class CompanyRepository {
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, "%@" + domain);
+            stmt.setString(1, "%" + domain);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {

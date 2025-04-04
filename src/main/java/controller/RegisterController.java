@@ -82,14 +82,14 @@ public class RegisterController {
 
             SessionManager.getInstance().setLoggedInUser(superAdminId, "SUPER_ADMIN");
 
-            showAlert(Alert.AlertType.INFORMATION, "Success", "Company and Super Admin registered successfully!");
+            showAlert(Alert.AlertType.INFORMATION, "success.title", "success.registration_successful");
 
             Navigator.navigateTo("superadmin_dashboard.fxml", registerButton);
 
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Registration failed: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "error.database", "error.databaseRegister");
         } catch (Exception ex) {
-            showAlert(Alert.AlertType.ERROR, "Unexpected Error", "An unexpected error occurred: " + ex.getMessage());
+            showAlert(Alert.AlertType.ERROR, "error.unexpected", "error.unexpectedWhileRegistering");
         }
     }
 

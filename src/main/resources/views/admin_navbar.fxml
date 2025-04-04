@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="450.0" minWidth="200.0" prefHeight="500.0" prefWidth="220.0" spacing="10" style=" -fx-padding: 10;" styleClass="navbar-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminNavbarController">
+<VBox minHeight="450.0" minWidth="200.0" prefHeight="500.0" prefWidth="220.0" spacing="10" style=" -fx-padding: 10;" styleClass="navbar-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Admin.AdminNavbarController">
 
     <!-- Logo -->
     <ImageView fitHeight="130" fitWidth="130">

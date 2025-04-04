@@ -1,4 +1,4 @@
-package controller;
+package controller.LogIn;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -102,7 +102,7 @@ public class LogInController {
                 return;
             }
 
-            SessionManager.getInstance().setLoggedInUser(user.getId(), user.getRole());
+            SessionManager.getInstance().setLoggedInUser(user.getId(), user.getRole(), user.getCompanyId());
 
             switch (user.getRole()) {
                 case "SUPER_ADMIN":

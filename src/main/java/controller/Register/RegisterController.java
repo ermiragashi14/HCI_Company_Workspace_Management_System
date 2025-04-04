@@ -1,4 +1,4 @@
-package controller;
+package controller.Register;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -80,7 +80,7 @@ public class RegisterController {
 
             int superAdminId = userRepository.registerUser(new User(companyId, "SUPER_ADMIN", hashedPassword, salt, adminName, adminEmail, adminPhone, "ACTIVE"));
 
-            SessionManager.getInstance().setLoggedInUser(superAdminId, "SUPER_ADMIN");
+            SessionManager.getInstance().setLoggedInUser(superAdminId, "SUPER_ADMIN", companyId);
 
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.registration_successful");
 

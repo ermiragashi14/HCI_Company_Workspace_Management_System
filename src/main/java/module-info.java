@@ -18,4 +18,10 @@ module com.example.hci_company_workspace_management_system {
     exports utils;
     exports app;
     opens app to javafx.fxml, javafx.graphics;
+    exports controller.Admin;
+    opens controller.Admin to javafx.fxml;
+    exports controller.Register;
+    opens controller.Register to javafx.fxml;
+    exports controller.LogIn;
+    opens controller.LogIn to javafx.fxml;
 }

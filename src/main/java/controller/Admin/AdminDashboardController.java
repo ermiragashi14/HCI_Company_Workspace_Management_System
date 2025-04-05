@@ -60,7 +60,7 @@ public class AdminDashboardController {
 
     private void loadNavbar() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/navbar.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/admin_navbar.fxml"));
             Parent navbar = loader.load();
             navbarContainer.getChildren().add(navbar);
         } catch (IOException e) {

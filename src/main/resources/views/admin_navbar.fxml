@@ -19,35 +19,40 @@
       </image></ImageView>
 
     <!-- Navigation Buttons -->
-    <Button onAction="#goToDashboard" prefHeight="35.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="🏠 Dashboard">
+    <Button onAction="#goToDashboard" prefHeight="35.0" styleClass="navbar-button"
+            stylesheets="@../css/style.css" text="🏠 Dashboard">
       <font>
          <Font size="14.0" />
       </font>
       <VBox.margin>
          <Insets top="20.0" />
       </VBox.margin></Button>
-    <Button onAction="#goToUserManagement" prefHeight="35.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="👥 User Management">
+    <Button onAction="#goToUserManagement" prefHeight="35.0"
+            styleClass="navbar-button" stylesheets="@../css/style.css" text="👥 User Management">
       <font>
          <Font size="14.0" />
       </font>
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></Button>
-    <Button onAction="#goToOfficeManagement" prefHeight="35.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="🏢 Office Management">
+    <Button onAction="#goToOfficeManagement" prefHeight="35.0"
+            styleClass="navbar-button" stylesheets="@../css/style.css" text="🏢 Office Management">
       <font>
          <Font size="14.0" />
       </font>
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></Button>
-    <Button onAction="#goToReservations" prefHeight="35.0" prefWidth="220.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📅 Reservation Management" wrapText="true">
+    <Button onAction="#goToReservations" prefHeight="35.0"
+            prefWidth="220.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📅 Reservation Management" wrapText="true">
       <font>
          <Font size="14.0" />
       </font>
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></Button>
-    <Button onAction="#goToReports" prefHeight="35.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📊 Raports and Analytics">
+    <Button onAction="#goToReports" prefHeight="35.0"
+            styleClass="navbar-button" stylesheets="@../css/style.css" text="📊 Raports and Analytics">
       <font>
          <Font size="14.0" />
       </font>

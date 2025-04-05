@@ -24,4 +24,6 @@ module com.example.hci_company_workspace_management_system {
     opens controller.Register to javafx.fxml;
     exports controller.LogIn;
     opens controller.LogIn to javafx.fxml;
+    exports controller.Superadmin to javafx.fxml;
+    opens controller.Superadmin to javafx.fxml;
 }

@@ -3,13 +3,9 @@ package controller.LogIn;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import repository.UserRepository;
-import service.OTPService;
-import service.PasswordHasher;
+import service.PasswordResetService;
 import utils.Navigator;
 import utils.TranslationUtils;
-import utils.ValidationUtils;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class PasswordResetController {
@@ -32,7 +28,6 @@ public class PasswordResetController {
         updateLanguage();
     }
 
-
     private void updateLanguage() {
         ResourceBundle bundle = TranslationUtils.getBundle();
 
@@ -47,34 +42,19 @@ public class PasswordResetController {
         languageSelector.setPromptText(bundle.getString("passwordreset.language"));
     }
 
-
-    private final UserRepository userRepository = new UserRepository();
+    private final PasswordResetService resetService = new PasswordResetService();
 
     @FXML
     private void sendOtp() {
         String email = emailField.getText().trim();
 
-        if (email.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.enter_email");
-            return;
-        }
         try {
-
-            boolean userExists = userRepository.getUserByEmail(email).isPresent();
-            if (!userExists) {
-                showAlert(Alert.AlertType.ERROR, "error.title", "error.email_not_registered");
-                return;
-            }
-
-            boolean otpSent = OTPService.sendOtpToUser(email);
-            if (!otpSent) {
-                showAlert(Alert.AlertType.ERROR, "error.title", "error.otp_send_failed");
-                return;
-            }
+            resetService.sendOtp(email);
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.otp_sent");
-
-        } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "error.database", "error.email_check_failed");
+        } catch (IllegalArgumentException ex) {
+            showAlert(Alert.AlertType.ERROR, "error.title", ex.getMessage());
+        } catch (Exception ex) {
+            showAlert(Alert.AlertType.ERROR, "error.database", "error.otp_send_failed");
         }
     }
 
@@ -85,39 +65,14 @@ public class PasswordResetController {
         String newPassword = newPasswordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
-        if (email.isEmpty() || otp.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.empty_fields");
-            return;
-        }
-
-        if (!ValidationUtils.doPasswordsMatch(newPassword, confirmPassword)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.passwords_no_match");
-            return;
-        }
-
         try {
-            boolean isOtpValid = OTPService.verifyOTP(email, otp);
-            if (!isOtpValid) {
-                showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_otp");
-                return;
-            }
-
-            String salt = PasswordHasher.generateSalt();
-            String hashedPassword = PasswordHasher.generateSaltedHash(newPassword, salt);
-
-            boolean passwordUpdated = userRepository.updateUserPassword(email, hashedPassword, salt);
-            if (!passwordUpdated) {
-                showAlert(Alert.AlertType.ERROR, "error.title", "error.password_update_failed");
-                return;
-            }
-
-            OTPService.removeOTP(email);
+            resetService.resetPassword(email, otp, newPassword, confirmPassword);
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.password_reset");
             Navigator.navigateTo("login.fxml", submitButton);
-
-        } catch (SQLException e) {
+        } catch (IllegalArgumentException ex) {
+            showAlert(Alert.AlertType.ERROR, "error.title", ex.getMessage());
+        } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "error.database", "error.password_reset_failed");
-
         }
     }
 

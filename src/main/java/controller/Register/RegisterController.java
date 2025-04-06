@@ -5,16 +5,12 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import model.Company;
 import model.User;
-import repository.CompanyRepository;
-import repository.UserRepository;
-import service.PasswordHasher;
 import service.SessionManager;
+import service.UserService;
 import utils.Navigator;
 import utils.TranslationUtils;
-import utils.ValidationUtils;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 
 public class RegisterController {
 
@@ -28,6 +24,8 @@ public class RegisterController {
     @FXML private Label companyNameLabel, companyEmailLabel, companyPhoneLabel;
     @FXML private Label superadminNameLabel, superadminEmailLabel, superadminPhoneLabel;
     @FXML private Label passwordLabel, confirmPasswordLabel;
+
+    private final UserService userService = new UserService();
 
     @FXML
     private void initialize() {
@@ -52,40 +50,39 @@ public class RegisterController {
         languageSelector.setPromptText(bundle.getString("register.label.language"));
     }
 
-
-    private final CompanyRepository companyRepository = new CompanyRepository();
-    private final UserRepository userRepository = new UserRepository();
-
     @FXML
     private void register() {
         try {
+            Company company = new Company(
+                    0,
+                    companyNameField.getText().trim(),
+                    companyEmailField.getText().trim(),
+                    companyPhoneField.getText().trim(),
+                    null
+            );
 
-            String companyName = companyNameField.getText().trim();
-            String companyEmail = companyEmailField.getText().trim();
-            String companyPhone = companyPhoneField.getText().trim();
+            String password = superadminPasswordField.getText().trim();
+            String confirmPassword = confirmPasswordField.getText().trim();
 
-            if (!validateCompany(companyName, companyEmail, companyPhone)) return;
+            User superAdmin = new User(
+                    0,
+                    "SUPER_ADMIN",
+                    null,
+                    null,
+                    superadminNameField.getText().trim(),
+                    superadminEmailField.getText().trim(),
+                    superadminPhoneField.getText().trim(),
+                    "ACTIVE"
+            );
 
-            String adminName = superadminNameField.getText().trim();
-            String adminEmail = superadminEmailField.getText().trim();
-            String adminPhone = superadminPhoneField.getText().trim();
-            String adminPassword = superadminPasswordField.getText().trim();
-            String adminConfirmPassword = confirmPasswordField.getText().trim();
-
-            if (!validateSuperAdmin(adminName, adminEmail, adminPhone, adminPassword, adminConfirmPassword, companyEmail)) return;
-            int companyId = companyRepository.registerCompany(new Company(0, companyName, companyEmail, companyPhone, null));
-
-            String salt = PasswordHasher.generateSalt();
-            String hashedPassword = PasswordHasher.generateSaltedHash(adminPassword, salt);
-
-            int superAdminId = userRepository.registerUser(new User(companyId, "SUPER_ADMIN", hashedPassword, salt, adminName, adminEmail, adminPhone, "ACTIVE"));
-
-            SessionManager.getInstance().setLoggedInUser(superAdminId, "SUPER_ADMIN", companyId);
+            int userId = userService.registerSuperAdminAndCompany(company, superAdmin, password, confirmPassword);
+            SessionManager.getInstance().setLoggedInUser(userId, "SUPER_ADMIN", company.getId());
 
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.registration_successful");
-
             Navigator.navigateTo("superadmin_dashboard.fxml", registerButton);
 
+        } catch (IllegalArgumentException ex) {
+            showAlert(Alert.AlertType.ERROR, "error.title", ex.getMessage());
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "error.database", "error.databaseRegister");
         } catch (Exception ex) {
@@ -93,16 +90,15 @@ public class RegisterController {
         }
     }
 
+
     @FXML
     private void backToLogin() {
         if (backToLoginLink == null) {
-            System.err.println("⚠ Error: backToLoginLink is null!");
+            System.err.println("Error: backToLoginLink is null!");
             return;
         }
-
         Navigator.navigateTo("login.fxml", backToLoginLink);
     }
-
 
     private void showAlert(Alert.AlertType alertType, String titleKey, String messageKey) {
         ResourceBundle bundle = TranslationUtils.getBundle();
@@ -110,74 +106,5 @@ public class RegisterController {
         alert.setTitle(bundle.getString(titleKey));
         alert.setContentText(bundle.getString(messageKey));
         alert.showAndWait();
-    }
-
-    private boolean validateCompany(String name, String email, String phone) throws SQLException {
-        if (name.isEmpty() || email.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.empty_fields");
-            return false;
-        }
-
-        if (!ValidationUtils.isValidEmail(email)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_email");
-            return false;
-        }
-
-        if (!ValidationUtils.isValidPhoneNumber(phone)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_phone");
-            return false;
-        }
-
-        if (companyRepository.companyExists(name, email)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.company_exists");
-            return false;
-        }
-
-        String companyDomain = ValidationUtils.getEmailDomain(email);
-        if (companyRepository.companyDomainExists(companyDomain)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.company_domain_exists");
-            return false;
-        }
-
-        return true;
-    }
-
-
-    private boolean validateSuperAdmin(String name, String email, String phone, String password, String confirmPassword,String companyEmail) throws SQLException {
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()|| confirmPassword.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.empty_superadmin_fields");
-            return false;
-        }
-
-        if (!ValidationUtils.isValidEmail(email)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_superadmin_email");
-            return false;
-        }
-
-        if (!email.endsWith(ValidationUtils.getEmailDomain(companyEmail))) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_superadmin_domain");
-            return false;
-        }
-
-        if (!ValidationUtils.isValidPhoneNumber(phone)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.invalid_phone");
-            return false;
-        }
-
-        if (!ValidationUtils.isValidPassword(password)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.weak_password");
-            return false;
-        }
-
-        if (!ValidationUtils.doPasswordsMatch(password, confirmPassword)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.passwords_no_match");
-            return false;
-        }
-
-        if (userRepository.userExists(email)) {
-            showAlert(Alert.AlertType.ERROR, "error.title", "error.user_exists");
-            return false;
-        }
-        return true;
     }
 }

@@ -3,17 +3,12 @@ package controller.LogIn;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import model.Company;
 import model.User;
-import repository.CompanyRepository;
-import repository.UserRepository;
-import service.PasswordHasher;
+import service.AuthService;
 import service.SessionManager;
 import utils.Navigator;
 import utils.TranslationUtils;
-import utils.ValidationUtils;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LogInController {
@@ -29,9 +24,6 @@ public class LogInController {
     @FXML private Text welcomeText;
     @FXML private Text titleText;
     @FXML private Button helpButton;
-
-    private final UserRepository userRepository = new UserRepository();
-    private final CompanyRepository companyRepository = new CompanyRepository();
 
     @FXML
     private void initialize() {
@@ -56,51 +48,13 @@ public class LogInController {
 
     @FXML
     private void login() {
-
         ResourceBundle bundle = TranslationUtils.getBundle();
-
         String email = EmailField.getText().trim();
         String password = PasswordField.getText().trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.empty_fields"));
-            return;
-        }
-
-        if (!ValidationUtils.isValidEmail(email)) {
-            showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.invalid_email"));
-            return;
-        }
-
         try {
-
-            String domain = ValidationUtils.getEmailDomain(email);
-            Optional<Company> companyOptional = companyRepository.getCompanyByDomain(domain);
-
-            if (companyOptional.isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.no_company_domain"));
-                return;
-            }
-
-            Company company = companyOptional.get();
-
-            Optional<User> userOptional = userRepository.getUserByEmail(email);
-            if (userOptional.isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.invalid_login"));
-                return;
-            }
-
-            User user = userOptional.get();
-
-            if (user.getCompanyId() != company.getId()) {
-                showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.mismatched_company"));
-                return;
-            }
-
-            if (!PasswordHasher.compareSaltedHash(password, user.getSalt(), user.getPasswordHash())) {
-                showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.invalid_login"));
-                return;
-            }
+            AuthService authService = new AuthService();
+            User user = authService.loginUser(email, password);
 
             SessionManager.getInstance().setLoggedInUser(user.getId(), user.getRole(), user.getCompanyId());
 
@@ -118,6 +72,8 @@ public class LogInController {
                     showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.unknown_role"));
             }
 
+        } catch (IllegalArgumentException ex) {
+            showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString(ex.getMessage()));
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, bundle.getString("error.database"), bundle.getString("error.login_failed") + e.getMessage());
         }
@@ -127,7 +83,6 @@ public class LogInController {
     private void openHelp() {
         Navigator.openHelpWindow("login");
     }
-
 
     @FXML
     private void passwordReset() {

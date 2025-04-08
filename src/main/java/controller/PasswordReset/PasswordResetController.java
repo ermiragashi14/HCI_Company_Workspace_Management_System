@@ -1,4 +1,4 @@
-package controller.LogIn;
+package controller.PasswordReset;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -21,6 +21,7 @@ public class PasswordResetController {
     @FXML private Text titleText;
     @FXML private Label emailLabel, otpLabel, newPasswordLabel, confirmPasswordLabel;
 
+    private final PasswordResetService resetService = new PasswordResetService();
 
     @FXML
     private void initialize() {
@@ -42,11 +43,14 @@ public class PasswordResetController {
         languageSelector.setPromptText(bundle.getString("passwordreset.language"));
     }
 
-    private final PasswordResetService resetService = new PasswordResetService();
-
     @FXML
     private void sendOtp() {
         String email = emailField.getText().trim();
+
+        if (email.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "error.title", "error.empty_fields");
+            return;
+        }
 
         try {
             resetService.sendOtp(email);
@@ -64,6 +68,11 @@ public class PasswordResetController {
         String otp = otpField.getText().trim();
         String newPassword = newPasswordField.getText();
         String confirmPassword = confirmPasswordField.getText();
+
+        if (email.isEmpty() || otp.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "error.title", "error.empty_fields");
+            return;
+        }
 
         try {
             resetService.resetPassword(email, otp, newPassword, confirmPassword);

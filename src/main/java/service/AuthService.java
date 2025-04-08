@@ -1,5 +1,7 @@
 package service;
 
+import dto.LoginResultDTO;
+import dto.LogIn.LoginRequestDTO;
 import model.Company;
 import model.User;
 import repository.CompanyRepository;
@@ -7,13 +9,15 @@ import repository.UserRepository;
 import utils.PasswordHasher;
 import utils.ValidationUtils;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class AuthService {
     private final UserRepository userRepository = new UserRepository();
     private final CompanyRepository companyRepository = new CompanyRepository();
 
-    public User loginUser(String email, String password) throws SQLException {
+    public LoginResultDTO loginUser(LoginRequestDTO loginDTO) throws SQLException {
+        String email = loginDTO.getEmail().trim();
+        String password = loginDTO.getPassword();
+
         if (email.isEmpty() || password.isEmpty()) {
             throw new IllegalArgumentException("error.empty_fields");
         }
@@ -22,20 +26,13 @@ public class AuthService {
             throw new IllegalArgumentException("error.invalid_email");
         }
 
-        String domain = ValidationUtils.getEmailDomain(email);
-        Optional<Company> companyOpt = companyRepository.getCompanyByDomain(domain);
-        if (companyOpt.isEmpty()) {
-            throw new IllegalArgumentException("error.no_company_domain");
-        }
+        Company company = companyRepository
+                .getCompanyByDomain(ValidationUtils.getEmailDomain(email))
+                .orElseThrow(() -> new IllegalArgumentException("error.no_company_domain"));
 
-        Company company = companyOpt.get();
-
-        Optional<User> userOpt = userRepository.getUserByEmail(email);
-        if (userOpt.isEmpty()) {
-            throw new IllegalArgumentException("error.invalid_login");
-        }
-
-        User user = userOpt.get();
+        User user = userRepository
+                .getUserByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("error.invalid_login"));
 
         if (user.getCompanyId() != company.getId()) {
             throw new IllegalArgumentException("error.mismatched_company");
@@ -45,6 +42,6 @@ public class AuthService {
             throw new IllegalArgumentException("error.invalid_login");
         }
 
-        return user;
+        return new LoginResultDTO(user.getId(), user.getCompanyId(), user.getRole());
     }
 }

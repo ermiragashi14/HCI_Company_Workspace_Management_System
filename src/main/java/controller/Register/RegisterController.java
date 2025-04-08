@@ -1,12 +1,13 @@
 package controller.Register;
 
+import dto.CompanyDTO;
+import dto.Register.RegisterRequestDTO;
+import dto.Register.RegisterResultDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import model.Company;
-import model.User;
 import service.SessionManager;
-import service.UserService;
+import service.RegisterService;
 import utils.Navigator;
 import utils.TranslationUtils;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class RegisterController {
     @FXML private Label superadminNameLabel, superadminEmailLabel, superadminPhoneLabel;
     @FXML private Label passwordLabel, confirmPasswordLabel;
 
-    private final UserService userService = new UserService();
+    private final RegisterService registerService = new RegisterService();
 
     @FXML
     private void initialize() {
@@ -35,7 +36,6 @@ public class RegisterController {
 
     private void updateLanguage() {
         ResourceBundle bundle = TranslationUtils.getBundle();
-
         titleText.setText(bundle.getString("register.title"));
         companyNameLabel.setText(bundle.getString("register.companyName"));
         companyEmailLabel.setText(bundle.getString("register.companyEmail"));
@@ -52,31 +52,29 @@ public class RegisterController {
 
     @FXML
     private void register() {
-        try {
-            Company company = new Company(
-                    0,
+
+            CompanyDTO companyDTO = new CompanyDTO(
                     companyNameField.getText().trim(),
                     companyEmailField.getText().trim(),
-                    companyPhoneField.getText().trim(),
-                    null
+                    companyPhoneField.getText().trim()
             );
 
-            String password = superadminPasswordField.getText().trim();
-            String confirmPassword = confirmPasswordField.getText().trim();
-
-            User superAdmin = new User(
-                    0,
-                    "SUPER_ADMIN",
-                    null,
-                    null,
+            RegisterRequestDTO userDTO = new RegisterRequestDTO(
                     superadminNameField.getText().trim(),
                     superadminEmailField.getText().trim(),
                     superadminPhoneField.getText().trim(),
-                    "ACTIVE"
+                    superadminPasswordField.getText().trim(),
+                    confirmPasswordField.getText().trim()
             );
 
-            int userId = userService.registerSuperAdminAndCompany(company, superAdmin, password, confirmPassword);
-            SessionManager.getInstance().setLoggedInUser(userId, "SUPER_ADMIN", company.getId());
+            if (hasEmptyFields(companyDTO, userDTO)) {
+                showAlert(Alert.AlertType.WARNING, "error.title", "error.empty_fields");
+                return;
+            }
+
+        try {
+            RegisterResultDTO result = registerService.registerSuperAdminAndCompany(companyDTO, userDTO);
+            SessionManager.getInstance().setLoggedInUser(result.getUserId(), "SUPER_ADMIN", result.getCompanyId());
 
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.registration_successful");
             Navigator.navigateTo("superadmin_dashboard.fxml", registerButton);
@@ -90,6 +88,16 @@ public class RegisterController {
         }
     }
 
+    private boolean hasEmptyFields(CompanyDTO company, RegisterRequestDTO user) {
+        return company.getName().isEmpty() ||
+                company.getEmail().isEmpty() ||
+                company.getPhoneNumber().isEmpty() ||
+                user.getFullName().isEmpty() ||
+                user.getEmail().isEmpty() ||
+                user.getPhoneNumber().isEmpty() ||
+                user.getPassword().isEmpty() ||
+                user.getConfirmPassword().isEmpty();
+    }
 
     @FXML
     private void backToLogin() {

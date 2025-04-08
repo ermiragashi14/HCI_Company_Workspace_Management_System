@@ -2,7 +2,6 @@ package repository;
 
 import model.Company;
 import utils.DBConnector;
-
 import java.sql.*;
 import java.util.Optional;
 
@@ -10,11 +9,10 @@ import static utils.DBConnector.getConnection;
 
 public class CompanyRepository {
 
-    public int registerCompany(Company company) throws SQLException {
+    public int registerCompany(Company company, Connection connection) throws SQLException {
         String query = "INSERT INTO company (name, email, phone_number) VALUES (?, ?, ?)";
 
-        try (Connection connection = DBConnector.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, company.getName());
             stmt.setString(2, company.getEmail());

@@ -7,13 +7,17 @@ import java.util.Optional;
 
 public class UserRepository {
 
-
     public int registerUser(User user) throws SQLException {
+        try (Connection conn = DBConnector.getConnection()) {
+            return registerUser(user, conn);
+        }
+    }
+
+    public int registerUser(User user, Connection connection) throws SQLException {
         String query = "INSERT INTO user (company_id, role, password_hash, salt, full_name, email, phone_number, status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = DBConnector.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, user.getCompanyId());
             stmt.setString(2, user.getRole());
@@ -27,23 +31,25 @@ public class UserRepository {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                return 1;
-            } else {
-                return -1;
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1); // userId i sapo krijuar
+                    }
+                }
             }
+
+            throw new SQLException("Creating user failed, no ID obtained.");
+
         }
     }
 
     public boolean userExists(String email) throws SQLException {
-        String query = "SELECT COUNT(*) FROM user WHERE role = 'SUPER_ADMIN' AND email = ?";
+        String query = "SELECT COUNT(*) FROM user WHERE email = ?";
         try (PreparedStatement stmt = DBConnector.getConnection().prepareStatement(query)) {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
-            }
+            return rs.next() && rs.getInt(1) > 0;
         }
-        return false;
     }
 
     public Optional<User> getUserByEmail(String email) throws SQLException {
@@ -74,49 +80,4 @@ public class UserRepository {
         }
         return Optional.empty();
     }
-
-    public boolean updateUserPassword(String email, String newPasswordHash, String newSalt) throws SQLException {
-        String query = "UPDATE user SET password_hash = ?, salt = ? WHERE email = ?";
-
-        try (Connection connection = DBConnector.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-
-            stmt.setString(1, newPasswordHash);
-            stmt.setString(2, newSalt);
-            stmt.setString(3, email);
-
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
-        }
-    }
-
-    public boolean saveOtp(String email, String otpCode, Timestamp expiryTime) throws SQLException {
-        String query = "UPDATE user SET otp_code = ?, otp_expiry = ? WHERE email = ?";
-
-        try (Connection connection = DBConnector.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-
-            stmt.setString(1, otpCode);
-            stmt.setTimestamp(2, expiryTime);
-            stmt.setString(3, email);
-
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
-        }
-    }
-
-    public boolean removeOtp(String email) throws SQLException {
-        String query = "UPDATE user SET otp_code = NULL, otp_expiry = NULL WHERE email = ?";
-
-        try (Connection connection = DBConnector.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-
-            stmt.setString(1, email);
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
-        }
-    }
-
-
-
 }

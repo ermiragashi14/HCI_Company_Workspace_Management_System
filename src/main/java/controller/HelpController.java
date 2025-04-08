@@ -5,7 +5,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.TranslationUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;

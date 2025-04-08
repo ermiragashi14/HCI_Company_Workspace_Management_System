@@ -26,4 +26,6 @@ module com.example.hci_company_workspace_management_system {
     opens controller.LogIn to javafx.fxml;
     exports controller.Superadmin to javafx.fxml;
     opens controller.Superadmin to javafx.fxml;
+    exports controller.PasswordReset;
+    opens controller.PasswordReset to javafx.fxml;
 }

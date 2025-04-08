@@ -1,9 +1,10 @@
 package controller.LogIn;
 
+import dto.LogIn.LoginRequestDTO;
+import dto.LoginResultDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import model.User;
 import service.AuthService;
 import service.SessionManager;
 import utils.Navigator;
@@ -24,6 +25,8 @@ public class LogInController {
     @FXML private Text welcomeText;
     @FXML private Text titleText;
     @FXML private Button helpButton;
+
+    private final AuthService authService = new AuthService();
 
     @FXML
     private void initialize() {
@@ -53,23 +56,16 @@ public class LogInController {
         String password = PasswordField.getText().trim();
 
         try {
-            AuthService authService = new AuthService();
-            User user = authService.loginUser(email, password);
+            LoginRequestDTO loginDTO = new LoginRequestDTO(email, password);
+            LoginResultDTO result = authService.loginUser(loginDTO);
 
-            SessionManager.getInstance().setLoggedInUser(user.getId(), user.getRole(), user.getCompanyId());
+            SessionManager.getInstance().setLoggedInUser(result.getUserId(), result.getRole(), result.getCompanyId());
 
-            switch (user.getRole()) {
-                case "SUPER_ADMIN":
-                    Navigator.navigateTo("superadmin_dashboard.fxml", loginButton);
-                    break;
-                case "REGULAR_ADMIN":
-                    Navigator.navigateTo("admin_dashboard.fxml", loginButton);
-                    break;
-                case "STAFF_USER":
-                    Navigator.navigateTo("staff_dashboard.fxml", loginButton);
-                    break;
-                default:
-                    showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.unknown_role"));
+            switch (result.getRole()) {
+                case "SUPER_ADMIN" -> Navigator.navigateTo("superadmin_dashboard.fxml", loginButton);
+                case "REGULAR_ADMIN" -> Navigator.navigateTo("admin_dashboard.fxml", loginButton);
+                case "STAFF_USER" -> Navigator.navigateTo("staff_dashboard.fxml", loginButton);
+                default -> showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.unknown_role"));
             }
 
         } catch (IllegalArgumentException ex) {

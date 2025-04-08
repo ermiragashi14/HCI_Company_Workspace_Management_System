@@ -26,49 +26,39 @@
     </ImageView>
 
     <!-- Navigation Buttons -->
-    <Button onAction="#goToDashboard" prefHeight="35.0"
+    <Button fx:id="dashboardButton" onAction="#goToDashboard" prefHeight="35.0"
             styleClass="navbar-button"
             text="🏠 Dashboard">
-        <font>
-            <Font size="14.0" />
-        </font>
+        <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="10.0" /></VBox.margin>
     </Button>
 
-    <Button onAction="#goToCompanies" prefHeight="35.0"
-            styleClass="navbar-button"
-            text="🏢 Companies">
-        <font><Font size="14.0" /></font>
-        <VBox.margin><Insets top="5.0" /></VBox.margin>
-    </Button>
-
-    <Button onAction="#goToReservations" prefHeight="35.0"
+    <Button fx:id="reservationsButton" onAction="#goToReservations" prefHeight="35.0"
             styleClass="navbar-button"
             text="📅 Reservations">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
 
-    <Button onAction="#goToWorkspaces" prefHeight="35.0"
+    <Button fx:id="workspacesButton" onAction="#goToWorkspaces" prefHeight="35.0"
             styleClass="navbar-button"
             text="🏢 Workspaces">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
 
-    <Button onAction="#goToAdmins" prefHeight="35.0"
-            styleClass="navbar-button"
-            text="👤 Admins">
-        <font><Font size="14.0" /></font>
-        <VBox.margin><Insets top="5.0" /></VBox.margin>
-    </Button>
-
-    <Button onAction="#goToAuditLog" prefHeight="35.0"
+    <Button fx:id="auditLogButton" onAction="#goToAuditLog" prefHeight="35.0"
             styleClass="navbar-button"
             text="🧾 Audit Log">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
 
+    <Button fx:id="userCreationButton" onAction="#goToUserCreation" prefHeight="35.0"
+            styleClass="navbar-button"
+            text="➕ Create Users">
+        <font><Font size="14.0" /></font>
+        <VBox.margin><Insets top="5.0" /></VBox.margin>
+    </Button>
 
 </VBox>

@@ -1,18 +1,16 @@
 package repository;
 
 import utils.DBConnector;
-import model.User;
 import service.SessionManager;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AdminRepository {
 
     private final Connection connection;
 
-    public AdminRepository() throws SQLException {
+    public AdminRepository() {
         try {
             this.connection = DBConnector.getConnection();
         } catch (SQLException e) {
@@ -20,48 +18,13 @@ public class AdminRepository {
         }
     }
 
-    public List<User> getAllAdmins() throws SQLException {
-        int companyId = SessionManager.getInstance().getLoggedInUserId();
-        String query = "SELECT u.* FROM user u WHERE u.role = 'ADMIN' AND u.company_id = ?";
-        List<User> admins = new ArrayList<>();
-
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, companyId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    User admin = new User(
-                            rs.getInt("id"),
-                            rs.getInt("company_id"),
-                            rs.getString("role"),
-                            rs.getString("password_hash"),
-                            rs.getString("salt"),
-                            rs.getString("full_name"),
-                            rs.getString("email"),
-                            rs.getString("phone_number"),
-                            rs.getString("status"),
-                            rs.getTimestamp("created_at"),
-                            rs.getString("otp_code"),
-                            rs.getTimestamp("otp_expiry")
-                    );
-                    admins.add(admin);
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error fetching admins for company " + companyId + ": " + e.getMessage());
-            throw e;
-        }
-        return admins;
-    }
-
     public int countTotalUsers() {
-        int companyId = SessionManager.getInstance().getLoggedInUserId();
+        int companyId = SessionManager.getInstance().getLoggedInCompanyId();
         String query = "SELECT COUNT(*) FROM user WHERE company_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, companyId);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
+                if (rs.next()) return rs.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,14 +33,12 @@ public class AdminRepository {
     }
 
     public int countTotalWorkspaces() {
-        int companyId = SessionManager.getInstance().getLoggedInUserId();
-        String query = "SELECT COUNT(*) FROM workspace w JOIN user u ON w.company_id = u.company_id WHERE u.company_id = ?";
+        int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+        String query = "SELECT COUNT(*) FROM workspace WHERE company_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, companyId);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
+                if (rs.next()) return rs.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,18 +47,73 @@ public class AdminRepository {
     }
 
     public int countTotalActiveReservations() {
-        int companyId = SessionManager.getInstance().getLoggedInUserId();
-        String query = "SELECT COUNT(*) FROM reservation r JOIN user u ON r.user_id = u.id WHERE r.status = 'active' AND u.company_id = ?";
+        int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+        String query = "SELECT COUNT(*) FROM reservation r JOIN user u ON r.user_id = u.id WHERE r.status = 'CONFIRMED' AND u.company_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, companyId);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
+                if (rs.next()) return rs.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public Map<String, Integer> getWorkspaceUsageStats() {
+        int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+        Map<String, Integer> stats = new HashMap<>();
+        String occupiedQuery = "SELECT COUNT(*) FROM reservation r JOIN workspace w ON r.workspace_id = w.id WHERE r.status = 'CONFIRMED' AND w.company_id = ? AND r.date = CURDATE()";
+        String totalQuery = "SELECT COUNT(*) FROM workspace WHERE company_id = ?";
+
+        try (PreparedStatement occupiedStmt = connection.prepareStatement(occupiedQuery);
+             PreparedStatement totalStmt = connection.prepareStatement(totalQuery)) {
+
+            occupiedStmt.setInt(1, companyId);
+            totalStmt.setInt(1, companyId);
+
+            int occupied = 0;
+            int total = 0;
+
+            try (ResultSet rs = occupiedStmt.executeQuery()) {
+                if (rs.next()) occupied = rs.getInt(1);
+            }
+
+            try (ResultSet rs = totalStmt.executeQuery()) {
+                if (rs.next()) total = rs.getInt(1);
+            }
+
+            int available = Math.max(total - occupied, 0);
+            stats.put("Occupied", occupied);
+            stats.put("Available", available);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return stats;
+    }
+
+    public Map<String, Integer> getMonthlyReservationTrends() {
+        int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+        Map<String, Integer> trends = new LinkedHashMap<>();
+
+        String query = "SELECT MONTHNAME(r.date) AS month, COUNT(*) AS count " +
+                "FROM reservation r JOIN user u ON r.user_id = u.id " +
+                "WHERE YEAR(r.date) = YEAR(CURDATE()) AND u.company_id = ? " +
+                "GROUP BY MONTH(r.date), MONTHNAME(r.date) ORDER BY MONTH(r.date)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    trends.put(rs.getString("month"), rs.getInt("count"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return trends;
     }
 }

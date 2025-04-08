@@ -41,5 +41,6 @@ public class SessionManager {
     public void clearSession() {
         this.loggedInUserId = -1;
         this.loggedInUserRole = null;
+        this.loggedInCompanyId = -1;
     }
 }

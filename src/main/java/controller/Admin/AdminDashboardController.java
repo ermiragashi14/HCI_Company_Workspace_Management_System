@@ -8,9 +8,10 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import service.AdminService;
+import repository.AdminRepository;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class AdminDashboardController {
     @FXML
@@ -31,7 +32,7 @@ public class AdminDashboardController {
     @FXML
     private LineChart<String, Number> reservationTrendsChart;
 
-    private final AdminService adminService = new AdminService();
+    private final AdminRepository adminRepository = new AdminRepository();
 
     public void initialize() {
         loadDashboardStats();
@@ -40,20 +41,24 @@ public class AdminDashboardController {
     }
 
     private void loadDashboardStats() {
-        totalUsersLabel.setText(String.valueOf(adminService.getTotalUsers()));
-        totalWorkspacesLabel.setText(String.valueOf(adminService.getTotalWorkspaces()));
-        totalActiveReservationsLabel.setText(String.valueOf(adminService.getTotalActiveReservations()));
+        totalUsersLabel.setText(String.valueOf(adminRepository.countTotalUsers()));
+        totalWorkspacesLabel.setText(String.valueOf(adminRepository.countTotalWorkspaces()));
+        totalActiveReservationsLabel.setText(String.valueOf(adminRepository.countTotalActiveReservations()));
     }
 
     private void setupCharts() {
-        workspaceUsageChart.getData().add(new PieChart.Data("Occupied", 60));
-        workspaceUsageChart.getData().add(new PieChart.Data("Available", 40));
+        Map<String, Integer> usageStats = adminRepository.getWorkspaceUsageStats();
+        for (Map.Entry<String, Integer> entry : usageStats.entrySet()) {
+            workspaceUsageChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
+        }
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Reservations Trend");
-        series.getData().add(new XYChart.Data<>("Jan", 20));
-        series.getData().add(new XYChart.Data<>("Feb", 25));
-        series.getData().add(new XYChart.Data<>("Mar", 30));
+
+        Map<String, Integer> trends = adminRepository.getMonthlyReservationTrends();
+        for (Map.Entry<String, Integer> entry : trends.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
 
         reservationTrendsChart.getData().add(series);
     }

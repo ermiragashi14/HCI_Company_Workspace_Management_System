@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
+import service.SessionManager;
+
 import java.io.IOException;
 
 public class RibbonController {
@@ -39,6 +41,7 @@ public class RibbonController {
 
     @FXML
     public void logout(ActionEvent event) {
+        SessionManager.getInstance().clearSession();
         switchScene(event, "login.fxml");
     }
 }

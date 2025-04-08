@@ -1,5 +1,6 @@
 package controller.PasswordReset;
 
+import dto.PasswordReset.PasswordResetDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -64,18 +65,23 @@ public class PasswordResetController {
 
     @FXML
     private void handleResetPassword() {
-        String email = emailField.getText().trim();
-        String otp = otpField.getText().trim();
-        String newPassword = newPasswordField.getText();
-        String confirmPassword = confirmPasswordField.getText();
 
-        if (email.isEmpty() || otp.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+        PasswordResetDTO dto = new PasswordResetDTO(
+                emailField.getText().trim(),
+                otpField.getText().trim(),
+                newPasswordField.getText(),
+                confirmPasswordField.getText()
+        );
+
+
+        if (dto.getEmail().isEmpty() || dto.getOtp().isEmpty()
+                || dto.getNewPassword().isEmpty() || dto.getConfirmPassword().isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "error.title", "error.empty_fields");
             return;
         }
 
         try {
-            resetService.resetPassword(email, otp, newPassword, confirmPassword);
+            resetService.resetPassword(dto);
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.password_reset");
             Navigator.navigateTo("login.fxml", submitButton);
         } catch (IllegalArgumentException ex) {

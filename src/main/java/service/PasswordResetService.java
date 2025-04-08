@@ -1,5 +1,6 @@
 package service;
 
+import dto.PasswordReset.PasswordResetDTO;
 import model.User;
 import repository.PasswordResetRepository;
 import repository.UserRepository;
@@ -64,7 +65,12 @@ public class PasswordResetService {
         }
     }
 
-    public void resetPassword(String email, String otp, String newPassword, String confirmPassword) throws Exception {
+    public void resetPassword(PasswordResetDTO dto) throws Exception {
+        String email = dto.getEmail();
+        String otp = dto.getOtp();
+        String newPassword = dto.getNewPassword();
+        String confirmPassword = dto.getConfirmPassword();
+
         if (email.isEmpty() || otp.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
             throw new IllegalArgumentException("error.empty_fields");
         }

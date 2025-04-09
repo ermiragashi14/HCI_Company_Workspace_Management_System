@@ -7,9 +7,35 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import utils.TranslationManager;
+
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class AdminNavbarController {
+
+    @FXML private Button dashboardButton;
+    @FXML private Button userManagementButton;
+    @FXML private Button officeManagementButton;
+    @FXML private Button reservationsButton;
+    @FXML private Button reportsButton;
+
+    @FXML
+    public void initialize() {
+        translate();
+        TranslationManager.addListener(this::translate);
+    }
+
+    private void translate() {
+        ResourceBundle bundle = TranslationManager.getBundle();
+
+        dashboardButton.setText("🏠 " + bundle.getString("admin.nav.dashboard"));
+        userManagementButton.setText("👥 " + bundle.getString("admin.nav.users"));
+        officeManagementButton.setText("🏢 " + bundle.getString("admin.nav.office"));
+        reservationsButton.setText("📅 " + bundle.getString("admin.nav.reservations"));
+        reportsButton.setText("📊 " + bundle.getString("admin.nav.reports"));
+    }
 
     private void switchScene(ActionEvent event, String fxmlFile) {
         try {

@@ -27,7 +27,7 @@
     <center>
         <VBox spacing="20" styleClass="admin-container" stylesheets="@../css/style.css">
             <HBox prefHeight="90.0" prefWidth="500.0" spacing="20.0" styleClass="admin-h" stylesheets="@../css/style.css">
-                <Label styleClass="admin-labels" stylesheets="@../css/style.css" text="Total Users:">
+                <Label styleClass="admin-labels" fx:id="usersTitleLabel" stylesheets="@../css/style.css" text="Total Users:">
                     <HBox.margin>
                         <Insets top="30.0" />
                     </HBox.margin>
@@ -40,7 +40,7 @@
                         <Insets top="30.0" />
                     </HBox.margin>
                 </Label>
-                <Label styleClass="admin-labels" stylesheets="@../css/style.css" text="Total Workspaces:">
+                <Label styleClass="admin-labels" fx:id="workspacesTitleLabel" stylesheets="@../css/style.css" text="Total Workspaces:">
                     <HBox.margin>
                         <Insets top="30.0" />
                     </HBox.margin>
@@ -50,7 +50,7 @@
                         <Insets top="30.0" />
                     </HBox.margin>
                 </Label>
-                <Label styleClass="admin-labels" stylesheets="@../css/style.css" text="Active Reservations:">
+                <Label styleClass="admin-labels" fx:id="reservationsTitleLabel" stylesheets="@../css/style.css" text="Active Reservations:">
                     <HBox.margin>
                         <Insets top="30.0" />
                     </HBox.margin>

@@ -9,35 +9,45 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import repository.AdminRepository;
+import utils.TranslationManager;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class AdminDashboardController {
-    @FXML
-    private VBox navbarContainer;
 
-    @FXML
-    private Label totalUsersLabel;
+    @FXML private VBox navbarContainer;
 
-    @FXML
-    private Label totalWorkspacesLabel;
+    @FXML private Label totalUsersLabel;
+    @FXML private Label totalWorkspacesLabel;
+    @FXML private Label totalActiveReservationsLabel;
 
-    @FXML
-    private Label totalActiveReservationsLabel;
+    @FXML private Label usersTitleLabel;
+    @FXML private Label workspacesTitleLabel;
+    @FXML private Label reservationsTitleLabel;
 
-    @FXML
-    private PieChart workspaceUsageChart;
-
-    @FXML
-    private LineChart<String, Number> reservationTrendsChart;
+    @FXML private PieChart workspaceUsageChart;
+    @FXML private LineChart<String, Number> reservationTrendsChart;
 
     private final AdminRepository adminRepository = new AdminRepository();
 
+    @FXML
     public void initialize() {
         loadDashboardStats();
         setupCharts();
         loadNavbar();
+        translate();
+        TranslationManager.addListener(this::translate);
+    }
+
+    private void translate() {
+        ResourceBundle bundle = TranslationManager.getBundle();
+        usersTitleLabel.setText(bundle.getString("admin.dashboard.totalusers"));
+        workspacesTitleLabel.setText(bundle.getString("admin.dashboard.totalworkspaces"));
+        reservationsTitleLabel.setText(bundle.getString("admin.dashboard.totalreservations"));
+        reservationTrendsChart.getXAxis().setLabel(bundle.getString("admin.chart.months"));
+        reservationTrendsChart.getYAxis().setLabel(bundle.getString("admin.chart.reservations"));
     }
 
     private void loadDashboardStats() {
@@ -47,11 +57,13 @@ public class AdminDashboardController {
     }
 
     private void setupCharts() {
+        workspaceUsageChart.getData().clear();
         Map<String, Integer> usageStats = adminRepository.getWorkspaceUsageStats();
         for (Map.Entry<String, Integer> entry : usageStats.entrySet()) {
             workspaceUsageChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
         }
 
+        reservationTrendsChart.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Reservations Trend");
 

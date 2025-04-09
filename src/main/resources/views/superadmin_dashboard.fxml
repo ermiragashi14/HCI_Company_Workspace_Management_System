@@ -29,29 +29,29 @@
         <VBox spacing="20" styleClass="admin-container" alignment="CENTER">
             <HBox spacing="30" alignment="CENTER" styleClass="admin-h">
                 <VBox alignment="CENTER" spacing="5">
-                    <Label text="Admins:" styleClass="admin-labels">
+                    <Label text="Admins:" fx:id="adminLabel" styleClass="admin-labels">
                         <font><Font name="System Bold" size="12.0" /></font>
                     </Label>
                     <Label fx:id="adminCountLabel" text="0" styleClass="admin-labels" />
                 </VBox>
 
                 <VBox alignment="CENTER" spacing="5">
-                    <Label text="Staff:" styleClass="admin-labels">
+                    <Label text="Staff:" fx:id="staffLabel" styleClass="admin-labels">
                         <font><Font name="System Bold" size="12.0" /></font>
                     </Label>
                     <Label fx:id="staffCountLabel" text="0" styleClass="admin-labels" />
                 </VBox>
 
                 <VBox alignment="CENTER" spacing="5">
-                    <Label text="Workspaces:" styleClass="admin-labels">
+                    <Label text="Workspaces:" fx:id="workspaceLabel" styleClass="admin-labels">
                         <font><Font name="System Bold" size="12.0" /></font>
                     </Label>
                     <Label fx:id="workspaceCountLabel" text="0" styleClass="admin-labels" />
                 </VBox>
 
                 <VBox alignment="CENTER" spacing="5">
-                    <Label text="Reservations:" styleClass="admin-labels">
-                        <font><Font name="System Bold" size="12.0" /></font>
+                    <Label text="Reservations:" fx:id="reservationLabel" styleClass="admin-labels">
+                        <font><Font name="System Bold"  size="12.0" /></font>
                     </Label>
                     <Label fx:id="reservationCountLabel" text="0" styleClass="admin-labels" />
                 </VBox>
@@ -59,7 +59,7 @@
 
             <LineChart fx:id="reservationTrendsChart" prefHeight="350.0" prefWidth="650.0">
                 <xAxis>
-                    <CategoryAxis fx:id="xAxis" label="Months" />
+                    <CategoryAxis fx:id="xAxis" label="Months"  />
                 </xAxis>
                 <yAxis>
                     <NumberAxis fx:id="yAxis" label="Reservations" />

@@ -19,7 +19,7 @@
       </image></ImageView>
 
     <!-- Navigation Buttons -->
-    <Button onAction="#goToDashboard" prefHeight="35.0" styleClass="navbar-button"
+    <Button onAction="#goToDashboard" fx:id="dashboardButton" prefHeight="35.0" styleClass="navbar-button"
             stylesheets="@../css/style.css" text="🏠 Dashboard">
       <font>
          <Font size="14.0" />
@@ -27,7 +27,7 @@
       <VBox.margin>
          <Insets top="20.0" />
       </VBox.margin></Button>
-    <Button onAction="#goToUserManagement" prefHeight="35.0"
+    <Button onAction="#goToUserManagement" fx:id="userManagementButton" prefHeight="35.0"
             styleClass="navbar-button" stylesheets="@../css/style.css" text="👥 User Management">
       <font>
          <Font size="14.0" />
@@ -35,7 +35,7 @@
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></Button>
-    <Button onAction="#goToOfficeManagement" prefHeight="35.0"
+    <Button onAction="#goToOfficeManagement" fx:id="officeManagementButton" prefHeight="35.0"
             styleClass="navbar-button" stylesheets="@../css/style.css" text="🏢 Office Management">
       <font>
          <Font size="14.0" />
@@ -43,7 +43,7 @@
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></Button>
-    <Button onAction="#goToReservations" prefHeight="35.0"
+    <Button onAction="#goToReservations"  fx:id="reservationsButton" prefHeight="35.0"
             prefWidth="220.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📅 Reservation Management" wrapText="true">
       <font>
          <Font size="14.0" />
@@ -51,7 +51,7 @@
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></Button>
-    <Button onAction="#goToReports" prefHeight="35.0"
+    <Button onAction="#goToReports" fx:id="reportsButton" prefHeight="35.0"
             styleClass="navbar-button" stylesheets="@../css/style.css" text="📊 Raports and Analytics">
       <font>
          <Font size="14.0" />

@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-
-<HBox fx:controller="controller.RibbonController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" prefHeight="40.0" prefWidth="700.0" styleClass="ribbon" stylesheets="@../css/style.css"
-      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="700.0" styleClass="ribbon" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RibbonController">
    <children>
-      <Button mnemonicParsing="false" prefHeight="35.0" onAction="#goToSettings" styleClass="ribbon-button" stylesheets="@../css/style.css">
+      <Button mnemonicParsing="false" onAction="#goToSettings" prefHeight="35.0" styleClass="ribbon-button" stylesheets="@../css/style.css">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -20,16 +16,16 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button mnemonicParsing="false" prefHeight="35.0" onAction="#goToNotifications" styleClass="ribbon-button" stylesheets="@../css/style.css">
+      <Button mnemonicParsing="false" onAction="#goToNotifications" prefHeight="35.0" styleClass="ribbon-button" stylesheets="@../css/style.css">
          <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0"  pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/notification.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button mnemonicParsing="false" prefHeight="35.0" onAction="#goToHelp" styleClass="ribbon-button" stylesheets="@../css/style.css">
+      <Button mnemonicParsing="false" onAction="#goToHelp" prefHeight="35.0" styleClass="ribbon-button" stylesheets="@../css/style.css">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -38,7 +34,12 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button mnemonicParsing="false" prefHeight="35.0" onAction="#logout" styleClass="ribbon-button" stylesheets="@../css/style.css">
+      <ComboBox fx:id="languageSelector" layoutX="600.0" layoutY="5.0" maxWidth="61.0" prefHeight="30.0" prefWidth="31.0" visibleRowCount="6">
+         <HBox.margin>
+            <Insets top="4.0" />
+         </HBox.margin></ComboBox>
+
+      <Button mnemonicParsing="false" onAction="#logout" prefHeight="35.0" styleClass="ribbon-button" stylesheets="@../css/style.css">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -52,6 +53,6 @@
       <Insets />
    </opaqueInsets>
    <padding>
-      <Insets left="500.0" />
+      <Insets left="460.0" />
    </padding>
 </HBox>

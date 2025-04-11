@@ -60,7 +60,7 @@ public class AdminNavbarController {
 
     @FXML
     public void goToOfficeManagement(ActionEvent event) {
-        switchScene(event, "office_management.fxml");
+        switchScene(event, "workspace_management.fxml");
     }
 
     @FXML

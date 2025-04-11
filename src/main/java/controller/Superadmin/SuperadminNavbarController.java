@@ -52,7 +52,7 @@ public class SuperadminNavbarController {
 
     @FXML
     private void goToWorkspaces(ActionEvent event) {
-        Navigator.navigateTo("superadmin_workspaces.fxml", (Node) event.getSource());
+        Navigator.navigateTo("workspace_management.fxml", (Node) event.getSource());
     }
 
     @FXML

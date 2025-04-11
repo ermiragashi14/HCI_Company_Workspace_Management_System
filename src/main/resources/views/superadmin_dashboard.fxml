@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane minHeight="500.0" minWidth="480.0" prefHeight="600.0" prefWidth="700.0"
-            styleClass="admin-dashboard-container"
-            stylesheets="@../css/style.css"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.Superadmin.SuperadminDashboardController">
+<BorderPane minHeight="474.0" minWidth="480.0" prefHeight="490.0" prefWidth="700.0" styleClass="admin-dashboard-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Superadmin.SuperadminDashboardController">
 
     <top>
         <fx:include source="ribbon.fxml" />
@@ -26,40 +16,40 @@
     </left>
 
     <center>
-        <VBox spacing="20" styleClass="admin-container" alignment="CENTER">
-            <HBox spacing="30" alignment="CENTER" styleClass="admin-h">
+        <VBox alignment="CENTER" spacing="20" styleClass="admin-container">
+            <HBox alignment="CENTER" spacing="30" styleClass="admin-h">
                 <VBox alignment="CENTER" spacing="5">
-                    <Label text="Admins:" fx:id="adminLabel" styleClass="admin-labels">
+                    <Label fx:id="adminLabel" styleClass="admin-labels" text="Admins:">
                         <font><Font name="System Bold" size="12.0" /></font>
                     </Label>
-                    <Label fx:id="adminCountLabel" text="0" styleClass="admin-labels" />
+                    <Label fx:id="adminCountLabel" styleClass="admin-labels" text="0" />
                 </VBox>
 
                 <VBox alignment="CENTER" spacing="5">
-                    <Label text="Staff:" fx:id="staffLabel" styleClass="admin-labels">
+                    <Label fx:id="staffLabel" styleClass="admin-labels" text="Staff:">
                         <font><Font name="System Bold" size="12.0" /></font>
                     </Label>
-                    <Label fx:id="staffCountLabel" text="0" styleClass="admin-labels" />
+                    <Label fx:id="staffCountLabel" styleClass="admin-labels" text="0" />
                 </VBox>
 
                 <VBox alignment="CENTER" spacing="5">
-                    <Label text="Workspaces:" fx:id="workspaceLabel" styleClass="admin-labels">
+                    <Label fx:id="workspaceLabel" styleClass="admin-labels" text="Workspaces:">
                         <font><Font name="System Bold" size="12.0" /></font>
                     </Label>
-                    <Label fx:id="workspaceCountLabel" text="0" styleClass="admin-labels" />
+                    <Label fx:id="workspaceCountLabel" styleClass="admin-labels" text="0" />
                 </VBox>
 
                 <VBox alignment="CENTER" spacing="5">
-                    <Label text="Reservations:" fx:id="reservationLabel" styleClass="admin-labels">
-                        <font><Font name="System Bold"  size="12.0" /></font>
+                    <Label fx:id="reservationLabel" styleClass="admin-labels" text="Reservations:">
+                        <font><Font name="System Bold" size="12.0" /></font>
                     </Label>
-                    <Label fx:id="reservationCountLabel" text="0" styleClass="admin-labels" />
+                    <Label fx:id="reservationCountLabel" styleClass="admin-labels" text="0" />
                 </VBox>
             </HBox>
 
-            <LineChart fx:id="reservationTrendsChart" prefHeight="350.0" prefWidth="650.0">
+            <LineChart fx:id="reservationTrendsChart" prefHeight="350.0" prefWidth="450.0">
                 <xAxis>
-                    <CategoryAxis fx:id="xAxis" label="Months"  />
+                    <CategoryAxis label="Months" fx:id="xAxis" />
                 </xAxis>
                 <yAxis>
                     <NumberAxis fx:id="yAxis" label="Reservations" />

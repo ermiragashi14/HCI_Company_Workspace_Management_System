@@ -63,8 +63,8 @@ public class LogInController {
 
             switch (result.getRole()) {
                 case "SUPER_ADMIN" -> Navigator.navigateTo("superadmin_dashboard.fxml", loginButton);
-                case "REGULAR_ADMIN" -> Navigator.navigateTo("admin_dashboard.fxml", loginButton);
-                case "STAFF_USER" -> Navigator.navigateTo("staff_dashboard.fxml", loginButton);
+                case "ADMIN" -> Navigator.navigateTo("admin_dashboard.fxml", loginButton);
+                case "STAFF" -> Navigator.navigateTo("staff_dashboard.fxml", loginButton);
                 default -> showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), bundle.getString("error.unknown_role"));
             }
 

@@ -22,7 +22,7 @@ public class SuperadminNavbarController {
     @FXML
     private Button auditLogButton;
     @FXML
-    private Button userCreationButton;
+    private Button manageUsersButton;
 
     @FXML
     public void initialize() {
@@ -37,7 +37,7 @@ public class SuperadminNavbarController {
         reservationsButton.setText("📅 " + bundle.getString("super.nav.reservations"));
         workspacesButton.setText("🏢 " + bundle.getString("super.nav.workspaces"));
         auditLogButton.setText("🧾 " + bundle.getString("super.nav.auditlog"));
-        userCreationButton.setText("👤 " + bundle.getString("super.nav.createuser"));
+        manageUsersButton.setText("👤 " + bundle.getString("super.nav.createuser"));
     }
 
     @FXML
@@ -61,7 +61,7 @@ public class SuperadminNavbarController {
     }
 
     @FXML
-    private void goToUserCreation(ActionEvent event) {
-        Navigator.navigateTo("create_users.fxml", (Node) event.getSource());
+    private void goToManageUsers(ActionEvent event) {
+        Navigator.navigateTo("manage_users.fxml", (Node) event.getSource());
     }
 }

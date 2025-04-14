@@ -10,6 +10,8 @@ module com.example.hci_company_workspace_management_system {
     requires jakarta.mail;
 
     opens controller to javafx.fxml;
+    opens dto to javafx.base;
+
 
     exports controller;
     exports model;

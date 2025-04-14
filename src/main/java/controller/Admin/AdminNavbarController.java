@@ -55,7 +55,7 @@ public class AdminNavbarController {
 
     @FXML
     public void goToUserManagement(ActionEvent event) {
-        switchScene(event, "user_management.fxml");
+        switchScene(event, "manage_users.fxml");
     }
 
     @FXML

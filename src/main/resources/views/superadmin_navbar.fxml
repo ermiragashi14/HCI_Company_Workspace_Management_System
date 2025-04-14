@@ -33,9 +33,9 @@
         <VBox.margin><Insets top="10.0" /></VBox.margin>
     </Button>
 
-    <Button fx:id="reservationsButton" onAction="#goToReservations" prefHeight="35.0"
+    <Button fx:id="manageUsersButton" onAction="#goToManageUsers" prefHeight="35.0"
             styleClass="navbar-button"
-            text="📅 Reservations">
+            text="Manage Users">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
@@ -47,16 +47,16 @@
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
 
-    <Button fx:id="auditLogButton" onAction="#goToAuditLog" prefHeight="35.0"
+    <Button fx:id="reservationsButton" onAction="#goToReservations" prefHeight="35.0"
             styleClass="navbar-button"
-            text="🧾 Audit Log">
+            text="📅 Reservations">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
 
-    <Button fx:id="userCreationButton" onAction="#goToUserCreation" prefHeight="35.0"
+    <Button fx:id="auditLogButton" onAction="#goToAuditLog" prefHeight="35.0"
             styleClass="navbar-button"
-            text="➕ Create Users">
+            text="🧾 Audit Log">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>

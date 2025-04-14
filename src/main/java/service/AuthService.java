@@ -38,6 +38,10 @@ public class AuthService {
             throw new IllegalArgumentException("error.mismatched_company");
         }
 
+        if (!"ACTIVE".equalsIgnoreCase(user.getStatus())) {
+            throw new IllegalArgumentException("error.account_disabled");
+        }
+
         if (!PasswordHasher.compareSaltedHash(password, user.getSalt(), user.getPasswordHash())) {
             throw new IllegalArgumentException("error.invalid_login");
         }

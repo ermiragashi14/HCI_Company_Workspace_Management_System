@@ -79,4 +79,21 @@ public class CompanyRepository {
         return Optional.empty();
     }
 
+    public String getCompanyEmail(int companyId) throws SQLException {
+        String query = "SELECT email FROM company WHERE id = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, companyId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("email");
+            } else {
+                throw new IllegalArgumentException("Company not found for ID: " + companyId);
+            }
+        }
+    }
+
+
 }

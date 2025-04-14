@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageUsersController">
+
+    <children>
+
+        <Button fx:id="createUserButton" layoutX="45.0" layoutY="14.0"
+                onAction="#onCreateUserClicked" text="➕ Create User"
+                AnchorPane.rightAnchor="511.6666666666667" AnchorPane.topAnchor="14.0"/>
+
+        <Label layoutX="45.0" layoutY="72.0" text="Apply filters:" />
+
+        <VBox layoutX="45.0" layoutY="97.0" spacing="10"
+              AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="46.33333333333337"
+              AnchorPane.topAnchor="97.0">
+
+            <HBox spacing="10">
+
+                <VBox fx:id="nameFilterBox" spacing="5">
+                    <Label text="Name:" />
+                    <TextField fx:id="nameFilterField" promptText="Search by name" />
+                </VBox>
+
+                <VBox fx:id="emailFilterBox" spacing="5">
+                    <Label text="Email:" />
+                    <TextField fx:id="emailFilterField" promptText="Search by email" />
+                </VBox>
+
+                <VBox fx:id="statusFilterBox" spacing="5">
+                    <Label text="Status:" />
+                    <ComboBox fx:id="statusFilterCombo" prefWidth="150">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="ALL" />
+                                <String fx:value="ACTIVE" />
+                                <String fx:value="DISABLED" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+
+                <VBox fx:id="roleFilterBox" spacing="5">
+                    <Label text="Role:" />
+                    <ComboBox fx:id="roleFilterCombo" prefWidth="150">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="ALL" />
+                                <String fx:value="SUPER_ADMIN" />
+                                <String fx:value="ADMIN" />
+                                <String fx:value="STAFF" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+
+                <VBox fx:id="createdAtFilterBox" spacing="5">
+                    <Label text="Created At (YYYY-MM-DD):" />
+                    <TextField fx:id="createdAtField" prefHeight="25.0" prefWidth="150" />
+                </VBox>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button fx:id="searchButton" onAction="#onSearchClicked" prefWidth="77.0" text="Search"/>
+                <Button fx:id="refreshButton" onAction="#onRefreshClicked" prefWidth="77.0" text="↻ Reset"/>
+            </HBox>
+        </VBox>
+
+        <TableView fx:id="userTable" layoutX="45.0" layoutY="198.0" prefHeight="288.0" prefWidth="561.0"
+                   AnchorPane.bottomAnchor="14.666666666666686" AnchorPane.leftAnchor="45.0"
+                   AnchorPane.rightAnchor="44.33333333333337" AnchorPane.topAnchor="198.0">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Full Name" />
+                <TableColumn fx:id="emailColumn" text="Email" />
+                <TableColumn fx:id="phoneColumn" text="Phone" />
+                <TableColumn fx:id="roleColumn" text="Role" />
+                <TableColumn fx:id="statusColumn" text="Status" />
+                <TableColumn fx:id="createdAtColumn" text="Created At" />
+                <TableColumn fx:id="actionColumn" text="Action" />
+            </columns>
+        </TableView>
+
+    </children>
+</AnchorPane>

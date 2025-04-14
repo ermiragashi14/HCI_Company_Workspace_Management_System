@@ -7,12 +7,6 @@ import java.util.Optional;
 
 public class UserRepository {
 
-    public int registerUser(User user) throws SQLException {
-        try (Connection conn = DBConnector.getConnection()) {
-            return registerUser(user, conn);
-        }
-    }
-
     public int registerUser(User user, Connection connection) throws SQLException {
         String query = "INSERT INTO user (company_id, role, password_hash, salt, full_name, email, phone_number, status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

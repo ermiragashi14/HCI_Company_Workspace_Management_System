@@ -8,7 +8,10 @@ ALTER TABLE user
 ALTER TABLE company ADD CONSTRAINT unique_company_name UNIQUE (name);
 
 
--- new update in 20/03/2025 at 03:16 :)
+-- new update 20/03/2025 at 03:16 :)
 ALTER TABLE user
 ADD COLUMN otp_code VARCHAR(10),
 ADD COLUMN otp_expiry DATETIME;
+
+--new update 14/04/2025
+ALTER TABLE `user` DROP INDEX `company_id_2`;

@@ -4,14 +4,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.event.ActionEvent;
 import service.SessionManager;
 import utils.TranslationManager;
+import utils.TranslationUtils;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class RibbonController {
 
@@ -20,18 +23,8 @@ public class RibbonController {
 
     @FXML
     public void initialize() {
-        languageSelector.getItems().addAll("English", "Shqip");
-        String currentLang = TranslationManager.getCurrentLanguage();
-        languageSelector.setValue(currentLang.equals("sq") ? "Shqip" : "English");
-
-        languageSelector.setOnAction(event -> {
-            String selected = languageSelector.getValue();
-            if ("English".equals(selected)) {
-                TranslationManager.setLanguage("en");
-            } else if ("Shqip".equals(selected)) {
-                TranslationManager.setLanguage("sq");
-            }
-        });
+        // 🔁 Delegate to TranslationUtils to handle language logic
+        TranslationUtils.setupLanguageSelector(languageSelector, this::refreshCurrentView);
     }
 
     private void switchScene(ActionEvent event, String fxmlFile) {
@@ -65,4 +58,12 @@ public class RibbonController {
         SessionManager.getInstance().clearSession();
         switchScene(event, "login.fxml");
     }
+
+    @FXML private Label languageLabel;
+
+    private void refreshCurrentView() {
+        ResourceBundle bundle = TranslationUtils.getBundle();
+        languageLabel.setText(bundle.getString("ribbon.label.language"));
+    }
+
 }

@@ -47,7 +47,7 @@ public class SuperadminNavbarController {
 
     @FXML
     private void goToReservations(ActionEvent event) {
-        Navigator.navigateTo("superadmin_reservations.fxml", (Node) event.getSource());
+        Navigator.navigateTo("reservation_management.fxml", (Node) event.getSource());
     }
 
     @FXML

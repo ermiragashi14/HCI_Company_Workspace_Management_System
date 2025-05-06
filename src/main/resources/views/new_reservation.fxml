@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.NewReservationController">
+    <top>
+        <VBox spacing="10">
+            <HBox spacing="10">
+                <Label text="Date:"/>
+                <DatePicker fx:id="datePicker"/>
+                <Label text="Start Time:"/>
+                <ComboBox fx:id="startTimeCombo"/>
+                <Label text="End Time:"/>
+                <ComboBox fx:id="endTimeCombo"/>
+                <Button text="Check Availability" onAction="#onCheckAvailabilityClicked"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <ListView fx:id="availableWorkspacesList" prefHeight="200"/>
+    </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Reserve" onAction="#onReserveClicked"/>
+            <Button text="Cancel" onAction="#onCancelClicked"/>
+        </HBox>
+    </bottom>
+</BorderPane>

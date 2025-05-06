@@ -65,7 +65,7 @@ public class AdminNavbarController {
 
     @FXML
     public void goToReservations(ActionEvent event) {
-        switchScene(event, "reservations.fxml");
+        switchScene(event, "reservation_management.fxml");
     }
 
     @FXML

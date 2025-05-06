@@ -131,4 +131,20 @@ public class WorkspaceRepository {
         }
     }
 
+    public List<String> getWorkspaceNamesByCompanyId(int companyId) throws SQLException {
+        List<String> names = new ArrayList<>();
+        String sql = "SELECT name FROM workspace WHERE company_id = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, companyId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                names.add(rs.getString("name"));
+            }
+        }
+        return names;
+    }
+
+
 }

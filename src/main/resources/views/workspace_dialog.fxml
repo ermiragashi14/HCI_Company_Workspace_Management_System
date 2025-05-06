@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controller.WorkspaceDialogController"
+      spacing="10" alignment="CENTER" prefWidth="300" prefHeight="250" style="-fx-padding: 15;">
+
+    <Label text="Workspace Name:"/>
+    <TextField fx:id="nameField" promptText="Enter workspace name"/>
+
+    <Label text="Capacity:"/>
+    <TextField fx:id="capacityField" promptText="Enter capacity"/>
+
+    <Label text="Description:"/>
+    <TextArea fx:id="descriptionArea" promptText="Enter description..." prefRowCount="3"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="cancelButton" text="Cancel"/>
+        <Button fx:id="saveButton" text="Save"/>
+    </HBox>
+</VBox>

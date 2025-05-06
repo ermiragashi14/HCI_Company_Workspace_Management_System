@@ -7,13 +7,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import service.SessionManager;
 import service.WorkspaceService;
 import javafx.scene.control.cell.TextFieldTableCell;
-
+import java.io.IOException;
 import java.util.List;
+
 
 public class WorkspaceManagementController {
 
@@ -72,11 +78,32 @@ public class WorkspaceManagementController {
     }
 
     private void handleAdd() {
-        int companyId = SessionManager.getInstance().getLoggedInCompanyId();
-        WorkspaceRequestDTO newWs = new WorkspaceRequestDTO("New Room", 10, "Placeholder");
-        service.createWorkspace(newWs, companyId);
-        loadWorkspaces();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/workspace_dialog.fxml"));
+            VBox root = loader.load();
+
+            WorkspaceDialogController controller = loader.getController();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add Workspace");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            controller.setDialogStage(dialogStage);
+
+            dialogStage.showAndWait();
+
+            controller.getResult().ifPresent(dto -> {
+                int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+                service.createWorkspace(dto, companyId);
+                loadWorkspaces();
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     private void handleDelete() {
         WorkspaceResponseDTO selected = workspaceTable.getSelectionModel().getSelectedItem();

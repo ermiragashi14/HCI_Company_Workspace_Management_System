@@ -12,7 +12,6 @@ public class TranslationUtils {
 
             languageSelector.setOnAction(event -> {
                 changeLanguage(languageSelector);
-                updateUI.run();
             });
         }
     }
@@ -30,5 +29,9 @@ public class TranslationUtils {
 
     public static ResourceBundle getBundle() {
         return TranslationManager.getBundle();
+    }
+
+    public static void addListener(Runnable listener) {
+        TranslationManager.addListener(listener);
     }
 }

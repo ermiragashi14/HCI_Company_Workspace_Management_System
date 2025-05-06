@@ -4,8 +4,10 @@ import dto.Workspace.WorkspaceRequestDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import utils.TranslationUtils;
 
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class WorkspaceDialogController {
 
@@ -14,14 +16,21 @@ public class WorkspaceDialogController {
     @FXML private TextArea descriptionArea;
     @FXML private Button cancelButton;
     @FXML private Button saveButton;
+    @FXML private Label nameLabel;
+    @FXML private Label capacityLabel;
+    @FXML private Label descriptionLabel;
 
     private Stage dialogStage;
     private WorkspaceRequestDTO result;
 
     private static final int MAX_CAPACITY = 50;
+    private ResourceBundle bundle;
 
     @FXML
     public void initialize() {
+        bundle = TranslationUtils.getBundle();
+        localizeUI();
+
         saveButton.setOnAction(e -> {
             if (validateInputs()) {
                 String name = nameField.getText().trim();
@@ -34,36 +43,47 @@ public class WorkspaceDialogController {
         });
 
         cancelButton.setOnAction(e -> dialogStage.close());
+        TranslationUtils.addListener(this::localizeUI);
+    }
+
+    private void localizeUI() {
+        bundle = TranslationUtils.getBundle();
+        nameLabel.setText(bundle.getString("workspace.dialog.name"));
+        capacityLabel.setText(bundle.getString("workspace.dialog.capacity"));
+        descriptionLabel.setText(bundle.getString("workspace.dialog.description"));
+        cancelButton.setText(bundle.getString("workspace.dialog.cancel"));
+        saveButton.setText(bundle.getString("workspace.dialog.save"));
+        nameField.setPromptText(bundle.getString("workspace.dialog.name.placeholder"));
+        capacityField.setPromptText(bundle.getString("workspace.dialog.capacity.placeholder"));
+        descriptionArea.setPromptText(bundle.getString("workspace.dialog.description.placeholder"));
     }
 
     private boolean validateInputs() {
         StringBuilder errors = new StringBuilder();
 
-
         if (nameField.getText().trim().isEmpty()) {
-            errors.append("Workspace name cannot be empty.\n");
+            errors.append(bundle.getString("workspace.dialog.error.nameEmpty")).append("\n");
         }
-
 
         try {
             int cap = Integer.parseInt(capacityField.getText().trim());
             if (cap <= 0) {
-                errors.append("Capacity must be greater than 0.\n");
+                errors.append(bundle.getString("workspace.dialog.error.capBelowZero")).append("\n");
             } else if (cap > MAX_CAPACITY) {
-                errors.append("Capacity cannot exceed ").append(MAX_CAPACITY).append(".\n");
+                errors.append(bundle.getString("workspace.dialog.error.capTooHigh")
+                        .replace("{0}", String.valueOf(MAX_CAPACITY))).append("\n");
             }
         } catch (NumberFormatException e) {
-            errors.append("Capacity must be a valid number.\n");
+            errors.append(bundle.getString("workspace.dialog.error.capInvalid")).append("\n");
         }
-
 
         if (descriptionArea.getText().trim().isEmpty()) {
-            errors.append("Description cannot be empty.\n");
+            errors.append(bundle.getString("workspace.dialog.error.descEmpty")).append("\n");
         }
-
 
         if (errors.length() > 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR, errors.toString(), ButtonType.OK);
+            alert.setTitle(bundle.getString("error.title"));
             alert.showAndWait();
             return false;
         }

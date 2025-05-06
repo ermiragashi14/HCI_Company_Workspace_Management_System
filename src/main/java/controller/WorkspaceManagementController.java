@@ -17,9 +17,12 @@ import javafx.util.converter.IntegerStringConverter;
 import service.SessionManager;
 import service.WorkspaceService;
 import javafx.scene.control.cell.TextFieldTableCell;
+import utils.TranslationUtils;
+
+
 import java.io.IOException;
 import java.util.List;
-
+import java.util.ResourceBundle;
 
 public class WorkspaceManagementController {
 
@@ -32,15 +35,28 @@ public class WorkspaceManagementController {
 
     private final WorkspaceService service = new WorkspaceService();
     private ObservableList<WorkspaceResponseDTO> data;
+    private ResourceBundle bundle;
 
     @FXML
     public void initialize() {
+        bundle = TranslationUtils.getBundle();
         workspaceTable.setEditable(true);
         setupColumns();
         loadWorkspaces();
+        localizeUI();
 
         addButton.setOnAction(e -> handleAdd());
         deleteButton.setOnAction(e -> handleDelete());
+        TranslationUtils.addListener(this::localizeUI);
+    }
+
+    private void localizeUI() {
+        bundle = TranslationUtils.getBundle();
+        nameColumn.setText(bundle.getString("workspace.table.name"));
+        capacityColumn.setText(bundle.getString("workspace.table.capacity"));
+        descriptionColumn.setText(bundle.getString("workspace.table.description"));
+        addButton.setText(bundle.getString("workspace.button.add"));
+        deleteButton.setText(bundle.getString("workspace.button.delete"));
     }
 
     private void loadWorkspaces() {
@@ -79,13 +95,13 @@ public class WorkspaceManagementController {
 
     private void handleAdd() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/workspace_dialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/workspace_dialog.fxml"), TranslationUtils.getBundle());
             VBox root = loader.load();
 
             WorkspaceDialogController controller = loader.getController();
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Add Workspace");
+            dialogStage.setTitle(bundle.getString("workspace.dialog.title"));
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.setScene(new Scene(root));
             controller.setDialogStage(dialogStage);
@@ -103,12 +119,12 @@ public class WorkspaceManagementController {
         }
     }
 
-
-
     private void handleDelete() {
         WorkspaceResponseDTO selected = workspaceTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Delete this workspace?", ButtonType.YES, ButtonType.NO);
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
+                    bundle.getString("workspace.confirm.delete"), ButtonType.YES, ButtonType.NO);
+            confirm.setTitle(bundle.getString("workspace.confirm.title"));
             confirm.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
                     service.deleteWorkspace(selected.getId());

@@ -1,54 +1,89 @@
 /*
-#2C3E50  navy
-#F5EFE7 beige
-#A6CDC6 baby blue
-#5B99C2 blue
-
+pink light #FBE5C0
+pinkish #FF5733
+#C70039 vishnje
+#900C3F purp
+#581845 dark
 */
-/* Navbar */
 
 .navbar-container {
-    -fx-background-color: #2C3E50;
+    -fx-background-color: linear-gradient(to bottom, #900C3F, #FBE5C0);
     -fx-padding: 10px;
     -fx-spacing: 15px;
 }
 
 .navbar-button {
-    -fx-text-fill: white;
+    -fx-text-fill: #581845;
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
     -fx-background-color: transparent;
     -fx-padding: 5px 5px;
     -fx-alignment: center-left;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
+    -fx-border-color: white;
 }
 
 .navbar-button:hover {
-    -fx-background-color: #34495E;
+    -fx-background-color: #e0e0e0;
 }
 
 .navbar-button:pressed {
-    -fx-background-color: #1A252F;
+    -fx-background-color: #cfcfcf;
 }
 
 /* Admin Dashboard */
-.admin-container{
-    -fx-background-color: #F5EFE7;
-
-
+.admin-container {
+    -fx-background-color: #E4EFE7;
 }
-.admin-h{
-    -fx-background-color: #5B99C2;
+
+.admin-h {
+ -fx-background-color: linear-gradient(to bottom, #C70039, #FF5733);
 }
-.admin-labels{
+
+.admin-labels {
     -fx-font-size: 15px;
     -fx-text-fill: white;
+}
+
+/* Ribbon */
+.ribbon {
+    -fx-background-color: #900C3F;
+}
+
+.ribbon-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #900C3F;
+}
+.tabela{
+    -fx-background-color: #FBE5C0;
 
 }
-/* Ribbon */
-.ribbon{
-    -fx-background-color: #2C3E50;
+.titujt-tabela{
+
+    -fx-background-color: #FBE5C0;
+    -fx-border-color:  white;
+
+
 }
-.ribbon-button{
-    -fx-background-color: transparent;
+.butonat{
+    -fx-background-color: #900C3F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+}
+.dialogjet{
+    -fx-background-color: #FBE5C0;
+}
+.labels{
+    -fx-text-fill: #900C3F;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+.butonat-dialog{
+    -fx-background-color: #900C3F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+
 }

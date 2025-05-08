@@ -3,27 +3,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.NewReservationController">
+<BorderPane prefHeight="252.0" prefWidth="536.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="controller.NewReservationController">
     <top>
         <VBox spacing="10">
             <HBox spacing="10">
-                <Label text="Date:"/>
-                <DatePicker fx:id="datePicker"/>
-                <Label text="Start Time:"/>
-                <ComboBox fx:id="startTimeCombo"/>
-                <Label text="End Time:"/>
-                <ComboBox fx:id="endTimeCombo"/>
-                <Button text="Check Availability" onAction="#onCheckAvailabilityClicked"/>
+                <Label text="Date:" />
+                <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="91.0" />
+                <Label text="Start Time:" />
+                <ComboBox fx:id="startTimeCombo" />
+                <Label text="End Time:" />
+                <ComboBox fx:id="endTimeCombo" />
+                <Button onAction="#onCheckAvailabilityClicked" text="Check Availability" />
             </HBox>
         </VBox>
     </top>
     <center>
-        <ListView fx:id="availableWorkspacesList" prefHeight="200"/>
+        <ListView fx:id="availableWorkspacesList" prefHeight="200" stylesheets="@../css/style.css" />
     </center>
     <bottom>
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button text="Reserve" onAction="#onReserveClicked"/>
-            <Button text="Cancel" onAction="#onCancelClicked"/>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button onAction="#onReserveClicked" text="Reserve" />
+            <Button onAction="#onCancelClicked" text="Cancel" />
         </HBox>
     </bottom>
 </BorderPane>

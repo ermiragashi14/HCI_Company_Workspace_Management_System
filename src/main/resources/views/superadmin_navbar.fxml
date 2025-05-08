@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox minHeight="450.0" minWidth="200.0" prefHeight="500.0" prefWidth="220.0"
-      spacing="10" style=" -fx-padding: 10;"
-      styleClass="navbar-container"
-      stylesheets="@../css/style.css"
-      xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controller.Superadmin.SuperadminNavbarController">
+<VBox minHeight="461.0" minWidth="200.0" prefHeight="500.0" prefWidth="220.0" spacing="10" style=" -fx-padding: 10;" styleClass="navbar-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Superadmin.SuperadminNavbarController">
 
     <!-- Logo -->
     <ImageView fitHeight="130" fitWidth="130">
         <VBox.margin>
-            <Insets left="30.0" />
+            <Insets left="30.0" top="20.0" />
         </VBox.margin>
         <image>
             <Image url="@../images/profile-user.png" />
@@ -26,37 +19,27 @@
     </ImageView>
 
     <!-- Navigation Buttons -->
-    <Button fx:id="dashboardButton" onAction="#goToDashboard" prefHeight="35.0"
-            styleClass="navbar-button"
-            text="🏠 Dashboard">
+    <Button fx:id="dashboardButton" onAction="#goToDashboard" prefHeight="35.0" prefWidth="193.0" styleClass="navbar-button" text="🏠 Dashboard">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="10.0" /></VBox.margin>
     </Button>
 
-    <Button fx:id="manageUsersButton" onAction="#goToManageUsers" prefHeight="35.0"
-            styleClass="navbar-button"
-            text="Manage Users">
+    <Button fx:id="manageUsersButton" onAction="#goToManageUsers" prefHeight="35.0" prefWidth="193.0" styleClass="navbar-button" text="Manage Users">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
 
-    <Button fx:id="workspacesButton" onAction="#goToWorkspaces" prefHeight="35.0"
-            styleClass="navbar-button"
-            text="🏢 Workspaces">
+    <Button fx:id="workspacesButton" onAction="#goToWorkspaces" prefHeight="35.0" prefWidth="196.0" styleClass="navbar-button" text="🏢 Workspaces">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
 
-    <Button fx:id="reservationsButton" onAction="#goToReservations" prefHeight="35.0"
-            styleClass="navbar-button"
-            text="📅 Reservations">
+    <Button fx:id="reservationsButton" onAction="#goToReservations" prefHeight="35.0" prefWidth="194.0" styleClass="navbar-button" text="📅 Reservations">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>
 
-    <Button fx:id="auditLogButton" onAction="#goToAuditLog" prefHeight="35.0"
-            styleClass="navbar-button"
-            text="🧾 Audit Log">
+    <Button fx:id="auditLogButton" onAction="#goToAuditLog" prefHeight="35.0" prefWidth="195.0" styleClass="navbar-button" text="🧾 Audit Log">
         <font><Font size="14.0" /></font>
         <VBox.margin><Insets top="5.0" /></VBox.margin>
     </Button>

@@ -13,9 +13,7 @@
         </VBox>
 
 
-        <VBox fx:id="navbarContainer" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
-            <fx:include source="admin_navbar.fxml" />
-        </VBox>
+        <VBox fx:id="navbarContainer" layoutX="0" layoutY="30.0" minHeight="480" prefWidth="200.0" />
 
 
         <VBox spacing="15" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">

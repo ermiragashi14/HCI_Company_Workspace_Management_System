@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogIn.LogInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="login-register" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogIn.LogInController">
    <children>
       <Pane layoutX="200.0" layoutY="141.0" prefHeight="200.0" prefWidth="319.0">
          <children>
-            <GridPane layoutX="66.0" layoutY="84.0" prefHeight="60.0" prefWidth="203.0">
+            <GridPane layoutX="11.0" layoutY="84.0" prefHeight="60.0" prefWidth="258.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.33331298828125" minWidth="10.0" prefWidth="75.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="155.0" />
@@ -27,20 +18,20 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="yourEmailLabel" prefHeight="17.0" prefWidth="77.0" text="Your email:" />
-                  <Label fx:id="yourPasswordLabel" prefHeight="17.0" prefWidth="79.0" text="Password:" GridPane.rowIndex="1" />
+                  <Label fx:id="yourEmailLabel" prefHeight="17.0" prefWidth="77.0" styleClass="labels" stylesheets="@../css/style.css" text="Your email:" />
+                  <Label fx:id="yourPasswordLabel" prefHeight="17.0" prefWidth="79.0" styleClass="labels" stylesheets="@../css/style.css" text="Password:" GridPane.rowIndex="1" />
                   <TextField fx:id="EmailField" prefWidth="105.0" GridPane.columnIndex="1" />
                   <PasswordField fx:id="PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Button fx:id="loginButton" layoutX="143.0" layoutY="165.0" mnemonicParsing="false" onAction="#login" text="Log In" />
+            <Button fx:id="loginButton" layoutX="143.0" layoutY="165.0" mnemonicParsing="false" onAction="#login" styleClass="butonat-dialog" text="Log In" />
+            <Text fx:id="welcomeText" fill="#900c3f" layoutX="129.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="labels" text="Welcome" />
          </children>
       </Pane>
-      <Text fx:id="titleText" layoutX="245.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Company Workspace Management System" wrappingWidth="229.99992879231763" />
-      <Text fx:id="welcomeText" layoutX="335.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" />
-      <Hyperlink fx:id="forgotYourPasswordLink" layoutX="402.0" layoutY="341.0" onAction="#passwordReset" text="Forgot your password?" />
-      <Hyperlink fx:id="register" layoutX="475.0" layoutY="365.0" onAction="#goToRegister" text="Register" />
-      <ComboBox fx:id="languageSelector" layoutX="645.0" layoutY="1.0" prefHeight="25.0" prefWidth="49.0" />
-      <Button fx:id="helpButton" layoutX="603.0" layoutY="1.0" mnemonicParsing="false" onAction="#openHelp" text="Help" />
+      <Text fx:id="titleText" fill="#632020" layoutX="253.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Company Workspace Management System" wrappingWidth="213.99992879231763" />
+      <Hyperlink fx:id="forgotYourPasswordLink" layoutX="402.0" layoutY="341.0" onAction="#passwordReset" styleClass="links" stylesheets="@../css/style.css" text="Forgot your password?" />
+      <Hyperlink fx:id="register" layoutX="242.0" layoutY="341.0" onAction="#goToRegister" styleClass="links" stylesheets="@../css/style.css" text="Register" textFill="WHITE" />
+       <ComboBox fx:id="languageSelector" layoutX="584.0" layoutY="13.0" prefHeight="30.0" prefWidth="50.0" />
+       <Button fx:id="helpButton" layoutX="635.0" layoutY="14.0" mnemonicParsing="false" onAction="#openHelp" styleClass="butonat-dialog" text="Help" />
    </children>
 </AnchorPane>

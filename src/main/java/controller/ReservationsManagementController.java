@@ -3,12 +3,17 @@ package controller;
 import dto.ManageReservationDTO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import service.SessionManager;
 import service.ManageReservationsService;
 import utils.Navigator;
+import utils.TranslationUtils;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +36,7 @@ public class ReservationsManagementController {
     @FXML private TableColumn<ManageReservationDTO, String> modifiedByColumn;
     @FXML private TableColumn<ManageReservationDTO, String> modifiedAtColumn;
     @FXML private TableColumn<ManageReservationDTO, Void> actionColumn;
+    @FXML private VBox navbarContainer;
 
     private final ManageReservationsService service = new ManageReservationsService();
 
@@ -40,6 +46,30 @@ public class ReservationsManagementController {
         setupTableColumns();
         loadAllReservations();
         applyRoleBasedAccessControl();
+        loadNavbar();
+    }
+    private void loadNavbar() {
+        String role = SessionManager.getInstance().getLoggedInUserRole();
+
+        String navbarPath = switch (role.toUpperCase()) {
+            case "ADMIN" -> "/views/admin_navbar.fxml";
+            case "SUPER_ADMIN" -> "/views/superadmin_navbar.fxml";
+            default -> null;
+        };
+        if (navbarPath == null) {
+            System.err.println("Unknown user role: " + role);
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationUtils.getBundle());
+            Node navbar = loader.load();
+            navbarContainer.getChildren().setAll(navbar);
+            System.out.println("[DEBUG] Loading navbar for role: " + role);
+
+        } catch (IOException e) {
+            System.err.println("[ERROR] Unknown role: " + role);
+            e.printStackTrace();
+        }
     }
 
     private void setupComboBoxes() {

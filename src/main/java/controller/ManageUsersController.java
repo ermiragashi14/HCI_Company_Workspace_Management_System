@@ -4,12 +4,18 @@ import dto.ManagedUserDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import service.ManageUsersService;
 import service.SessionManager;
 import utils.Navigator;
 import utils.TranslationManager;
+import utils.TranslationUtils;
+
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -38,6 +44,7 @@ public class ManageUsersController {
     @FXML private Label statusFilterLabel;
     @FXML private Label createdAtFilterLabel;
     @FXML private Label roleFilterLabel;
+    @FXML private VBox navbarContainer;
 
     private final ManageUsersService userService = new ManageUsersService();
     ResourceBundle bundle = TranslationManager.getBundle();
@@ -50,6 +57,30 @@ public class ManageUsersController {
         loadAllUsers();
         applyTranslations();
         TranslationManager.addListener(this::applyTranslations);
+        loadNavbar();
+    }
+    private void loadNavbar() {
+        String role = SessionManager.getInstance().getLoggedInUserRole();
+
+        String navbarPath = switch (role.toUpperCase()) {
+            case "ADMIN" -> "/views/admin_navbar.fxml";
+            case "SUPER_ADMIN" -> "/views/superadmin_navbar.fxml";
+            default -> null;
+        };
+        if (navbarPath == null) {
+            System.err.println("Unknown user role: " + role);
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationUtils.getBundle());
+            Node navbar = loader.load();
+            navbarContainer.getChildren().setAll(navbar);
+            System.out.println("[DEBUG] Loading navbar for role: " + role);
+
+        } catch (IOException e) {
+            System.err.println("[ERROR] Unknown role: " + role);
+            e.printStackTrace();
+        }
     }
 
     private void applyTranslations() {

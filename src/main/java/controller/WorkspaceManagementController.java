@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -32,6 +33,8 @@ public class WorkspaceManagementController {
     @FXML private TableColumn<WorkspaceResponseDTO, String> descriptionColumn;
     @FXML private Button addButton;
     @FXML private Button deleteButton;
+    @FXML private VBox navbarContainer;
+
 
     private final WorkspaceService service = new WorkspaceService();
     private ObservableList<WorkspaceResponseDTO> data;
@@ -44,11 +47,37 @@ public class WorkspaceManagementController {
         setupColumns();
         loadWorkspaces();
         localizeUI();
+        loadNavbar();
+
 
         addButton.setOnAction(e -> handleAdd());
         deleteButton.setOnAction(e -> handleDelete());
         TranslationUtils.addListener(this::localizeUI);
     }
+    private void loadNavbar() {
+        String role = SessionManager.getInstance().getLoggedInUserRole();
+
+        String navbarPath = switch (role.toUpperCase()) {
+            case "ADMIN" -> "/views/admin_navbar.fxml";
+            case "SUPER_ADMIN" -> "/views/superadmin_navbar.fxml";
+            default -> null;
+        };
+        if (navbarPath == null) {
+            System.err.println("Unknown user role: " + role);
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationUtils.getBundle());
+            Node navbar = loader.load();
+            navbarContainer.getChildren().setAll(navbar);
+            System.out.println("[DEBUG] Loading navbar for role: " + role);
+
+        } catch (IOException e) {
+            System.err.println("[ERROR] Unknown role: " + role);
+            e.printStackTrace();
+        }
+    }
+
 
     private void localizeUI() {
         bundle = TranslationUtils.getBundle();

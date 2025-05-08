@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="480.0" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUserDialogController">
+<AnchorPane prefHeight="361.0" prefWidth="412.0" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUserDialogController">
 
     <children>
-        <VBox layoutX="73.0" layoutY="72.0" prefHeight="295.0" prefWidth="333.0" spacing="15">
+        <VBox layoutX="44.0" layoutY="58.0" prefHeight="219.0" prefWidth="310.0" spacing="15">
             <children>
 
                 <GridPane hgap="10" prefHeight="202.0" prefWidth="261.0" vgap="10">
@@ -45,20 +44,14 @@
                   <RowConstraints />
                </rowConstraints>
                 </GridPane>
-
-                <Button fx:id="createButton" onAction="#onCreateClicked" prefHeight="26.0" prefWidth="102.0" styleClass="butonat-dialog" stylesheets="@../css/style.css" text="Create User">
-               <VBox.margin>
-                  <Insets left="120.0" />
-               </VBox.margin></Button>
-            <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#goBackToManageUsers" styleClass="butonat-dialog" stylesheets="@../css/style.css" text="Go back">
-               <VBox.margin>
-                  <Insets left="130.0" />
-               </VBox.margin></Button>
             </children>
         </VBox>
-          <Text fx:id="createNewUserText" fill="#ae3f3f" layoutX="186.0" layoutY="43.0" styleClass="labels" text="Create New User" wrappingWidth="139.388671875">
+          <Text fx:id="createNewUserText" fill="#ae3f3f" layoutX="151.0" layoutY="39.0" styleClass="labels" text="Create New User" wrappingWidth="139.388671875">
          <font>
             <Font size="17.0" />
          </font></Text>
+      <Button fx:id="goBackButton" layoutX="148.0" layoutY="300.0" mnemonicParsing="false" onAction="#goBackToManageUsers" styleClass="butonat-dialog" stylesheets="@../css/style.css" text="Cancel" />
+
+          <Button fx:id="createButton" layoutX="240.0" layoutY="300.0" onAction="#onCreateClicked" prefHeight="26.0" prefWidth="102.0" styleClass="butonat-dialog" stylesheets="@../css/style.css" text="Create User" />
     </children>
 </AnchorPane>

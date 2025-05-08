@@ -10,36 +10,32 @@
     <children>
 
 
-        <VBox fx:id="ribbonContainer" layoutX="0" layoutY="0" prefHeight="30.0" prefWidth="650.0">
+        <VBox fx:id="ribbonContainer" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <fx:include source="ribbon.fxml" />
         </VBox>
 
 
-        <VBox fx:id="navbarContainer" layoutX="0" layoutY="30.0" prefHeight="480.0" prefWidth="200.0">
-            <fx:include source="admin_navbar.fxml" />
-        </VBox>
-
-
-
+        <VBox fx:id="navbarContainer" layoutX="0" layoutY="30.0" minHeight="480" prefWidth="200.0" />
+        
 
             <HBox alignment="CENTER_LEFT" spacing="10" />
 
-            <Label fx:id="filtersLabel" layoutX="334.0" layoutY="62.0" text="Apply filters:" />
+            <Label fx:id="filtersLabel" layoutX="355.0" layoutY="61.0" styleClass="labels" stylesheets="@../css/style.css" text="Apply filters:" />
 
 
 
 
-                    <Label fx:id="nameFilterLabel" layoutX="213.0" layoutY="107.0" text="Name:" />
-                    <TextField fx:id="nameFilterField" layoutX="267.0" layoutY="103.0" prefHeight="26.0" prefWidth="130.0" />
+                    <Label fx:id="nameFilterLabel" layoutX="225.0" layoutY="117.0" styleClass="labels" stylesheets="@../css/style.css" text="Name:" />
+                    <TextField fx:id="nameFilterField" layoutX="276.0" layoutY="114.0" prefHeight="26.0" prefWidth="142.0" />
 
 
 
-                    <Label fx:id="emailFilterLabel" layoutX="409.0" layoutY="107.0" text="Email:" />
-                    <TextField fx:id="emailFilterField" layoutX="452.0" layoutY="103.0" />
+                    <Label fx:id="emailFilterLabel" layoutX="449.0" layoutY="117.0" styleClass="labels" stylesheets="@../css/style.css" text="Email:" />
+                    <TextField fx:id="emailFilterField" layoutX="498.0" layoutY="114.0" prefHeight="26.0" prefWidth="170.0" />
 
 
-                    <Label fx:id="statusFilterLabel" layoutX="379.0" layoutY="154.0" text="Status:" />
-                    <ComboBox fx:id="statusFilterCombo" layoutX="440.0" layoutY="148.0" prefHeight="26.0" prefWidth="79.0">
+                    <Label fx:id="statusFilterLabel" layoutX="397.0" layoutY="160.0" styleClass="labels" stylesheets="@../css/style.css" text="Status:" />
+                    <ComboBox fx:id="statusFilterCombo" layoutX="464.0" layoutY="157.0" prefHeight="26.0" prefWidth="79.0">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="ALL" />
@@ -51,8 +47,8 @@
 
 
 
-                    <Label fx:id="roleFilterLabel" layoutX="217.0" layoutY="153.0" text="Role:" />
-                    <ComboBox fx:id="roleFilterCombo" layoutX="267.0" layoutY="149.0" prefHeight="26.0" prefWidth="93.0">
+                    <Label fx:id="roleFilterLabel" layoutX="230.0" layoutY="160.0" styleClass="labels" stylesheets="@../css/style.css" text="Role:" />
+                    <ComboBox fx:id="roleFilterCombo" layoutX="280.0" layoutY="157.0" prefHeight="26.0" prefWidth="93.0">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="ALL" />
@@ -65,8 +61,8 @@
 
 
 
-                    <Label fx:id="createdAtFilterLabel" layoutX="223.0" layoutY="199.0" text="Created At (YYYY-MM-DD):" />
-                    <TextField fx:id="createdAtField" layoutX="387.0" layoutY="195.0" prefWidth="130" />
+                    <Label fx:id="createdAtFilterLabel" layoutX="223.0" layoutY="199.0" styleClass="labels" stylesheets="@../css/style.css" text="Created At (YYYY-MM-DD):" />
+                    <TextField fx:id="createdAtField" layoutX="414.0" layoutY="194.0" prefWidth="130" />
 
 
 
@@ -84,7 +80,7 @@
                 </columns>
             </TableView>
              <Button fx:id="refreshButton" layoutX="574.0" layoutY="194.0" onAction="#onRefreshClicked" prefHeight="26.0" prefWidth="93.0" styleClass="butonat" stylesheets="@../css/style.css" text="↻ Reset" />
-             <Button fx:id="searchButton" layoutX="575.0" layoutY="157.0" onAction="#onSearchClicked" prefHeight="26.0" prefWidth="93.0" styleClass="butonat" stylesheets="@../css/style.css" text="Search" />
+             <Button fx:id="searchButton" layoutX="574.0" layoutY="157.0" onAction="#onSearchClicked" prefHeight="26.0" prefWidth="93.0" styleClass="butonat" stylesheets="@../css/style.css" text="Search" />
              <Button fx:id="createUserButton" layoutX="230.0" layoutY="58.0" onAction="#onCreateUserClicked" styleClass="butonat" stylesheets="@../css/style.css" text="➕ Create User" />
 
         

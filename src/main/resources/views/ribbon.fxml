@@ -5,7 +5,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="700.0" styleClass="ribbon" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RibbonController">
+<HBox  prefHeight="29.0" prefWidth="700.0" styleClass="ribbon" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RibbonController">
+   <Region HBox.hgrow="ALWAYS" />
    <children>
       <Button mnemonicParsing="false" onAction="#goToSettings" prefHeight="35.0" styleClass="ribbon-button" stylesheets="@../css/style.css">
          <graphic>
@@ -34,22 +35,22 @@
             </ImageView>
          </graphic>
       </Button>
-      <ComboBox fx:id="languageSelector" layoutX="600.0" layoutY="5.0" maxWidth="30.0" prefHeight="13.0" prefWidth="30.0" visibleRowCount="6">
+      <ComboBox fx:id="languageSelector" maxWidth="20.0" prefHeight="26.0" visibleRowCount="3">
          <HBox.margin>
             <Insets />
          </HBox.margin></ComboBox>
 
-      <Button mnemonicParsing="false" onAction="#logout" prefHeight="35.0" styleClass="ribbon-button" stylesheets="@../css/style.css" />
-      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/logout.png" />
-         </image>
-      </ImageView>
+      <Button mnemonicParsing="false" onAction="#logout" prefHeight="35.0" styleClass="ribbon-button" stylesheets="@../css/style.css">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logout.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
-   <padding>
-      <Insets left="460.0" />
-   </padding>
 </HBox>

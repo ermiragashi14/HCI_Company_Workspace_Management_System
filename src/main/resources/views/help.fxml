@@ -3,14 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="500.0" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HelpController">
+<AnchorPane fx:id="dialogRoot" prefHeight="339.0" prefWidth="483.0" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HelpController">
+
     <children>
-        <VBox fx:id="helpBox" layoutX="10.0" layoutY="28.0" prefHeight="321.0" prefWidth="479.0" spacing="10">
+        <VBox fx:id="helpBox" prefHeight="321.0" prefWidth="479.0" spacing="10" style="-fx-padding: 20;">
             <Label fx:id="helpTitle" style="-fx-font-size: 18px; -fx-font-weight: bold;" styleClass="labels" text="Help" />
             <ListView fx:id="questionList" prefHeight="117.0" prefWidth="479.0" />
             <TextArea fx:id="answerText" editable="false" prefHeight="100.0" wrapText="true" />
             <Button fx:id="closeButton" onAction="#closeHelp" styleClass="butonat-dialog" text="Close" />
         </VBox>
-      <ComboBox fx:id="languageSelector" layoutX="450.0" layoutY="1.0" prefHeight="25.0" prefWidth="45.0" />
     </children>
 </AnchorPane>

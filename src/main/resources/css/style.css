@@ -39,6 +39,8 @@ pinkish #FF5733
 
 .admin-h {
  -fx-background-color: linear-gradient(to bottom, #C70039, #FF5733);
+ -fx-border-radius: 5px;
+ -fx-font-weight: bold;
 }
 
 .admin-labels {
@@ -86,4 +88,17 @@ pinkish #FF5733
     -fx-font-weight: bold;
     -fx-font-size: 14px;
 
+}
+.login-register{
+   -fx-background-color: linear-gradient(to bottom, #FBE5C0, #900C3F);
+}
+.title{
+    -fx-text-fill: #900C3F;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+.links{
+    -fx-text-fill: white;
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
 }

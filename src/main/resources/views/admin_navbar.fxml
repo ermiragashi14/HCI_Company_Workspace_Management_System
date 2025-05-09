@@ -8,7 +8,7 @@
 
 <VBox minHeight="461.0" minWidth="200.0" prefHeight="500.0" prefWidth="220.0" spacing="10" style=" -fx-padding: 10;" styleClass="navbar-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Admin.AdminNavbarController">
 
-    <!-- Logo -->
+
     <ImageView fitHeight="130" fitWidth="130">
       <VBox.margin>
          <Insets left="30.0" top="20.0" />
@@ -17,7 +17,7 @@
          <Image url="@../images/profile-user.png" />
       </image></ImageView>
 
-    <!-- Navigation Buttons -->
+
     <Button fx:id="dashboardButton" onAction="#goToDashboard" prefHeight="35.0" prefWidth="198.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="🏠 Dashboard">
       <font>
          <Font size="14.0" />
@@ -46,7 +46,7 @@
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></Button>
-    <Button fx:id="reportsButton" onAction="#onReportsClicked" prefHeight="35.0" prefWidth="199.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📊 Raports and Analytics">
+    <Button fx:id="reportsButton" onAction="#goToReports" prefHeight="35.0" prefWidth="199.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📊 Raports and Analytics">
       <font>
          <Font size="14.0" />
       </font>

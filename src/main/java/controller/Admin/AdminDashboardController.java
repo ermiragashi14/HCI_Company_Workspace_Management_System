@@ -1,31 +1,25 @@
 package controller.Admin;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import repository.AdminRepository;
 import utils.TranslationManager;
-
-import java.io.IOException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 public class AdminDashboardController {
 
-    @FXML private VBox navbarContainer;
 
-    @FXML private Label totalUsersLabel;
-    @FXML private Label totalWorkspacesLabel;
-    @FXML private Label totalActiveReservationsLabel;
+    @FXML private Label staffCountLabel;
+    @FXML private Label workspaceCountLabel;
+    @FXML private Label reservationCountLabel;
 
-    @FXML private Label usersTitleLabel;
-    @FXML private Label workspacesTitleLabel;
-    @FXML private Label reservationsTitleLabel;
+    @FXML private Label staffLabel;
+    @FXML private Label workspaceLabel;
+    @FXML private Label reservationLabel;
 
     @FXML private PieChart workspaceUsageChart;
     @FXML private LineChart<String, Number> reservationTrendsChart;
@@ -36,24 +30,23 @@ public class AdminDashboardController {
     public void initialize() {
         loadDashboardStats();
         setupCharts();
-        loadNavbar();
         translate();
         TranslationManager.addListener(this::translate);
     }
 
     private void translate() {
         ResourceBundle bundle = TranslationManager.getBundle();
-        usersTitleLabel.setText(bundle.getString("admin.dashboard.totalusers"));
-        workspacesTitleLabel.setText(bundle.getString("admin.dashboard.totalworkspaces"));
-        reservationsTitleLabel.setText(bundle.getString("admin.dashboard.totalreservations"));
+        staffLabel.setText(bundle.getString("admin.dashboard.totalusers"));
+        workspaceLabel.setText(bundle.getString("admin.dashboard.totalworkspaces"));
+        reservationLabel.setText(bundle.getString("admin.dashboard.totalreservations"));
         reservationTrendsChart.getXAxis().setLabel(bundle.getString("admin.chart.months"));
         reservationTrendsChart.getYAxis().setLabel(bundle.getString("admin.chart.reservations"));
     }
 
     private void loadDashboardStats() {
-        totalUsersLabel.setText(String.valueOf(adminRepository.countTotalUsers()));
-        totalWorkspacesLabel.setText(String.valueOf(adminRepository.countTotalWorkspaces()));
-        totalActiveReservationsLabel.setText(String.valueOf(adminRepository.countTotalActiveReservations()));
+        staffCountLabel.setText(String.valueOf(adminRepository.countTotalUsers()));
+        workspaceCountLabel.setText(String.valueOf(adminRepository.countTotalWorkspaces()));
+        reservationCountLabel.setText(String.valueOf(adminRepository.countTotalActiveReservations()));
     }
 
     private void setupCharts() {
@@ -73,15 +66,5 @@ public class AdminDashboardController {
         }
 
         reservationTrendsChart.getData().add(series);
-    }
-
-    private void loadNavbar() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/admin_navbar.fxml"));
-            Parent navbar = loader.load();
-            navbarContainer.getChildren().add(navbar);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

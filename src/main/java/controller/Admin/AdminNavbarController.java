@@ -70,6 +70,6 @@ public class AdminNavbarController {
 
     @FXML
     public void goToReports(ActionEvent event) {
-        switchScene(event, "reports.fxml");
+        switchScene(event, "reports_analytics.fxml");
     }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox minHeight="461.0" minWidth="200.0" prefHeight="500.0" prefWidth="220.0" spacing="10" style=" -fx-padding: 10;" styleClass="navbar-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Staff.StaffNavbarController">
+
+
+    <ImageView fitHeight="130" fitWidth="130">
+        <VBox.margin>
+            <Insets left="30.0" top="20.0" />
+        </VBox.margin>
+        <image>
+            <Image url="@../images/profile-user.png" />
+        </image></ImageView>
+
+
+    <Button fx:id="dashboardButton" onAction="#goToDashboard" prefHeight="35.0" prefWidth="198.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="🏠 Dashboard">
+        <font>
+            <Font size="14.0" />
+        </font>
+        <VBox.margin>
+            <Insets top="20.0" />
+        </VBox.margin></Button>
+    <Button fx:id="availableWorkspacesButton" onAction="#goToAvailableWorkspaces" prefHeight="35.0" prefWidth="198.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="🏢 Available Workspaces">
+        <font>
+            <Font size="14.0" />
+        </font>
+        <VBox.margin>
+            <Insets top="10.0" />
+        </VBox.margin></Button>
+    <Button fx:id="reservationsButton" onAction="#goToMakeReservation" prefHeight="35.0" prefWidth="197.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📅 Make Reservation">
+        <font>
+            <Font size="14.0" />
+        </font>
+        <VBox.margin>
+            <Insets top="10.0" />
+        </VBox.margin></Button>
+    <Button fx:id="reportsButton" onAction="#goToMyReservations" prefHeight="35.0" prefWidth="199.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📋 My Reservations">
+        <font>
+            <Font size="14.0" />
+        </font>
+        <VBox.margin>
+            <Insets top="10.0" />
+        </VBox.margin></Button>
+</VBox>

@@ -8,6 +8,7 @@ module com.example.hci_company_workspace_management_system {
     requires org.kordamp.bootstrapfx.core;
     requires mysql.connector.j;
     requires jakarta.mail;
+    requires java.desktop;
 
     opens controller to javafx.fxml;
     opens dto to javafx.base;
@@ -30,4 +31,7 @@ module com.example.hci_company_workspace_management_system {
     opens controller.Superadmin to javafx.fxml;
     exports controller.PasswordReset;
     opens controller.PasswordReset to javafx.fxml;
+    exports dto;
+
+    opens controller.Staff to javafx.fxml;
 }

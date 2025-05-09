@@ -46,7 +46,7 @@
       <VBox.margin>
          <Insets top="10.0" />
       </VBox.margin></Button>
-    <Button fx:id="reportsButton" onAction="#goToReports" prefHeight="35.0" prefWidth="199.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📊 Raports and Analytics">
+    <Button fx:id="reportsButton" onAction="#onReportsClicked" prefHeight="35.0" prefWidth="199.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="📊 Raports and Analytics">
       <font>
          <Font size="14.0" />
       </font>

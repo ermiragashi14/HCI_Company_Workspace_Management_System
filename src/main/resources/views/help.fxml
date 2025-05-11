@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="dialogRoot" prefHeight="339.0" prefWidth="483.0" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HelpController">
+<AnchorPane fx:id="dialogRoot" prefHeight="382.0" prefWidth="556.0" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HelpController">
 
     <children>
-        <VBox fx:id="helpBox" prefHeight="321.0" prefWidth="479.0" spacing="10" style="-fx-padding: 20;">
-            <Label fx:id="helpTitle" style="-fx-font-size: 18px; -fx-font-weight: bold;" styleClass="labels" text="Help" />
+        <VBox fx:id="helpBox" layoutX="38.0" layoutY="71.0" prefHeight="244.0" prefWidth="479.0" spacing="10" style="-fx-padding: 20;">
             <ListView fx:id="questionList" prefHeight="117.0" prefWidth="479.0" />
             <TextArea fx:id="answerText" editable="false" prefHeight="100.0" wrapText="true" />
-            <Button fx:id="closeButton" onAction="#closeHelp" styleClass="butonat-dialog" text="Close" />
         </VBox>
+         <Label fx:id="helpTitle" layoutX="258.0" layoutY="42.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" styleClass="labels" text="Help" />
+         <Button fx:id="closeButton" layoutX="387.0" layoutY="300.0" minWidth="110.0" onAction="#closeHelp" styleClass="butonat-dialog" text="Close" />
     </children>
 </AnchorPane>

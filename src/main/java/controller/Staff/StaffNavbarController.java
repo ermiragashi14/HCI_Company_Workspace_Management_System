@@ -1,17 +1,16 @@
 package controller.Staff;
 
-import dto.UserProfileDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import service.SessionManager;
 import service.UserProfileService;
-import utils.ImageUtils;
 import utils.Navigator;
 import utils.TranslationManager;
 
+import java.io.File;
 import java.util.ResourceBundle;
 
 public class StaffNavbarController {
@@ -31,9 +30,12 @@ public class StaffNavbarController {
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
 
-        int userId = SessionManager.getInstance().getLoggedInUserId();
-        UserProfileDTO profile = userSettingsService.getUserProfile(userId);
-        navbarProfileImage.setImage(ImageUtils.loadProfileImage(profile.getAvatarPath()));
+        File defaultAvatar = new File("user_photos/default_avatar.png");
+        if (defaultAvatar.exists()) {
+            navbarProfileImage.setImage(new Image(defaultAvatar.toURI().toString()));
+        } else {
+            System.err.println("Default avatar image not found at 'user_photos/default.png'");
+        }
     }
 
     private void updateLanguage() {

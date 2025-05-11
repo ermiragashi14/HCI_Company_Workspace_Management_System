@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="252.0" prefWidth="557.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
-    <top>
-        <VBox spacing="10">
-            <HBox spacing="10" styleClass="dialogjet" stylesheets="@../css/style.css">
-                <Label styleClass="labels" text="Date:" />
-                <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="91.0" />
-                <Label styleClass="labels" text="Start Time:" />
-                <ComboBox fx:id="startTimeCombo" />
-                <Label styleClass="labels" text="End Time:" />
-                <ComboBox fx:id="endTimeCombo" />
-                <Button onAction="#onCheckAvailabilityClicked" styleClass="butonat" text="Check Availability" />
-            <VBox.margin>
-               <Insets left="5.0" right="5.0" top="5.0" />
-            </VBox.margin>
+<AnchorPane minWidth="650.0" prefHeight="359.0" prefWidth="650.0" style="-fx-background-color: #B9CCBF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
+
+    <children>
+        <VBox layoutY="80.0" prefHeight="261.0" prefWidth="644.0" spacing="10" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="80.0">
+
+            <HBox prefHeight="25.0" prefWidth="555.0" spacing="10" style="-fx-background-color: #B9CCBF;" styleClass="dialogjet" stylesheets="@../css/style.css">
+                <Label fx:id="dateLabel" styleClass="labels" />
+                <DatePicker fx:id="datePicker" minWidth="119.0" prefHeight="25.0" prefWidth="119.0" />
+                <Label fx:id="startTimeLabel" styleClass="labels" />
+                <ComboBox fx:id="startTimeCombo" minWidth="126.0" prefHeight="25.0" prefWidth="126.0" promptText="Start Time" />
+                <Label fx:id="endTimeLabel" styleClass="labels" />
+                <ComboBox fx:id="endTimeCombo" minWidth="126.0" prefHeight="25.0" prefWidth="126.0" promptText="End Time" />
+                <Button fx:id="checkAvailabilityButton" minWidth="120.0" onAction="#onCheckAvailabilityClicked" prefHeight="25.0" prefWidth="221.0" styleClass="butonat" />
+            </HBox>
+
+            <ListView fx:id="availableWorkspacesList" prefHeight="200" prefWidth="558.0" style="-fx-background-color: #E4EFE7;" styleClass="dialogjet" stylesheets="@../css/style.css" />
+
+            <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-background-color: #B9CCBF;" styleClass="dialogjet" stylesheets="@../css/style.css">
+                <Button fx:id="reserveButton" minWidth="110.0" onAction="#onReserveClicked" styleClass="butonat" />
+                <Button fx:id="cancelButton" minWidth="110.0" onAction="#onCancelClicked" styleClass="butonat" />
+                <Button fx:id="backButton" minWidth="110.0" onAction="#onBackClicked" styleClass="butonat" />
             </HBox>
         </VBox>
-    </top>
-    <center>
-        <ListView fx:id="availableWorkspacesList" prefHeight="200" prefWidth="558.0" styleClass="dialogjet" stylesheets="@../css/style.css" />
-    </center>
-    <bottom>
-        <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="dialogjet" stylesheets="@../css/style.css">
-            <Button onAction="#onReserveClicked" styleClass="butonat" text="Reserve" />
-            <Button onAction="#onCancelClicked" styleClass="butonat" text="Cancel" />
-         <BorderPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" />
-         </BorderPane.margin>
-        </HBox>
-    </bottom>
-</BorderPane>
+         <Label layoutX="250.0" layoutY="24.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="New Reservation" />
+    </children>
+</AnchorPane>

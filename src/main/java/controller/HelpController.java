@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import service.SessionManager;
+import utils.Navigator;
 import utils.TranslationManager;
 import utils.TranslationUtils;
 import java.util.HashMap;
@@ -87,7 +89,19 @@ public class HelpController {
 
     @FXML
     private void closeHelp() {
-        Stage stage = (Stage) helpBox.getScene().getWindow();
-        stage.close();
+        String role = SessionManager.getInstance().getLoggedInUserRole();
+
+        String fxml = switch (role.toUpperCase()) {
+            case "SUPER_ADMIN" -> "superadmin_dashboard.fxml";
+            case "ADMIN" -> "admin_dashboard.fxml";
+            case "STAFF" -> "staff_dashboard.fxml";
+            default -> null;
+        };
+
+        if (fxml != null) {
+            Navigator.navigateTo(fxml, closeButton);
+        } else {
+            System.err.println("Unknown role or no dashboard assigned.");
+        }
     }
 }

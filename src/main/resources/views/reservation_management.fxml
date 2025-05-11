@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservationsManagementController">
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservationsManagementController">
 
     <children>
 
@@ -19,8 +32,8 @@
         <VBox spacing="15" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
 
             <!-- Filters -->
-            <TitledPane expanded="true" styleClass="tabela" stylesheets="@../css/style.css" text="🔍 Filters">
-                <VBox prefHeight="154.0" prefWidth="452.0" spacing="10" styleClass="tabela" stylesheets="@../css/style.css">
+            <TitledPane fx:id="advancedfilterss" expanded="false" prefHeight="195.0" prefWidth="491.0" styleClass="tabela" stylesheets="@../css/style.css" text="🔍 Filters">
+                <VBox prefHeight="151.0" prefWidth="483.0" spacing="10" styleClass="tabela" stylesheets="@../css/style.css">
                     <GridPane hgap="15" prefHeight="98.0" prefWidth="239.0" vgap="10">
                         <columnConstraints>
                             <ColumnConstraints percentWidth="30.0" />
@@ -31,23 +44,23 @@
 
                         <children>
 
-                            <Label text="User:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <Label fx:id="userFilterLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             <TextField fx:id="userFilterField" promptText="Search by user" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                            <Label text="Workspace:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                            <ComboBox fx:id="workspaceFilterCombo" prefHeight="26.0" prefWidth="134.0" promptText="Select workspace" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                            <Label fx:id="workspaceFilterLabel" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <ComboBox fx:id="workspaceFilterCombo" prefHeight="26.0" prefWidth="117.0" promptText="Select workspace" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-                            <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                            <ComboBox fx:id="statusFilterCombo" prefWidth="150" promptText="Select status" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <Label fx:id="statusFilterLabel" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <ComboBox fx:id="statusFilterCombo" prefWidth="117.0" promptText="Select status" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                            <Label text="Date:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                            <DatePicker fx:id="dateFilterPicker" prefHeight="26.0" prefWidth="134.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                            <Label fx:id="dateFilterLabel" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <DatePicker fx:id="dateFilterPicker" prefHeight="26.0" prefWidth="117.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-                            <Label text="Modified By:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <Label fx:id="modifiedByFilterLabel" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                             <TextField fx:id="modifiedByFilterField" promptText="Modifier name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                            <Label text="Modified Date:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                            <DatePicker fx:id="modifiedDateFilterPicker" prefHeight="26.0" prefWidth="136.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                            <Label fx:id="modifiedDateFilterLabel" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <DatePicker fx:id="modifiedDateFilterPicker" prefHeight="26.0" prefWidth="117.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         </children>
                   <rowConstraints>
                      <RowConstraints />
@@ -57,8 +70,8 @@
                     </GridPane>
 
                     <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="515.0" spacing="10">
-                        <Button onAction="#onSearchClicked" styleClass="butonat" stylesheets="@../css/style.css" text="🔍 Search" />
-                        <Button onAction="#onRefreshClicked" styleClass="butonat" text="↻ Reset" />
+                        <Button fx:id="searchButton" minWidth="110.0" onAction="#onSearchClicked" styleClass="butonat" stylesheets="@../css/style.css" text="🔍 Search" />
+                        <Button fx:id="refreshButton" minWidth="110.0" onAction="#onRefreshClicked" styleClass="butonat" text="↻ Reset" />
                     </HBox>
                 </VBox>
             </TitledPane>
@@ -68,19 +81,19 @@
                 <HBox spacing="20">
                     <Label style="-fx-font-weight: bold; -fx-font-size: 16" text="📅 All Reservations" />
                     <Region fx:id="spacer" HBox.hgrow="ALWAYS" />
-                    <Button onAction="#onNewReservationClicked" styleClass="butonat" stylesheets="@../css/style.css" text="🆕 New Reservation" />
+                    <Button fx:id="newReservationButton" minWidth="110.0" onAction="#onNewReservationClicked" styleClass="butonat" stylesheets="@../css/style.css" />
                 </HBox>
 
                 <TableView fx:id="reservationTable" prefHeight="209.0" prefWidth="501.0" styleClass="tabela" stylesheets="@../css/style.css" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="userColumn" prefWidth="52.40000915527344" styleClass="titujt-tabela" text="User" />
-                        <TableColumn fx:id="workspaceColumn" prefWidth="71.80001831054688" styleClass="titujt-tabela" text="Workspace" />
-                        <TableColumn fx:id="dateColumn" prefWidth="44.800018310546875" styleClass="titujt-tabela" text="Date" />
-                        <TableColumn fx:id="statusColumn" prefWidth="53.4000244140625" styleClass="titujt-tabela" text="Status" />
-                        <TableColumn fx:id="scheduleColumn" prefWidth="64.99996948242188" styleClass="titujt-tabela" text="Schedule" />
-                        <TableColumn fx:id="modifiedByColumn" prefWidth="69.79998779296875" styleClass="titujt-tabela" text="Modified By" />
-                        <TableColumn fx:id="modifiedAtColumn" prefWidth="65.60003662109375" styleClass="titujt-tabela" text="Modified At" />
-                        <TableColumn fx:id="actionColumn" prefWidth="60.0" styleClass="titujt-tabela" text="Actions" />
+                        <TableColumn fx:id="userColumn" minWidth="100.0" prefWidth="100.0" styleClass="titujt-tabela" text="User" />
+                        <TableColumn fx:id="workspaceColumn" minWidth="100.0" prefWidth="100.0" styleClass="titujt-tabela" text="Workspace" />
+                        <TableColumn fx:id="dateColumn" minWidth="100.0" prefWidth="100.0" styleClass="titujt-tabela" text="Date" />
+                        <TableColumn fx:id="statusColumn" minWidth="100.0" prefWidth="100.0" styleClass="titujt-tabela" text="Status" />
+                        <TableColumn fx:id="scheduleColumn" minWidth="100.0" prefWidth="100.0" styleClass="titujt-tabela" text="Schedule" />
+                        <TableColumn fx:id="modifiedByColumn" minWidth="100.0" prefWidth="100.0" styleClass="titujt-tabela" text="Modified By" />
+                        <TableColumn fx:id="modifiedAtColumn" minWidth="100.0" prefWidth="100.0" styleClass="titujt-tabela" text="Modified At" />
+                        <TableColumn fx:id="actionColumn" minWidth="100.0" prefWidth="100.0" styleClass="titujt-tabela" text="Actions" />
                     </columns>
                 </TableView>
             </VBox>

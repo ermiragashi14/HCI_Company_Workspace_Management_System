@@ -47,6 +47,7 @@ public class ManageUsersController {
     @FXML private Label createdAtFilterLabel;
     @FXML private Label roleFilterLabel;
     @FXML private VBox navbarContainer;
+    @FXML private TitledPane AdvancedFilters;
 
     private final ManageUsersService userService = new ManageUsersService();
     ResourceBundle bundle;
@@ -82,6 +83,7 @@ public class ManageUsersController {
         createdAtColumn.setText(bundle.getString("manage.users.createdAt"));
         actionColumn.setText(bundle.getString("manage.users.action"));
         avatarColumn.setText("Avatar");
+        AdvancedFilters.setText(bundle.getString("advanced.filters"));
     }
 
     private void loadNavbar() {

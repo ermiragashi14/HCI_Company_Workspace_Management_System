@@ -6,18 +6,29 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import service.NewReservationService;
 import service.SessionManager;
+import utils.Navigator;
+import utils.TranslationManager;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class NewReservationController {
     @FXML private DatePicker datePicker;
     @FXML private ComboBox<LocalTime> startTimeCombo;
     @FXML private ComboBox<LocalTime> endTimeCombo;
     @FXML private ListView<NewReservationDTO> availableWorkspacesList;
+    @FXML private Button reserveButton;
+    @FXML private Button cancelButton;
+    @FXML private Button checkAvailabilityButton;
+    @FXML private Label dateLabel;
+    @FXML private Label startTimeLabel;
+    @FXML private Label endTimeLabel;
+    @FXML private Button backButton;
 
     private final NewReservationService service = new NewReservationService();
+    ResourceBundle bundle;
 
     @FXML
     public void initialize() {
@@ -26,6 +37,20 @@ public class NewReservationController {
             startTimeCombo.getItems().add(LocalTime.of(hour, 0));
             endTimeCombo.getItems().add(LocalTime.of(hour, 0));
         }
+
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
+    }
+
+    private void updateLanguage() {
+        bundle=TranslationManager.getBundle();
+        reserveButton.setText(bundle.getString("new.reservation.reserve"));
+        cancelButton.setText(bundle.getString("new.reservation.cancel"));
+        backButton.setText(bundle.getString("new.reservation.back"));
+        checkAvailabilityButton.setText(bundle.getString("new.reservation.check"));
+        dateLabel.setText(bundle.getString("new.reservation.date"));
+        startTimeCombo.setPromptText(bundle.getString("new.reservation.startPrompt"));
+        endTimeCombo.setPromptText(bundle.getString("new.reservation.endPrompt"));
     }
 
     @FXML
@@ -36,13 +61,18 @@ public class NewReservationController {
         LocalTime end = endTimeCombo.getValue();
 
         if (date == null || start == null || end == null || !start.isBefore(end)) {
-            showAlert("Invalid input", "Please select a valid date and time range.");
+            showAlert(bundle.getString("new.reservation.invalidTitle"), bundle.getString("new.reservation.invalidMessage"));
             return;
         }
 
         List<NewReservationDTO> available = service.getAvailableWorkspaces(
                 date, start, end, SessionManager.getInstance().getLoggedInCompanyId()
         );
+
+        if (available.isEmpty()) {
+            showAlert(bundle.getString("new.reservation.noneAvailableTitle"), bundle.getString("new.reservation.noneAvailableMessage"));
+        }
+
         availableWorkspacesList.setItems(FXCollections.observableArrayList(available));
     }
 
@@ -55,7 +85,7 @@ public class NewReservationController {
         LocalTime end = endTimeCombo.getValue();
 
         if (selected == null || date == null || start == null || end == null) {
-            showAlert("Missing input", "Select a workspace and time range.");
+            showAlert(bundle.getString("new.reservation.missingTitle"), bundle.getString("new.reservation.missingMessage"));
             return;
         }
 
@@ -65,9 +95,9 @@ public class NewReservationController {
         );
 
         if (success) {
-            showAlert("Success", "Reservation confirmed.");
+            showAlert(bundle.getString("new.reservation.successTitle"), bundle.getString("new.reservation.successMessage"));
         } else {
-            showAlert("Error", "Could not complete reservation.");
+            showAlert(bundle.getString("new.reservation.errorTitle"), bundle.getString("new.reservation.errorMessage"));
         }
     }
 
@@ -78,6 +108,11 @@ public class NewReservationController {
         startTimeCombo.setValue(null);
         endTimeCombo.setValue(null);
         availableWorkspacesList.getItems().clear();
+    }
+
+    @FXML
+    public void onBackClicked() {
+        Navigator.navigateTo("reservation_management.fxml", backButton);
     }
 
     private void showAlert(String title, String content) {

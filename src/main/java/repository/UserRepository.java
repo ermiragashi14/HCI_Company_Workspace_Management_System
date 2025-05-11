@@ -130,10 +130,12 @@ public class UserRepository {
     }
 
     public void updateAvatarPath(int userId, String path) {
+        String defaultPath = "user_photos/default_avatar.png";
+
         String query = "UPDATE user SET avatar_path = ? WHERE id = ?";
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, path);
+            stmt.setString(1, (path != null) ? path : defaultPath);
             stmt.setInt(2, userId);
             stmt.executeUpdate();
         } catch (SQLException e) {

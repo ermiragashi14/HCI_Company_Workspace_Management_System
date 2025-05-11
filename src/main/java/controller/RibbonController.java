@@ -1,66 +1,37 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.event.ActionEvent;
 import service.SessionManager;
-import utils.TranslationManager;
+import utils.Navigator;
 import utils.TranslationUtils;
-
-import java.io.IOException;
-import java.util.ResourceBundle;
 
 public class RibbonController {
 
-    @FXML
-    private ComboBox<String> languageSelector;
+    @FXML private ComboBox<String> languageSelector;
+    @FXML private Button goToSettings;
+    @FXML private Button goToNotifications;
+    @FXML private Button goToHelp;
+    @FXML private Button goToLogout;
 
     @FXML
     public void initialize() {
-
         TranslationUtils.setupLanguageSelector(languageSelector);
     }
 
-    private void switchScene(ActionEvent event, String fxmlFile) {
-
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/views/" + fxmlFile));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
+    @FXML
+    public void goToSettings() {Navigator.navigateTo("settings.fxml", goToSettings);}
 
     @FXML
-    public void goToSettings(ActionEvent event) {
-        switchScene(event, "settings.fxml");
-    }
+    public void goToNotifications() {Navigator.navigateTo("notifications.fxml", goToNotifications);}
 
     @FXML
-    public void goToNotifications(ActionEvent event) {
-        switchScene(event, "notifications.fxml");
-    }
+    public void goToHelp() {Navigator.navigateTo("help.fxml", goToHelp);};
 
     @FXML
-    public void goToHelp(ActionEvent event) {
-        switchScene(event, "help.fxml");
-    }
-
-    @FXML
-    public void logout(ActionEvent event) {
-
+    public void logout() {
         SessionManager.getInstance().clearSession();
-        switchScene(event, "login.fxml");
+        Navigator.navigateTo("login.fxml", goToLogout);
     }
-
 }

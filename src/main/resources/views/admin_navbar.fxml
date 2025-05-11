@@ -9,14 +9,11 @@
 <VBox minHeight="461.0" minWidth="200.0" prefHeight="500.0" prefWidth="220.0" spacing="10" style=" -fx-padding: 10;" styleClass="navbar-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Admin.AdminNavbarController">
 
 
-    <ImageView fitHeight="130" fitWidth="130">
-      <VBox.margin>
-         <Insets left="30.0" top="20.0" />
-      </VBox.margin>
-      <image>
-         <Image url="@../images/profile-user.png" />
-      </image></ImageView>
-
+    <ImageView fx:id="navbarProfileImage" fitHeight="130" fitWidth="130">
+        <VBox.margin>
+            <Insets left="30.0" top="20.0" />
+        </VBox.margin>
+    </ImageView>
 
     <Button fx:id="dashboardButton" onAction="#goToDashboard" prefHeight="35.0" prefWidth="198.0" styleClass="navbar-button" stylesheets="@../css/style.css" text="🏠 Dashboard">
       <font>

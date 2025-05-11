@@ -19,7 +19,7 @@
         <VBox spacing="15" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
 
             <!-- Filters -->
-            <TitledPane expanded="true" styleClass="tabela" stylesheets="@../css/style.css" text="🔍 Advanced Filters">
+            <TitledPane expanded="true" styleClass="tabela" stylesheets="@../css/style.css" text="🔍 Filters">
                 <VBox prefHeight="154.0" prefWidth="452.0" spacing="10" styleClass="tabela" stylesheets="@../css/style.css">
                     <GridPane hgap="15" prefHeight="98.0" prefWidth="239.0" vgap="10">
                         <columnConstraints>

@@ -1,29 +1,28 @@
 package controller.Superadmin;
 
+import dto.UserProfileDTO;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
+import javafx.scene.image.ImageView;
+import service.SessionManager;
+import service.UserProfileService;
+import utils.ImageUtils;
 import utils.Navigator;
 import utils.TranslationManager;
-
 import java.util.ResourceBundle;
-
-
 
 public class SuperadminNavbarController {
 
-    @FXML
-    private Button dashboardButton;
-    @FXML
-    private Button reservationsButton;
-    @FXML
-    private Button workspacesButton;
-    @FXML
-    private Button auditLogButton;
-    @FXML
-    private Button manageUsersButton;
+    @FXML private Button dashboardButton;
+    @FXML private Button reservationsButton;
+    @FXML private Button workspacesButton;
+    @FXML private Button auditLogButton;
+    @FXML private Button manageUsersButton;
+    @FXML private ImageView navbarProfileImage;
 
+    private final UserProfileService userSettingsService = new UserProfileService();
     ResourceBundle bundle;
 
     @FXML
@@ -31,6 +30,11 @@ public class SuperadminNavbarController {
 
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+
+        int userId = SessionManager.getInstance().getLoggedInUserId();
+        UserProfileDTO profile = userSettingsService.getUserProfile(userId);
+        navbarProfileImage.setImage(ImageUtils.loadProfileImage(profile.getAvatarPath()));
+
     }
 
     private void updateLanguage() {

@@ -1,16 +1,17 @@
 package controller.Staff;
 
+import dto.UserProfileDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import service.SessionManager;
+import service.UserProfileService;
+import utils.ImageUtils;
+import utils.Navigator;
 import utils.TranslationManager;
 
-import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class StaffNavbarController {
@@ -19,7 +20,9 @@ public class StaffNavbarController {
     @FXML private Button availableWorkspacesButton;
     @FXML private Button reservationsButton;
     @FXML private Button reportsButton;
+    @FXML private ImageView navbarProfileImage;
 
+    private final UserProfileService userSettingsService = new UserProfileService();
     ResourceBundle bundle;
 
     @FXML
@@ -27,6 +30,10 @@ public class StaffNavbarController {
 
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+
+        int userId = SessionManager.getInstance().getLoggedInUserId();
+        UserProfileDTO profile = userSettingsService.getUserProfile(userId);
+        navbarProfileImage.setImage(ImageUtils.loadProfileImage(profile.getAvatarPath()));
     }
 
     private void updateLanguage() {
@@ -38,34 +45,23 @@ public class StaffNavbarController {
         reportsButton.setText("📋 " + bundle.getString("staff.nav.myreservations"));
     }
 
-    private void switchScene(ActionEvent event, String fxmlFile) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/views/Staff/" + fxmlFile));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     private void goToDashboard(ActionEvent event) {
-        switchScene(event, "staff_dashboard.fxml");
+        Navigator.navigateTo("staff_dashboard.fxml", (Node) event.getSource());
     }
 
     @FXML
     private void goToAvailableWorkspaces(ActionEvent event) {
-        switchScene(event, "available_workspaces.fxml");
+        Navigator.navigateTo("available_workspaces.fxml", (Node) event.getSource());
     }
 
     @FXML
     private void goToMakeReservation(ActionEvent event) {
-        switchScene(event, "make_reservation.fxml");
+        Navigator.navigateTo("make_reservation.fxml", (Node) event.getSource());
     }
 
     @FXML
     private void goToMyReservations(ActionEvent event) {
-        switchScene(event, "my_reservations.fxml");
+        Navigator.navigateTo("my_reservations.fxml", (Node) event.getSource());
     }
 }

@@ -1,16 +1,17 @@
 package controller.Admin;
 
+import dto.UserProfileDTO;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import service.SessionManager;
+import service.UserProfileService;
+import utils.ImageUtils;
+import utils.Navigator;
 import utils.TranslationManager;
 
-import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class AdminNavbarController {
@@ -20,13 +21,19 @@ public class AdminNavbarController {
     @FXML private Button officeManagementButton;
     @FXML private Button reservationsButton;
     @FXML private Button reportsButton;
+    @FXML private ImageView navbarProfileImage;
 
+    private final UserProfileService userSettingsService = new UserProfileService();
     ResourceBundle bundle;
 
     @FXML
     public void initialize() {
+
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+        int userId = SessionManager.getInstance().getLoggedInUserId();
+        UserProfileDTO profile = userSettingsService.getUserProfile(userId);
+        navbarProfileImage.setImage(ImageUtils.loadProfileImage(profile.getAvatarPath()));
     }
 
     private void updateLanguage() {
@@ -39,39 +46,28 @@ public class AdminNavbarController {
         reportsButton.setText("📊 " + bundle.getString("admin.nav.reports"));
     }
 
-    private void switchScene(ActionEvent event, String fxmlFile) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/views/" + fxmlFile));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     public void goToDashboard(ActionEvent event) {
-        switchScene(event, "admin_dashboard.fxml");
+        Navigator.navigateTo("admin_dashboard.fxml", (Node) event.getSource());
     }
 
     @FXML
     public void goToUserManagement(ActionEvent event) {
-        switchScene(event, "manage_users.fxml");
+        Navigator.navigateTo("manage_users.fxml", (Node) event.getSource());
     }
 
     @FXML
     public void goToOfficeManagement(ActionEvent event) {
-        switchScene(event, "workspace_management.fxml");
+        Navigator.navigateTo("workspace_management.fxml", (Node) event.getSource());
     }
 
     @FXML
     public void goToReservations(ActionEvent event) {
-        switchScene(event, "reservation_management.fxml");
+        Navigator.navigateTo("reservation_management.fxml", (Node) event.getSource());
     }
 
     @FXML
     public void goToReports(ActionEvent event) {
-        switchScene(event, "reports_analytics.fxml");
+        Navigator.navigateTo("reports_analytics.fxml", (Node) event.getSource());
     }
 }

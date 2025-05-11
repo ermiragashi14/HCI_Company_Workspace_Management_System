@@ -95,5 +95,26 @@ public class CompanyRepository {
         }
     }
 
+    public Company findById(int id) {
+        String query = "SELECT * FROM company WHERE id = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Company company = new Company();
+                company.setId(rs.getInt("id"));
+                company.setName(rs.getString("name"));
+                company.setEmail(rs.getString("email"));
+                company.setPhoneNumber(rs.getString("phone_number"));
+                company.setCreatedAt(rs.getTimestamp("created_at"));
+                return company;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

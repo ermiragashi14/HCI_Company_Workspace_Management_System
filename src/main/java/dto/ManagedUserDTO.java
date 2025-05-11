@@ -9,8 +9,9 @@ public class ManagedUserDTO {
     private String status;
     private String createdAt;
     private String lastLogin;
+    private String avatarPath;
 
-    public ManagedUserDTO(int id, String fullName, String email, String phone, String role, String status, String createdAt, String lastLogin) {
+    public ManagedUserDTO(int id, String fullName, String email, String phone, String role, String status, String createdAt, String lastLogin, String avatarPath) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -19,6 +20,7 @@ public class ManagedUserDTO {
         this.status = status;
         this.createdAt = createdAt;
         this.lastLogin = lastLogin;
+        this.avatarPath = avatarPath;
     }
 
     public int getId() {
@@ -83,5 +85,13 @@ public class ManagedUserDTO {
 
     public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public String getAvatarPath(){
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarpath){
+        this.avatarPath=avatarpath;
     }
 }

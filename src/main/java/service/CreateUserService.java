@@ -8,6 +8,7 @@ import utils.DBConnector;
 import utils.PasswordHasher;
 import utils.ValidationUtils;
 
+import java.io.File;
 import java.sql.Connection;
 
 public class CreateUserService {
@@ -44,6 +45,14 @@ public class CreateUserService {
                 dto.getPhone(),
                 "ACTIVE"
         );
+
+        //avatarpath
+        String defaultAvatarPath = "user_photos/default_avatar.png";
+        File defaultAvatar = new File(defaultAvatarPath);
+        if (!defaultAvatar.exists()) {
+            throw new IllegalStateException("Default avatar not found at: " + defaultAvatarPath);
+        }
+        user.setAvatarPath(defaultAvatarPath);
 
         try (Connection conn = DBConnector.getConnection()) {
             return userRepo.registerUser(user, conn);

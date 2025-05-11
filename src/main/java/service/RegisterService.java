@@ -9,6 +9,8 @@ import repository.UserRepository;
 import utils.DBConnector;
 import utils.PasswordHasher;
 import utils.ValidationUtils;
+
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -72,6 +74,13 @@ public class RegisterService {
                 user.getPhoneNumber(),
                 user.getStatus()
         );
+
+        String defaultAvatarPath = "user_photos/default_avatar.png";
+        File defaultAvatar = new File(defaultAvatarPath);
+        if (!defaultAvatar.exists()) {
+            throw new IllegalStateException("Default avatar not found at: " + defaultAvatarPath);
+        }
+        securedUser.setAvatarPath(defaultAvatarPath);
 
         return userRepository.registerUser(securedUser, conn);
     }

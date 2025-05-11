@@ -55,67 +55,29 @@ public class ManageUsersRepository {
                 stmt.setDate(paramIndex++, Date.valueOf(createdAt));
             }
 
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                users.add(new User(
-                        rs.getInt("id"),
-                        rs.getInt("company_id"),
-                        rs.getString("role"),
-                        rs.getString("password_hash"),
-                        rs.getString("salt"),
-                        rs.getString("full_name"),
-                        rs.getString("email"),
-                        rs.getString("phone_number"),
-                        rs.getString("status"),
-                        rs.getTimestamp("created_at"),
-                        rs.getString("otp_code"),
-                        rs.getTimestamp("otp_expiry")
-                ));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setCompanyId(rs.getInt("company_id"));
+                    user.setRole(rs.getString("role"));
+                    user.setPasswordHash(rs.getString("password_hash"));
+                    user.setSalt(rs.getString("salt"));
+                    user.setFullName(rs.getString("full_name"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPhoneNumber(rs.getString("phone_number"));
+                    user.setStatus(rs.getString("status"));
+                    user.setCreatedAt(rs.getTimestamp("created_at"));
+                    user.setOtpCode(rs.getString("otp_code"));
+                    user.setOtpExpiry(rs.getTimestamp("otp_expiry"));
+                    user.setAvatarPath(rs.getString("avatar_path"));
+                    users.add(user);
+                }
             }
         }
 
         return users;
     }
-
-    public User getUserById(int userId) throws SQLException {
-        String query = "SELECT * FROM user WHERE id = ?";
-        try (Connection conn = DBConnector.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return new User(
-                        rs.getInt("id"),
-                        rs.getInt("company_id"),
-                        rs.getString("role"),
-                        rs.getString("password_hash"),
-                        rs.getString("salt"),
-                        rs.getString("full_name"),
-                        rs.getString("email"),
-                        rs.getString("phone_number"),
-                        rs.getString("status"),
-                        rs.getTimestamp("created_at"),
-                        rs.getString("otp_code"),
-                        rs.getTimestamp("otp_expiry")
-                );
-            }
-        }
-        return null;
-    }
-
-    public boolean updateUserStatus(int userId, String newStatus) throws SQLException {
-        String query = "UPDATE user SET status = ? WHERE id = ?";
-        try (Connection conn = DBConnector.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, newStatus);
-            stmt.setInt(2, userId);
-            return stmt.executeUpdate() > 0;
-        }
-    }
-
 }
 
 

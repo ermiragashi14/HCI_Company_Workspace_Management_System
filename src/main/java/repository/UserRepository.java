@@ -8,8 +8,8 @@ import java.util.Optional;
 public class UserRepository {
 
     public int registerUser(User user, Connection connection) throws SQLException {
-        String query = "INSERT INTO user (company_id, role, password_hash, salt, full_name, email, phone_number, status) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO user (company_id, role, password_hash, salt, full_name, email, phone_number, status, avatar_path) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
@@ -21,6 +21,7 @@ public class UserRepository {
             stmt.setString(6, user.getEmail());
             stmt.setString(7, user.getPhoneNumber());
             stmt.setString(8, user.getStatus());
+            stmt.setString(9, user.getAvatarPath());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -74,4 +75,70 @@ public class UserRepository {
         }
         return Optional.empty();
     }
+
+    public User findById(int id) {
+
+        String query = "SELECT * FROM user WHERE id = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setCompanyId(rs.getInt("company_id"));
+                user.setRole(rs.getString("role"));
+                user.setPasswordHash(rs.getString("password_hash"));
+                user.setSalt(rs.getString("salt"));
+                user.setFullName(rs.getString("full_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setStatus(rs.getString("status"));
+                user.setCreatedAt(rs.getTimestamp("created_at"));
+                user.setOtpCode(rs.getString("otp_code"));
+                user.setOtpExpiry(rs.getTimestamp("otp_expiry"));
+                user.setAvatarPath(rs.getString("avatar_path"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updateUserStatus(int userId, String newStatus) throws SQLException {
+        String query = "UPDATE user SET status = ? WHERE id = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, userId);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public void updatePhone(int userId, String phone) {
+        String query = "UPDATE user SET phone_number = ? WHERE id = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, phone);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateAvatarPath(int userId, String path) {
+        String query = "UPDATE user SET avatar_path = ? WHERE id = ?";
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, path);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

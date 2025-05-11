@@ -20,9 +20,9 @@ public class SuperadminRepository {
             throw new RuntimeException("Database connection failed", e);
         }
     }
-
     private int countByQuery(String query, int companyId) {
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, companyId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) return rs.getInt(1);
@@ -32,6 +32,7 @@ public class SuperadminRepository {
         }
         return 0;
     }
+
 
     public int countAdmins(int companyId) {
         return countByQuery("SELECT COUNT(*) FROM user WHERE role = 'ADMIN' AND company_id = ?", companyId);
@@ -56,7 +57,8 @@ public class SuperadminRepository {
                 "WHERE YEAR(r.date) = YEAR(CURDATE()) AND u.company_id = ? " +
                 "GROUP BY MONTH(r.date), MONTHNAME(r.date) ORDER BY MONTH(r.date)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, companyId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

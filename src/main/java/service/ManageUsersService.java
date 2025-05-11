@@ -3,6 +3,7 @@ package service;
 import dto.ManagedUserDTO;
 import model.User;
 import repository.ManageUsersRepository;
+import repository.UserRepository;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,8 @@ import java.util.List;
 
 public class ManageUsersService {
 
-    private final ManageUsersRepository usersRepository = new ManageUsersRepository();
+    private final ManageUsersRepository manageusersRepository = new ManageUsersRepository();
+    private final UserRepository userRepository = new UserRepository();
     private final SessionManager sessionManager = SessionManager.getInstance();
 
     public List<ManagedUserDTO> filterUsers(String name, String email, String status, String role, String createdAt) {
@@ -19,7 +21,7 @@ public class ManageUsersService {
             int companyId = sessionManager.getLoggedInCompanyId();
             String currentUserRole = sessionManager.getLoggedInUserRole();
 
-            List<User> users = usersRepository.getUsersWithFilters(companyId, name, email, status, role, createdAt, currentUserRole);
+            List<User> users = manageusersRepository.getUsersWithFilters(companyId, name, email, status, role, createdAt, currentUserRole);
             return convertToDTO(users);
         } catch (SQLException e) {
             System.err.println("Error fetching users: " + e.getMessage());
@@ -29,7 +31,7 @@ public class ManageUsersService {
 
     public boolean updateUserStatus(int userId, String newStatus) {
         try {
-            User targetUser = usersRepository.getUserById(userId);
+            User targetUser = userRepository.findById(userId);
             if (targetUser == null) return false;
 
             String currentUserRole = sessionManager.getLoggedInUserRole();
@@ -38,7 +40,7 @@ public class ManageUsersService {
                 return false;
             }
 
-            return usersRepository.updateUserStatus(userId, newStatus);
+            return userRepository.updateUserStatus(userId, newStatus);
         } catch (SQLException e) {
             System.err.println("Error updating user status: " + e.getMessage());
             return false;
@@ -59,7 +61,8 @@ public class ManageUsersService {
                     user.getRole(),
                     user.getStatus(),
                     user.getCreatedAt() != null ? sdf.format(user.getCreatedAt()) : "",
-                    "" // Placeholder for lastLogin if available
+                    "",// Placeholder for lastLogin if available,
+                    user.getAvatarPath()
             ));
         }
         return dtos;

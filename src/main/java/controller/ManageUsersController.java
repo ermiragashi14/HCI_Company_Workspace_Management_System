@@ -8,13 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import service.ManageUsersService;
 import service.SessionManager;
 import utils.Navigator;
 import utils.TranslationManager;
-import utils.TranslationUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
@@ -36,8 +38,8 @@ public class ManageUsersController {
     @FXML private TableColumn<ManagedUserDTO, String> roleColumn;
     @FXML private TableColumn<ManagedUserDTO, String> statusColumn;
     @FXML private TableColumn<ManagedUserDTO, String> createdAtColumn;
+    @FXML private TableColumn<ManagedUserDTO, String> avatarColumn;
     @FXML private TableColumn<ManagedUserDTO, Void> actionColumn;
-    @FXML private Label filtersLabel;
     @FXML private Button refreshButton;
     @FXML private Label nameFilterLabel;
     @FXML private Label emailFilterLabel;
@@ -66,14 +68,12 @@ public class ManageUsersController {
         bundle = TranslationManager.getBundle();
         createUserButton.setText(bundle.getString("manage.users.create"));
         searchButton.setText(bundle.getString("manage.users.search"));
-        filtersLabel.setText(bundle.getString("manage.users.filters"));
         refreshButton.setText(bundle.getString("manage.users.refresh"));
         nameFilterLabel.setText(bundle.getString("manage.users.name"));
         emailFilterLabel.setText(bundle.getString("manage.users.email"));
         statusFilterLabel.setText(bundle.getString("manage.users.status"));
         roleFilterLabel.setText(bundle.getString("manage.users.role"));
         createdAtFilterLabel.setText(bundle.getString("manage.users.createdAt"));
-
         statusColumn.setText(bundle.getString("manage.users.status"));
         roleColumn.setText(bundle.getString("manage.users.role"));
         phoneColumn.setText(bundle.getString("manage.users.phone"));
@@ -81,6 +81,7 @@ public class ManageUsersController {
         nameColumn.setText(bundle.getString("manage.users.fullName"));
         createdAtColumn.setText(bundle.getString("manage.users.createdAt"));
         actionColumn.setText(bundle.getString("manage.users.action"));
+        avatarColumn.setText("Avatar");
     }
 
     private void loadNavbar() {
@@ -127,6 +128,32 @@ public class ManageUsersController {
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         createdAtColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
+        avatarColumn.setCellValueFactory(new PropertyValueFactory<>("avatarPath"));
+
+        avatarColumn.setCellFactory(column -> new TableCell<>() {
+            private final ImageView imageView = new ImageView();
+            {
+                imageView.setFitHeight(40);
+                imageView.setFitWidth(40);
+                imageView.setPreserveRatio(true);
+            }
+
+            @Override
+            protected void updateItem(String path, boolean empty) {
+                super.updateItem(path, empty);
+                if (empty || path == null || path.isBlank()) {
+                    setGraphic(null);
+                    return;
+                }
+                File file = new File(path);
+                if (file.exists()) {
+                    imageView.setImage(new Image(file.toURI().toString()));
+                    setGraphic(imageView);
+                } else {
+                    setGraphic(null);
+                }
+            }
+        });
 
         addDisableButtonToTable();
     }

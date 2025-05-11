@@ -28,19 +28,20 @@ public class SuperadminDashboardController {
 
     private final SuperadminRepository repo = new SuperadminRepository();
     private final int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+    ResourceBundle bundle;
 
     @FXML
     public void initialize() {
-        applyTranslations();
+
         loadData();
         loadReservationTrendsChart();
-
-        TranslationManager.addListener(this::applyTranslations);
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
 
-    private void applyTranslations() {
-        ResourceBundle bundle = TranslationManager.getBundle();
+    private void updateLanguage() {
 
+        bundle = TranslationManager.getBundle();
         adminLabel.setText(bundle.getString("super.dashboard.admins"));
         staffLabel.setText(bundle.getString("super.dashboard.staff"));
         workspaceLabel.setText(bundle.getString("super.dashboard.workspaces"));

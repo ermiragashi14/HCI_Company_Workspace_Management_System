@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import utils.TranslationManager;
 import utils.TranslationUtils;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,23 +21,19 @@ public class HelpController {
 
     private String helpSection = "default";
     private final Map<String, String> questionsAndAnswers = new HashMap<>();
+    ResourceBundle bundle;
 
     @FXML
     private void initialize() {
-        TranslationUtils.setupLanguageSelector(languageSelector, this::updateLanguage);
-        updateLanguage();
-    }
 
-    public void setHelpSection(String section) {
-        if (section != null && !section.isEmpty()) {
-            this.helpSection = section;
-        }
+        TranslationUtils.setupLanguageSelector(languageSelector);
         updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
-
 
     private void updateLanguage() {
-        ResourceBundle bundle = TranslationUtils.getBundle();
+
+        bundle = TranslationManager.getBundle();
         helpTitle.setText(bundle.getString("help.title"));
         closeButton.setText(bundle.getString("help.button.close"));
 
@@ -71,7 +68,15 @@ public class HelpController {
         });
     }
 
+    public void setHelpSection(String section) {
+        if (section != null && !section.isEmpty()) {
+            this.helpSection = section;
+        }
+        updateLanguage();
+    }
+
     private void addHelpContent(ResourceBundle bundle, String questionKey, String answerKey) {
+
         if (bundle.containsKey(questionKey) && bundle.containsKey(answerKey)) {
             String question = bundle.getString(questionKey);
             String answer = bundle.getString(answerKey);

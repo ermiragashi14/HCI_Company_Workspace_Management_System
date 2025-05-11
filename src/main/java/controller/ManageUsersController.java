@@ -47,44 +47,23 @@ public class ManageUsersController {
     @FXML private VBox navbarContainer;
 
     private final ManageUsersService userService = new ManageUsersService();
-    ResourceBundle bundle = TranslationManager.getBundle();
+    ResourceBundle bundle;
 
     @FXML
     private void initialize() {
+
         setupFilterList();
         setupComboBoxes();
         setupTableColumns();
         loadAllUsers();
-        applyTranslations();
-        TranslationManager.addListener(this::applyTranslations);
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
         loadNavbar();
     }
-    private void loadNavbar() {
-        String role = SessionManager.getInstance().getLoggedInUserRole();
 
-        String navbarPath = switch (role.toUpperCase()) {
-            case "ADMIN" -> "/views/admin_navbar.fxml";
-            case "SUPER_ADMIN" -> "/views/superadmin_navbar.fxml";
-            default -> null;
-        };
-        if (navbarPath == null) {
-            System.err.println("Unknown user role: " + role);
-            return;
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationUtils.getBundle());
-            Node navbar = loader.load();
-            navbarContainer.getChildren().setAll(navbar);
-            System.out.println("[DEBUG] Loading navbar for role: " + role);
+    private void updateLanguage() {
 
-        } catch (IOException e) {
-            System.err.println("[ERROR] Unknown role: " + role);
-            e.printStackTrace();
-        }
-    }
-
-    private void applyTranslations() {
-
+        bundle = TranslationManager.getBundle();
         createUserButton.setText(bundle.getString("manage.users.create"));
         searchButton.setText(bundle.getString("manage.users.search"));
         filtersLabel.setText(bundle.getString("manage.users.filters"));
@@ -104,6 +83,30 @@ public class ManageUsersController {
         actionColumn.setText(bundle.getString("manage.users.action"));
     }
 
+    private void loadNavbar() {
+
+        String role = SessionManager.getInstance().getLoggedInUserRole();
+
+        String navbarPath = switch (role.toUpperCase()) {
+            case "ADMIN" -> "/views/admin_navbar.fxml";
+            case "SUPER_ADMIN" -> "/views/superadmin_navbar.fxml";
+            default -> null;
+        };
+        if (navbarPath == null) {
+            System.err.println("Unknown user role: " + role);
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationManager.getBundle());
+            Node navbar = loader.load();
+            navbarContainer.getChildren().setAll(navbar);
+            System.out.println("[DEBUG] Loading navbar for role: " + role);
+
+        } catch (IOException e) {
+            System.err.println("[ERROR] Unknown role: " + role);
+            e.printStackTrace();
+        }
+    }
 
     private void setupFilterList() {
         ObservableList<String> filters = FXCollections.observableArrayList("Name", "Email", "Status", "Role", "Created At");
@@ -214,7 +217,6 @@ public class ManageUsersController {
             }
         });
     }
-
 
     private void loadAllUsers() {
         try {

@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import service.PasswordResetService;
 import utils.Navigator;
+import utils.TranslationManager;
 import utils.TranslationUtils;
 import java.util.ResourceBundle;
 
@@ -23,16 +24,19 @@ public class PasswordResetController {
     @FXML private Label emailLabel, otpLabel, newPasswordLabel, confirmPasswordLabel;
 
     private final PasswordResetService resetService = new PasswordResetService();
+    ResourceBundle bundle;
 
     @FXML
     private void initialize() {
-        TranslationUtils.setupLanguageSelector(languageSelector, this::updateLanguage);
+
+        TranslationUtils.setupLanguageSelector(languageSelector);
         updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
 
     private void updateLanguage() {
-        ResourceBundle bundle = TranslationUtils.getBundle();
 
+        bundle = TranslationManager.getBundle();
         titleText.setText(bundle.getString("passwordreset.title"));
         emailLabel.setText(bundle.getString("passwordreset.email"));
         otpLabel.setText(bundle.getString("passwordreset.otp"));
@@ -46,6 +50,7 @@ public class PasswordResetController {
 
     @FXML
     private void sendOtp() {
+
         String email = emailField.getText().trim();
 
         if (email.isEmpty()) {
@@ -97,7 +102,8 @@ public class PasswordResetController {
     }
 
     private void showAlert(Alert.AlertType alertType, String titleKey, String messageKey) {
-        ResourceBundle bundle = TranslationUtils.getBundle();
+
+        bundle = TranslationManager.getBundle();
         Alert alert = new Alert(alertType);
         alert.setTitle(bundle.getString(titleKey));
         alert.setContentText(bundle.getString(messageKey));

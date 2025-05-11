@@ -18,6 +18,7 @@ import javafx.util.converter.IntegerStringConverter;
 import service.SessionManager;
 import service.WorkspaceService;
 import javafx.scene.control.cell.TextFieldTableCell;
+import utils.TranslationManager;
 import utils.TranslationUtils;
 
 
@@ -42,19 +43,30 @@ public class WorkspaceManagementController {
 
     @FXML
     public void initialize() {
-        bundle = TranslationUtils.getBundle();
+
+        bundle = TranslationManager.getBundle();
+        TranslationManager.addListener(this::updateLanguage);
         workspaceTable.setEditable(true);
         setupColumns();
         loadWorkspaces();
-        localizeUI();
+        updateLanguage();
         loadNavbar();
-
-
         addButton.setOnAction(e -> handleAdd());
         deleteButton.setOnAction(e -> handleDelete());
-        TranslationUtils.addListener(this::localizeUI);
     }
+
+    private void updateLanguage() {
+
+        bundle = TranslationManager.getBundle();
+        nameColumn.setText(bundle.getString("workspace.table.name"));
+        capacityColumn.setText(bundle.getString("workspace.table.capacity"));
+        descriptionColumn.setText(bundle.getString("workspace.table.description"));
+        addButton.setText(bundle.getString("workspace.button.add"));
+        deleteButton.setText(bundle.getString("workspace.button.delete"));
+    }
+
     private void loadNavbar() {
+
         String role = SessionManager.getInstance().getLoggedInUserRole();
 
         String navbarPath = switch (role.toUpperCase()) {
@@ -67,7 +79,7 @@ public class WorkspaceManagementController {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationUtils.getBundle());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationManager.getBundle());
             Node navbar = loader.load();
             navbarContainer.getChildren().setAll(navbar);
             System.out.println("[DEBUG] Loading navbar for role: " + role);
@@ -78,15 +90,6 @@ public class WorkspaceManagementController {
         }
     }
 
-
-    private void localizeUI() {
-        bundle = TranslationUtils.getBundle();
-        nameColumn.setText(bundle.getString("workspace.table.name"));
-        capacityColumn.setText(bundle.getString("workspace.table.capacity"));
-        descriptionColumn.setText(bundle.getString("workspace.table.description"));
-        addButton.setText(bundle.getString("workspace.button.add"));
-        deleteButton.setText(bundle.getString("workspace.button.delete"));
-    }
 
     private void loadWorkspaces() {
         List<WorkspaceResponseDTO> list = service.getAllWorkspacesForLoggedInCompany();
@@ -124,7 +127,7 @@ public class WorkspaceManagementController {
 
     private void handleAdd() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/workspace_dialog.fxml"), TranslationUtils.getBundle());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/workspace_dialog.fxml"), TranslationManager.getBundle());
             VBox root = loader.load();
 
             WorkspaceDialogController controller = loader.getController();

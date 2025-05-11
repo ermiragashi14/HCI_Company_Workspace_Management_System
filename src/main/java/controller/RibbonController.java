@@ -23,17 +23,20 @@ public class RibbonController {
 
     @FXML
     public void initialize() {
-        // 🔁 Delegate to TranslationUtils to handle language logic
-        TranslationUtils.setupLanguageSelector(languageSelector, this::refreshCurrentView);
+
+        TranslationUtils.setupLanguageSelector(languageSelector);
     }
 
     private void switchScene(ActionEvent event, String fxmlFile) {
+
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/views/" + fxmlFile));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
+
         } catch (IOException e) {
+
             e.printStackTrace();
         }
     }
@@ -55,15 +58,9 @@ public class RibbonController {
 
     @FXML
     public void logout(ActionEvent event) {
+
         SessionManager.getInstance().clearSession();
         switchScene(event, "login.fxml");
-    }
-
-    @FXML private Label languageLabel;
-
-    private void refreshCurrentView() {
-        ResourceBundle bundle = TranslationUtils.getBundle();
-        languageLabel.setText(bundle.getString("ribbon.label.language"));
     }
 
 }

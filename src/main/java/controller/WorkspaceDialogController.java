@@ -4,7 +4,7 @@ import dto.Workspace.WorkspaceRequestDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import utils.TranslationUtils;
+import utils.TranslationManager;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -28,8 +28,10 @@ public class WorkspaceDialogController {
 
     @FXML
     public void initialize() {
-        bundle = TranslationUtils.getBundle();
-        localizeUI();
+
+        bundle = TranslationManager.getBundle();
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
 
         saveButton.setOnAction(e -> {
             if (validateInputs()) {
@@ -43,11 +45,11 @@ public class WorkspaceDialogController {
         });
 
         cancelButton.setOnAction(e -> dialogStage.close());
-        TranslationUtils.addListener(this::localizeUI);
     }
 
-    private void localizeUI() {
-        bundle = TranslationUtils.getBundle();
+    private void updateLanguage() {
+
+        bundle = TranslationManager.getBundle();
         nameLabel.setText(bundle.getString("workspace.dialog.name"));
         capacityLabel.setText(bundle.getString("workspace.dialog.capacity"));
         descriptionLabel.setText(bundle.getString("workspace.dialog.description"));

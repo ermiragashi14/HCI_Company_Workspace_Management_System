@@ -1,37 +1,26 @@
 package utils;
 
 import javafx.scene.control.ComboBox;
-import java.util.ResourceBundle;
 
 public class TranslationUtils {
 
-    public static void setupLanguageSelector(ComboBox<String> languageSelector, Runnable updateUI) {
+    public static void setupLanguageSelector(ComboBox<String> languageSelector) {
+
         if (languageSelector != null) {
-            languageSelector.getItems().addAll("English", "Shqip");
-            languageSelector.setValue(TranslationManager.getCurrentLanguage().equals("sq") ? "Shqip" : "English");
+            languageSelector.getItems().setAll("English", "Shqip");
+
+            String currentLang = TranslationManager.getCurrentLanguage();
+            languageSelector.setValue(currentLang.equals("sq") ? "Shqip" : "English");
 
             languageSelector.setOnAction(event -> {
-                changeLanguage(languageSelector);
+                String selectedLang = languageSelector.getValue();
+                if ("English".equals(selectedLang)) {
+                    TranslationManager.setLanguage("en");
+                } else if ("Shqip".equals(selectedLang)) {
+                    TranslationManager.setLanguage("sq");
+                }
             });
         }
     }
-
-    public static void changeLanguage(ComboBox<String> languageSelector) {
-        if (languageSelector != null) {
-            String selectedLang = languageSelector.getValue();
-            if (selectedLang.equals("English")) {
-                TranslationManager.setLanguage("en");
-            } else if (selectedLang.equals("Shqip")) {
-                TranslationManager.setLanguage("sq");
-            }
-        }
-    }
-
-    public static ResourceBundle getBundle() {
-        return TranslationManager.getBundle();
-    }
-
-    public static void addListener(Runnable listener) {
-        TranslationManager.addListener(listener);
-    }
 }
+

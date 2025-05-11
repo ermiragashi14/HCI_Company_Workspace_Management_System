@@ -21,6 +21,7 @@ public class NewReservationController {
 
     @FXML
     public void initialize() {
+
         for (int hour = 8; hour <= 18; hour++) {
             startTimeCombo.getItems().add(LocalTime.of(hour, 0));
             endTimeCombo.getItems().add(LocalTime.of(hour, 0));
@@ -29,6 +30,7 @@ public class NewReservationController {
 
     @FXML
     public void onCheckAvailabilityClicked() {
+
         LocalDate date = datePicker.getValue();
         LocalTime start = startTimeCombo.getValue();
         LocalTime end = endTimeCombo.getValue();
@@ -46,6 +48,7 @@ public class NewReservationController {
 
     @FXML
     public void onReserveClicked() {
+
         NewReservationDTO selected = availableWorkspacesList.getSelectionModel().getSelectedItem();
         LocalDate date = datePicker.getValue();
         LocalTime start = startTimeCombo.getValue();
@@ -70,6 +73,7 @@ public class NewReservationController {
 
     @FXML
     public void onCancelClicked() {
+
         datePicker.setValue(null);
         startTimeCombo.setValue(null);
         endTimeCombo.setValue(null);
@@ -77,6 +81,7 @@ public class NewReservationController {
     }
 
     private void showAlert(String title, String content) {
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);

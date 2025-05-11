@@ -20,15 +20,18 @@ public class StaffNavbarController {
     @FXML private Button reservationsButton;
     @FXML private Button reportsButton;
 
+    ResourceBundle bundle;
+
     @FXML
     public void initialize() {
-        translate();
-        TranslationManager.addListener(this::translate);
+
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
 
-    private void translate() {
-        ResourceBundle bundle = TranslationManager.getBundle();
+    private void updateLanguage() {
 
+        bundle = TranslationManager.getBundle();
         dashboardButton.setText("🏠 " + bundle.getString("staff.nav.dashboard"));
         availableWorkspacesButton.setText("🏢 " + bundle.getString("staff.nav.available"));
         reservationsButton.setText("📅 " + bundle.getString("staff.nav.reserve"));

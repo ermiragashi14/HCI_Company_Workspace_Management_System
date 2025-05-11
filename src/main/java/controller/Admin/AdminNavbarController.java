@@ -21,15 +21,17 @@ public class AdminNavbarController {
     @FXML private Button reservationsButton;
     @FXML private Button reportsButton;
 
+    ResourceBundle bundle;
+
     @FXML
     public void initialize() {
-        translate();
-        TranslationManager.addListener(this::translate);
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
 
-    private void translate() {
-        ResourceBundle bundle = TranslationManager.getBundle();
+    private void updateLanguage() {
 
+        bundle = TranslationManager.getBundle();
         dashboardButton.setText("🏠 " + bundle.getString("admin.nav.dashboard"));
         userManagementButton.setText("👥 " + bundle.getString("admin.nav.users"));
         officeManagementButton.setText("🏢 " + bundle.getString("admin.nav.office"));

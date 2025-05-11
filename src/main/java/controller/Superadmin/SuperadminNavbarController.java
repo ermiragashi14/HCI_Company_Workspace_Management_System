@@ -24,15 +24,18 @@ public class SuperadminNavbarController {
     @FXML
     private Button manageUsersButton;
 
+    ResourceBundle bundle;
+
     @FXML
     public void initialize() {
-        applyTranslations();
 
-        TranslationManager.addListener(this::applyTranslations);
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
-    private void applyTranslations() {
-        ResourceBundle bundle = TranslationManager.getBundle();
 
+    private void updateLanguage() {
+
+        bundle = TranslationManager.getBundle();
         dashboardButton.setText("🏠 " + bundle.getString("super.nav.dashboard"));
         reservationsButton.setText("📅 " + bundle.getString("super.nav.reservations"));
         workspacesButton.setText("🏢 " + bundle.getString("super.nav.workspaces"));

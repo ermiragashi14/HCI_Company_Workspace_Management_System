@@ -8,7 +8,9 @@ import javafx.scene.text.Text;
 import service.AuthService;
 import service.SessionManager;
 import utils.Navigator;
+import utils.TranslationManager;
 import utils.TranslationUtils;
+
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -27,16 +29,19 @@ public class LogInController {
     @FXML private Button helpButton;
 
     private final AuthService authService = new AuthService();
+    ResourceBundle bundle;
 
     @FXML
     private void initialize() {
-        TranslationUtils.setupLanguageSelector(languageSelector, this::updateLanguage);
+
+        TranslationUtils.setupLanguageSelector(languageSelector);
         updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
 
     private void updateLanguage() {
-        ResourceBundle bundle = TranslationUtils.getBundle();
 
+        bundle = TranslationManager.getBundle();
         titleText.setText(bundle.getString("app.title"));
         welcomeText.setText(bundle.getString("login.welcome"));
         yourEmailLabel.setText(bundle.getString("login.email"));
@@ -51,7 +56,8 @@ public class LogInController {
 
     @FXML
     private void login() {
-        ResourceBundle bundle = TranslationUtils.getBundle();
+
+        bundle = TranslationManager.getBundle();
         String email = EmailField.getText().trim();
         String password = PasswordField.getText().trim();
 

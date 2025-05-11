@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 
 public class AdminDashboardController {
 
-
     @FXML private Label staffCountLabel;
     @FXML private Label workspaceCountLabel;
     @FXML private Label reservationCountLabel;
@@ -25,17 +24,20 @@ public class AdminDashboardController {
     @FXML private LineChart<String, Number> reservationTrendsChart;
 
     private final AdminRepository adminRepository = new AdminRepository();
+    ResourceBundle bundle;
 
     @FXML
     public void initialize() {
+
         loadDashboardStats();
         setupCharts();
-        translate();
-        TranslationManager.addListener(this::translate);
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
 
-    private void translate() {
-        ResourceBundle bundle = TranslationManager.getBundle();
+    private void updateLanguage() {
+
+        bundle = TranslationManager.getBundle();
         staffLabel.setText(bundle.getString("admin.dashboard.totalusers"));
         workspaceLabel.setText(bundle.getString("admin.dashboard.totalworkspaces"));
         reservationLabel.setText(bundle.getString("admin.dashboard.totalreservations"));
@@ -44,12 +46,14 @@ public class AdminDashboardController {
     }
 
     private void loadDashboardStats() {
+
         staffCountLabel.setText(String.valueOf(adminRepository.countTotalUsers()));
         workspaceCountLabel.setText(String.valueOf(adminRepository.countTotalWorkspaces()));
         reservationCountLabel.setText(String.valueOf(adminRepository.countTotalActiveReservations()));
     }
 
     private void setupCharts() {
+
         workspaceUsageChart.getData().clear();
         Map<String, Integer> usageStats = adminRepository.getWorkspaceUsageStats();
         for (Map.Entry<String, Integer> entry : usageStats.entrySet()) {

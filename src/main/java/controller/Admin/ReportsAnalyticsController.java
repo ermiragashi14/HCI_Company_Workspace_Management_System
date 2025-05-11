@@ -34,17 +34,30 @@ public class ReportsAnalyticsController {
     @FXML private TableColumn<UserStatDTO, Integer> reservationCountColumn;
 
     private final ReportsAnalyticsRepository repository = new ReportsAnalyticsRepository();
+    ResourceBundle bundle;
 
     @FXML
     public void initialize() {
+
         loadTotalReservations();
         loadActiveReservations();
         loadReservationStatusChart();
         loadMonthlyTrendsChart();
         setupTopUsersTable();
         loadTopUsers();
-        translate();
-        TranslationManager.addListener(this::translate);
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
+    }
+
+    private void updateLanguage() {
+
+        bundle = TranslationManager.getBundle();
+        if (totalReservationsText != null) totalReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
+        if (activeReservationsText != null) activeReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
+        if (chartTitle != null) chartTitle.setText(bundle.getString("admin.chart.reservations"));
+        if (topUsersLabel != null) topUsersLabel.setText(bundle.getString("admin.chart.topusers"));
+        if (fullNameColumn != null) fullNameColumn.setText(bundle.getString("table.column.name"));
+        if (reservationCountColumn != null) reservationCountColumn.setText(bundle.getString("table.column.count"));
     }
 
     private void loadTotalReservations() {
@@ -89,13 +102,4 @@ public class ReportsAnalyticsController {
         topUsersTable.setItems(FXCollections.observableArrayList(topUsers));
     }
 
-    private void translate() {
-        ResourceBundle bundle = TranslationManager.getBundle();
-        if (totalReservationsText != null) totalReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
-        if (activeReservationsText != null) activeReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
-        if (chartTitle != null) chartTitle.setText(bundle.getString("admin.chart.reservations"));
-        if (topUsersLabel != null) topUsersLabel.setText(bundle.getString("admin.chart.topusers"));
-        if (fullNameColumn != null) fullNameColumn.setText(bundle.getString("table.column.name"));
-        if (reservationCountColumn != null) reservationCountColumn.setText(bundle.getString("table.column.count"));
-    }
 }

@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import service.SessionManager;
 import service.ManageReservationsService;
 import utils.Navigator;
-import utils.TranslationUtils;
+import utils.TranslationManager;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -42,6 +42,7 @@ public class ReservationsManagementController {
 
     @FXML
     private void initialize() {
+
         setupComboBoxes();
         setupTableColumns();
         loadAllReservations();
@@ -49,6 +50,7 @@ public class ReservationsManagementController {
         loadNavbar();
     }
     private void loadNavbar() {
+
         String role = SessionManager.getInstance().getLoggedInUserRole();
 
         String navbarPath = switch (role.toUpperCase()) {
@@ -61,7 +63,7 @@ public class ReservationsManagementController {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationUtils.getBundle());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(navbarPath), TranslationManager.getBundle());
             Node navbar = loader.load();
             navbarContainer.getChildren().setAll(navbar);
             System.out.println("[DEBUG] Loading navbar for role: " + role);
@@ -73,6 +75,7 @@ public class ReservationsManagementController {
     }
 
     private void setupComboBoxes() {
+
         statusFilterCombo.setItems(FXCollections.observableArrayList("ALL", "CONFIRMED", "CANCELED", "EXPIRED"));
         statusFilterCombo.getSelectionModel().select("ALL");
 
@@ -83,6 +86,7 @@ public class ReservationsManagementController {
     }
 
     private void setupTableColumns() {
+
         userColumn.setCellValueFactory(new PropertyValueFactory<>("userFullName"));
         workspaceColumn.setCellValueFactory(new PropertyValueFactory<>("workspaceName"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -95,6 +99,7 @@ public class ReservationsManagementController {
     }
 
     private void addActionButtons() {
+
         actionColumn.setCellFactory(param -> new TableCell<>() {
             private final Button cancelBtn = new Button("❌ Cancel");
 
@@ -131,6 +136,7 @@ public class ReservationsManagementController {
 
     @FXML
     private void onSearchClicked() {
+
         String user = emptyOrNull(userFilterField.getText());
         String workspace = workspaceFilterCombo.getValue();
         if ("ALL".equalsIgnoreCase(workspace)) workspace = null;
@@ -152,6 +158,7 @@ public class ReservationsManagementController {
 
     @FXML
     private void onRefreshClicked() {
+
         userFilterField.clear();
         workspaceFilterCombo.getSelectionModel().select("ALL");
         statusFilterCombo.getSelectionModel().select("ALL");
@@ -167,6 +174,7 @@ public class ReservationsManagementController {
     }
 
     private void loadAllReservations() {
+
         List<ManageReservationDTO> reservations = service.filterReservations(
                 SessionManager.getInstance().getLoggedInCompanyId(),
                 null, null, null, null, null, null
@@ -175,8 +183,9 @@ public class ReservationsManagementController {
     }
 
     private void applyRoleBasedAccessControl() {
+
         if ("ADMIN".equals(SessionManager.getInstance().getLoggedInUserRole())) {
-            // Hide or disable SuperAdmin-only features (if any)
+
         }
     }
 
@@ -185,6 +194,7 @@ public class ReservationsManagementController {
     }
 
     private void showAlert(Alert.AlertType type, String title, String msg) {
+
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);

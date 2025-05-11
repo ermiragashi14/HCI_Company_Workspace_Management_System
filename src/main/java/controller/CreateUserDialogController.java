@@ -31,13 +31,13 @@ public class CreateUserDialogController {
     private final CreateUserService createUserService = new CreateUserService();
     String role = SessionManager.getInstance().getLoggedInUserRole();
     int companyId = SessionManager.getInstance().getLoggedInCompanyId();
-    ResourceBundle bundle = TranslationManager.getBundle();
+    ResourceBundle bundle;
 
     @FXML
     public void initialize() {
 
-        applyTranslations();
-        TranslationManager.addListener(this::applyTranslations);
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
 
         if ("SUPER_ADMIN".equals(role)) {
             roleComboBox.getItems().addAll("ADMIN", "STAFF");
@@ -47,8 +47,9 @@ public class CreateUserDialogController {
         roleComboBox.getSelectionModel().selectFirst();
     }
 
-    private void applyTranslations(){
+    private void updateLanguage(){
 
+        bundle = TranslationManager.getBundle();
         goBackButton.setText(bundle.getString("create.user.dialog.goback"));
         fullnameLabel.setText(bundle.getString("manage.users.name"));
         emailLabel.setText(bundle.getString("manage.users.email"));
@@ -62,6 +63,7 @@ public class CreateUserDialogController {
 
     @FXML
     private void onCreateClicked() {
+
         try {
             CreateUserDTO dto = new CreateUserDTO(
                     fullNameField.getText().trim(),
@@ -73,15 +75,17 @@ public class CreateUserDialogController {
             );
 
             createUserService.createUser(role, companyId,dto);
-
             showAlert(Alert.AlertType.INFORMATION, bundle.getString("create.user.dialog.userCreated"), bundle.getString("create.user.dialog.success"));
             goBackToManageUsers();
+
         } catch (Exception e) {
+
             showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
     }
 
     private void showAlert(Alert.AlertType type, String title, String msg) {
+
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -91,6 +95,7 @@ public class CreateUserDialogController {
 
     @FXML
     private void goBackToManageUsers() {
+
         try {
             Navigator.navigateTo("manage_users.fxml", goBackButton);
         } catch (Exception e) {

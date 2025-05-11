@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import service.SessionManager;
 import service.RegisterService;
 import utils.Navigator;
+import utils.TranslationManager;
 import utils.TranslationUtils;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -27,15 +28,19 @@ public class RegisterController {
     @FXML private Label passwordLabel, confirmPasswordLabel;
 
     private final RegisterService registerService = new RegisterService();
+    ResourceBundle bundle;
 
     @FXML
     private void initialize() {
-        TranslationUtils.setupLanguageSelector(languageSelector, this::updateLanguage);
+
+        TranslationUtils.setupLanguageSelector(languageSelector);
         updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
     }
 
     private void updateLanguage() {
-        ResourceBundle bundle = TranslationUtils.getBundle();
+
+        bundle = TranslationManager.getBundle();
         titleText.setText(bundle.getString("register.title"));
         companyNameLabel.setText(bundle.getString("register.companyName"));
         companyEmailLabel.setText(bundle.getString("register.companyEmail"));
@@ -89,6 +94,7 @@ public class RegisterController {
     }
 
     private boolean hasEmptyFields(CompanyDTO company, RegisterRequestDTO user) {
+
         return company.getName().isEmpty() ||
                 company.getEmail().isEmpty() ||
                 company.getPhoneNumber().isEmpty() ||
@@ -101,6 +107,7 @@ public class RegisterController {
 
     @FXML
     private void backToLogin() {
+
         if (backToLoginLink == null) {
             System.err.println("Error: backToLoginLink is null!");
             return;
@@ -109,7 +116,8 @@ public class RegisterController {
     }
 
     private void showAlert(Alert.AlertType alertType, String titleKey, String messageKey) {
-        ResourceBundle bundle = TranslationUtils.getBundle();
+
+        bundle = TranslationManager.getBundle();
         Alert alert = new Alert(alertType);
         alert.setTitle(bundle.getString(titleKey));
         alert.setContentText(bundle.getString(messageKey));

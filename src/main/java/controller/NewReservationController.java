@@ -4,6 +4,7 @@ import dto.NewReservationDTO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import service.NewReservationService;
 import service.SessionManager;
 import utils.Navigator;
@@ -22,10 +23,11 @@ public class NewReservationController {
     @FXML private Button reserveButton;
     @FXML private Button cancelButton;
     @FXML private Button checkAvailabilityButton;
-    @FXML private Label dateLabel;
     @FXML private Label startTimeLabel;
     @FXML private Label endTimeLabel;
     @FXML private Button backButton;
+    @FXML private VBox navbarContainer;
+    @FXML private VBox ribbonContainer;
 
     private final NewReservationService service = new NewReservationService();
     ResourceBundle bundle;
@@ -38,6 +40,17 @@ public class NewReservationController {
             endTimeCombo.getItems().add(LocalTime.of(hour, 0));
         }
 
+        String role = SessionManager.getInstance().getLoggedInUserRole();
+        boolean isStaff = "staff".equalsIgnoreCase(role);
+
+        navbarContainer.setVisible(isStaff);
+        navbarContainer.setManaged(isStaff);
+        ribbonContainer.setVisible(isStaff);
+        ribbonContainer.setManaged(isStaff);
+
+        backButton.setVisible(!isStaff);
+        backButton.setManaged(!isStaff);
+        
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
     }
@@ -48,7 +61,6 @@ public class NewReservationController {
         cancelButton.setText(bundle.getString("new.reservation.cancel"));
         backButton.setText(bundle.getString("new.reservation.back"));
         checkAvailabilityButton.setText(bundle.getString("new.reservation.check"));
-        dateLabel.setText(bundle.getString("new.reservation.date"));
         startTimeCombo.setPromptText(bundle.getString("new.reservation.startPrompt"));
         endTimeCombo.setPromptText(bundle.getString("new.reservation.endPrompt"));
     }

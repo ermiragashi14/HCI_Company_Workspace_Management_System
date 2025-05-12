@@ -59,7 +59,7 @@ public class StaffNavbarController {
 
     @FXML
     private void goToMakeReservation(ActionEvent event) {
-        Navigator.navigateTo("make_reservation.fxml", (Node) event.getSource());
+        Navigator.navigateTo("new_reservation.fxml", (Node) event.getSource());
     }
 
     @FXML

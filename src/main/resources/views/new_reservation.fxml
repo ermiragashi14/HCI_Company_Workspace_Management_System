@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -9,29 +10,36 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minWidth="650.0" prefHeight="359.0" prefWidth="650.0" style="-fx-background-color: #B9CCBF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
+<AnchorPane minWidth="650.0" prefHeight="532.0" prefWidth="700.0" style="-fx-background-color: #B9CCBF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
 
     <children>
-        <VBox layoutY="80.0" prefHeight="261.0" prefWidth="644.0" spacing="10" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="80.0">
+        <VBox layoutX="254.0" layoutY="121.0" prefHeight="337.0" prefWidth="253.0" spacing="10.0" styleClass="vbox-container" stylesheets="@../css/trying.css" AnchorPane.leftAnchor="254.0" AnchorPane.topAnchor="121.0">
+         <VBox prefHeight="219.0" prefWidth="221.0">
+            <children>
+                   <DatePicker fx:id="datePicker" minWidth="221.0" prefHeight="25.0" prefWidth="119.0" styleClass="butonat" />
+                   <ComboBox fx:id="startTimeCombo" minWidth="221.0" prefHeight="25.0" prefWidth="126.0" promptText="Start Time" styleClass="butonat" />
+                   <ComboBox fx:id="endTimeCombo" minWidth="221.0" prefHeight="25.0" prefWidth="126.0" promptText="End Time" styleClass="butonat">
+                  <padding>
+                     <Insets right="10.0" />
+                  </padding>
+               </ComboBox>
+                   <Button fx:id="checkAvailabilityButton" minWidth="120.0" onAction="#onCheckAvailabilityClicked" prefHeight="35.0" prefWidth="221.0" styleClass="butonat" />
+            </children>
+         </VBox>
 
-            <HBox prefHeight="25.0" prefWidth="555.0" spacing="10" style="-fx-background-color: #B9CCBF;" styleClass="dialogjet" stylesheets="@../css/style.css">
-                <Label fx:id="dateLabel" styleClass="labels" />
-                <DatePicker fx:id="datePicker" minWidth="119.0" prefHeight="25.0" prefWidth="119.0" />
-                <Label fx:id="startTimeLabel" styleClass="labels" />
-                <ComboBox fx:id="startTimeCombo" minWidth="126.0" prefHeight="25.0" prefWidth="126.0" promptText="Start Time" />
-                <Label fx:id="endTimeLabel" styleClass="labels" />
-                <ComboBox fx:id="endTimeCombo" minWidth="126.0" prefHeight="25.0" prefWidth="126.0" promptText="End Time" />
-                <Button fx:id="checkAvailabilityButton" minWidth="120.0" onAction="#onCheckAvailabilityClicked" prefHeight="25.0" prefWidth="221.0" styleClass="butonat" />
-            </HBox>
-
-            <ListView fx:id="availableWorkspacesList" prefHeight="200" prefWidth="558.0" style="-fx-background-color: #E4EFE7;" styleClass="dialogjet" stylesheets="@../css/style.css" />
-
-            <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-background-color: #B9CCBF;" styleClass="dialogjet" stylesheets="@../css/style.css">
-                <Button fx:id="reserveButton" minWidth="110.0" onAction="#onReserveClicked" styleClass="butonat" />
-                <Button fx:id="cancelButton" minWidth="110.0" onAction="#onCancelClicked" styleClass="butonat" />
-                <Button fx:id="backButton" minWidth="110.0" onAction="#onBackClicked" styleClass="butonat" />
-            </HBox>
+            <ListView fx:id="availableWorkspacesList" prefHeight="211.0" prefWidth="221.0" style="-fx-background-color: #E4EFE7;" styleClass="dialogjet" stylesheets="@../css/style.css" />
         </VBox>
-         <Label layoutX="250.0" layoutY="24.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="New Reservation" />
+         <Label layoutX="293.0" layoutY="78.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" styleClass="admin-labels" stylesheets="@../css/style.css" text="New Reservation" />
+
+         <HBox alignment="CENTER_RIGHT" layoutX="-31.0" layoutY="471.0" spacing="10" style="-fx-background-color: #B9CCBF;" styleClass="dialogjet" stylesheets="@../css/style.css" />
+          <Button fx:id="backButton" layoutX="576.0" layoutY="485.0" minWidth="110.0" onAction="#onBackClicked" styleClass="butonat" stylesheets="@../css/trying.css" />
+          <Button fx:id="cancelButton" layoutX="388.0" layoutY="485.0" minWidth="110.0" onAction="#onCancelClicked" styleClass="butonat" stylesheets="@../css/trying.css" />
+          <Button fx:id="reserveButton" layoutX="271.0" layoutY="485.0" minWidth="110.0" onAction="#onReserveClicked" styleClass="butonat" stylesheets="@../css/trying.css" />
+        <VBox fx:id="navbarContainer" minHeight="480.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+            <fx:include source="staff_navbar.fxml" />
+        </VBox>
+        <VBox fx:id="ribbonContainer" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <fx:include source="ribbon.fxml" />
+        </VBox>
     </children>
 </AnchorPane>

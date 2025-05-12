@@ -39,7 +39,15 @@
         </VBox>
 
         <HBox prefHeight="270.0" prefWidth="509.0" spacing="20.0">
-            <PieChart fx:id="workspaceUsageChart" prefHeight="270.0" prefWidth="460.0" />
+            <BarChart fx:id="workspaceUsageBarChart" prefHeight="270.0" prefWidth="460.0">
+                <xAxis>
+                    <CategoryAxis label="Workspace"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="yAxis" label="Reservations" lowerBound="0" upperBound="50" tickUnit="5"/>
+                </yAxis>
+            </BarChart>
+
         </HBox>
     </VBox>
 

@@ -11,7 +11,7 @@ import java.util.*;
 public class StaffRepository {
 
     public int countActiveReservations(int userId) {
-        String query = "SELECT COUNT(*) FROM reservations WHERE user_id = ? AND status = 'active'";
+        String query = "SELECT COUNT(*) FROM reservation WHERE user_id = ? AND status = 'CONFIRMED'";
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, userId);
@@ -24,7 +24,7 @@ public class StaffRepository {
     }
 
     public int countTotalReservations(int userId) {
-        String query = "SELECT COUNT(*) FROM reservations WHERE user_id = ?";
+        String query = "SELECT COUNT(*) FROM reservation WHERE user_id = ?";
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, userId);
@@ -39,11 +39,11 @@ public class StaffRepository {
     public List<RecentReservationsDTO> getRecentReservations(int userId) {
         List<RecentReservationsDTO> list = new ArrayList<>();
         String query = """
-            SELECT r.reservation_date, r.start_time, r.end_time, w.workspace_name
-            FROM reservations r
-            JOIN workspaces w ON r.workspace_id = w.id
+            SELECT r.date, r.start_time, r.end_time, w.name
+            FROM reservation r
+            JOIN workspace w ON r.workspace_id = w.id
             WHERE r.user_id = ?
-            ORDER BY r.reservation_date DESC, r.start_time DESC
+            ORDER BY r.date DESC, r.start_time DESC
             LIMIT 3
             """;
         try (Connection conn = DBConnector.getConnection();
@@ -51,9 +51,9 @@ public class StaffRepository {
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String date = rs.getString("reservation_date");
+                String date = rs.getString("date");
                 String time = rs.getString("start_time") + " - " + rs.getString("end_time");
-                String workspace = rs.getString("workspace_name");
+                String workspace = rs.getString("name");
                 list.add(new RecentReservationsDTO(date, time, workspace));
             }
         } catch (Exception e) {
@@ -65,11 +65,11 @@ public class StaffRepository {
     public Map<String, Integer> getWorkspaceUsageStats(int userId) {
         Map<String, Integer> usageMap = new HashMap<>();
         String query = """
-            SELECT w.workspace_name, COUNT(*) AS usage_count
-            FROM reservations r
-            JOIN workspaces w ON r.workspace_id = w.id
-            WHERE r.user_id = ? AND r.status = 'active'
-            GROUP BY w.workspace_name
+            SELECT w.name, COUNT(*) AS usage_count
+            FROM reservation r
+            JOIN workspace w ON r.workspace_id = w.id
+            WHERE r.user_id = ? AND r.status = 'CONFIRMED'
+            GROUP BY w.name
             """;
 
         try (Connection conn = DBConnector.getConnection();
@@ -77,7 +77,7 @@ public class StaffRepository {
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                usageMap.put(rs.getString("workspace_name"), rs.getInt("usage_count"));
+                usageMap.put(rs.getString("name"), rs.getInt("usage_count"));
             }
         } catch (Exception e) {
             e.printStackTrace();

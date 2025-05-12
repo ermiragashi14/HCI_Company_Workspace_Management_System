@@ -3,13 +3,16 @@ package controller.Staff;
 import dto.RecentReservationsDTO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import repository.StaffRepository;
 import service.SessionManager;
+
 
 import java.util.List;
 import java.util.Map;
@@ -23,8 +26,9 @@ public class StaffDashboardController {
     @FXML private TableColumn<RecentReservationsDTO, String> dateColumn;
     @FXML private TableColumn<RecentReservationsDTO, String> timeColumn;
     @FXML private TableColumn<RecentReservationsDTO, String> workspaceColumn;
+    @FXML private NumberAxis yAxis;
 
-    @FXML private PieChart workspaceUsageChart;
+    @FXML private BarChart<String, Number> workspaceUsageBarChart;
 
     private final StaffRepository staffRepository = new StaffRepository();
 
@@ -37,6 +41,10 @@ public class StaffDashboardController {
 
         setupRecentReservationsTable(userId);
         setupWorkspaceUsageChart(userId);
+
+        yAxis.setLowerBound(0);
+        yAxis.setUpperBound(50);
+        yAxis.setTickUnit(5);
     }
 
     private void setupRecentReservationsTable(int userId) {
@@ -49,11 +57,17 @@ public class StaffDashboardController {
     }
 
     private void setupWorkspaceUsageChart(int userId) {
-        workspaceUsageChart.getData().clear();
+        workspaceUsageBarChart.getData().clear();
         Map<String, Integer> usageStats = staffRepository.getWorkspaceUsageStats(userId);
 
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Workspace Usage");
+
         for (Map.Entry<String, Integer> entry : usageStats.entrySet()) {
-            workspaceUsageChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
         }
+
+        workspaceUsageBarChart.getData().add(series);
     }
+
 }

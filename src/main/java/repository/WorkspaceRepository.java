@@ -4,6 +4,8 @@ import model.Workspace;
 import utils.DBConnector;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,6 +147,60 @@ public class WorkspaceRepository {
         }
         return names;
     }
+    public List<Workspace> findAvailableWorkspaces(int companyId, LocalDate date, LocalTime start, LocalTime end) {
+        List<Workspace> available = new ArrayList<>();
+
+        String sql = """
+        SELECT * FROM workspace w
+        WHERE w.company_id = ?
+        AND NOT EXISTS (
+            SELECT 1 FROM reservation r
+            WHERE r.workspace_id = w.id
+            AND r.date = ?
+            AND (
+                (r.start_time < ? AND r.end_time > ?)
+                OR (r.start_time >= ? AND r.start_time < ?)
+                OR (r.end_time > ? AND r.end_time <= ?)
+            )
+        )
+    """;
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, companyId);
+            stmt.setDate(2, Date.valueOf(date));
+
+            stmt.setTime(3, Time.valueOf(end));
+            stmt.setTime(4, Time.valueOf(start));
+
+            stmt.setTime(5, Time.valueOf(start));
+            stmt.setTime(6, Time.valueOf(end));
+
+            stmt.setTime(7, Time.valueOf(start));
+            stmt.setTime(8, Time.valueOf(end));
+
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Workspace ws = new Workspace(
+                        rs.getInt("id"),
+                        rs.getInt("company_id"),
+                        rs.getString("name"),
+                        rs.getInt("capacity"),
+                        rs.getString("description"),
+                        rs.getTimestamp("created_at")
+                );
+                available.add(ws);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return available;
+    }
+
 
 
 }

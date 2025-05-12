@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="510.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Staff.AvailableWorkspacesController">
+
+    <VBox fx:id="ribbonContainer" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <fx:include source="ribbon.fxml" />
+    </VBox>
+    <VBox fx:id="navbarContainer" minHeight="480.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+        <fx:include source="staff_navbar.fxml" />
+    </VBox>
+
+    <VBox layoutX="197.0" layoutY="50.0" prefHeight="473.0" prefWidth="498.0" spacing="10.0">
+
+        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Available Workspaces" />
+
+        <HBox spacing="10">
+            <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="98.0" />
+            <ComboBox fx:id="startTimeCombo" promptText="Start Time" />
+            <ComboBox fx:id="endTimeCombo" promptText="End Time" />
+            <Button fx:id="checkAvailabilityButton" onAction="#checkAvailability" text="Check Availability" />
+        </HBox>
+
+        <TableView fx:id="workspaceTable" prefHeight="350.0" styleClass="tabela" stylesheets="@../css/style.css">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="60.0" styleClass="titujt-tabela" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="120.0" styleClass="titujt-tabela" text="Name" />
+                <TableColumn fx:id="descriptionColumn" prefWidth="200.0" styleClass="titujt-tabela" text="Description" />
+                <TableColumn fx:id="capacityColumn" prefWidth="116.0" styleClass="titujt-tabela" text="Capacity" />
+            </columns>
+        </TableView>
+
+    </VBox>
+
+</AnchorPane>

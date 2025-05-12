@@ -6,6 +6,8 @@ import model.Workspace;
 import repository.WorkspaceRepository;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,4 +67,17 @@ public class WorkspaceService {
         int companyId = SessionManager.getInstance().getLoggedInCompanyId();
         return getAllWorkspacesForCompany(companyId);
     }
+    public List<WorkspaceResponseDTO> getAvailableWorkspaces(int companyId, LocalDate date, LocalTime start, LocalTime end) {
+        List<Workspace> workspaces = repository.findAvailableWorkspaces(companyId, date, start, end);
+        return workspaces.stream()
+                .map(ws -> new WorkspaceResponseDTO(
+                        ws.getId(),
+                        ws.getName(),
+                        ws.getCapacity(),
+                        ws.getDescription()
+                ))
+                .collect(Collectors.toList());
+    }
+
+
 }

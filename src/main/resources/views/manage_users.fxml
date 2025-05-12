@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="511.0" prefWidth="688.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageUsersController">
+<AnchorPane prefHeight="510.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageUsersController">
 
     <children>
 
@@ -24,7 +24,7 @@
             <fx:include source="ribbon.fxml" />
         </VBox>
 
-        <VBox fx:id="navbarContainer" layoutX="0" layoutY="30.0" minHeight="480" prefWidth="200.0" />
+        <VBox fx:id="navbarContainer" layoutX="0" layoutY="30.0" minHeight="480" prefWidth="195.0" />
 
             <HBox alignment="CENTER_LEFT" spacing="10" />
 

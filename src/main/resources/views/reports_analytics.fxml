@@ -5,19 +5,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="510.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="controller.Admin.ReportsAnalyticsController">
+<AnchorPane prefHeight="526.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Admin.ReportsAnalyticsController">
     <children>
 
         <VBox fx:id="ribbonContainer" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <fx:include source="ribbon.fxml" />
         </VBox>
 
-        <VBox fx:id="navbarContainer" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+        <VBox fx:id="navbarContainer" prefWidth="195.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
             <fx:include source="admin_navbar.fxml" />
         </VBox>
 
-        <VBox spacing="20" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
-
+        <VBox layoutX="199.0" layoutY="37.0" prefHeight="467.0" prefWidth="495.0" spacing="20" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="37.0">
 
             <HBox prefHeight="22.0" prefWidth="476.0" spacing="40" styleClass="admin-h" stylesheets="@../css/style.css">
                 <Label styleClass="admin-labels" text="Total Reservations:">
@@ -29,8 +28,6 @@
                 <Label styleClass="admin-labels" text="Active Reservations:" />
                 <Label fx:id="activeReservationsLabel" style="-fx-font-weight: bold;" styleClass="admin-labels" text="0" />
             </HBox>
-
-
             <HBox spacing="20">
                 <PieChart fx:id="statusPieChart" prefHeight="182.0" prefWidth="233.0" />
                 <LineChart fx:id="monthlyLineChart" prefHeight="227.0" prefWidth="225.0">
@@ -42,8 +39,6 @@
                     </yAxis>
                 </LineChart>
             </HBox>
-
-
             <VBox spacing="10">
                 <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" styleClass="title" stylesheets="@../css/style.css" text="Top Active Users" />
                 <TableView fx:id="topUsersTable" prefHeight="200.0" styleClass="tabela" stylesheets="@../css/style.css">
@@ -53,8 +48,6 @@
                     </columns>
                 </TableView>
             </VBox>
-
         </VBox>
-
     </children>
 </AnchorPane>

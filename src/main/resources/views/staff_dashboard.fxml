@@ -5,28 +5,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="admin-dashboard-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Staff.StaffDashboardController">
+<AnchorPane prefHeight="510.0" prefWidth="700.0" styleClass="admin-dashboard-container" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Staff.StaffDashboardController">
 
-    <!-- Ribbon (optional for language etc.) -->
     <VBox fx:id="ribbonContainer" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <fx:include source="ribbon.fxml" />
     </VBox>
-
-    <!-- Navbar -->
-    <VBox fx:id="navbarContainer" minHeight="480.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+    <VBox fx:id="navbarContainer" minHeight="480.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
         <fx:include source="staff_navbar.fxml" />
     </VBox>
-
-    <!-- Main Dashboard Content -->
     <VBox layoutX="200.0" layoutY="32.0" prefHeight="500.0" prefWidth="500.0" spacing="20.0" styleClass="admin-container" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="32.0">
-
-        <!-- Statistics Section -->
         <HBox prefHeight="113.0" prefWidth="500.0" spacing="5.0">
             <VBox alignment="CENTER" prefHeight="103.0" prefWidth="240.0" spacing="5" styleClass="admin-h">
                 <Label styleClass="admin-labels" text="Active Reservations:" />
                 <Label fx:id="activeReservationsLabel" styleClass="admin-labels" text="0" />
             </VBox>
-
             <VBox alignment="CENTER" prefHeight="103.0" prefWidth="240.0" spacing="5" styleClass="admin-h">
                 <Label styleClass="admin-labels" text="Total Reservations:" />
                 <Label fx:id="totalReservationsLabel" styleClass="admin-labels" text="0" />
@@ -35,8 +27,6 @@
             <Insets left="6.0" top="5.0" />
          </VBox.margin>
         </HBox>
-
-        <!-- Recent Reservations Table -->
         <VBox spacing="10">
             <Label styleClass="title" stylesheets="@../css/style.css" text=" Recent Reservations:" />
             <TableView fx:id="recentReservationsTable" prefHeight="150" styleClass="tabela" stylesheets="@../css/style.css">
@@ -48,7 +38,6 @@
             </TableView>
         </VBox>
 
-        <!-- Charts Section -->
         <HBox prefHeight="270.0" prefWidth="509.0" spacing="20.0">
             <PieChart fx:id="workspaceUsageChart" prefHeight="270.0" prefWidth="460.0" />
         </HBox>

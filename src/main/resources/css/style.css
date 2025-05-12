@@ -14,7 +14,7 @@ pinkish #FF5733
 
 .navbar-button {
     -fx-text-fill: #581845;
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-background-color: transparent;
     -fx-padding: 5px 5px;
@@ -25,11 +25,15 @@ pinkish #FF5733
 }
 
 .navbar-button:hover {
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: #a8164b;
+    -fx-border-color: #4d0b22;
+
 }
 
 .navbar-button:pressed {
-    -fx-background-color: #cfcfcf;
+     -fx-background-color: #6c0a32;
+     -fx-translate-y: 1;
+     -fx-effect: none;
 }
 
 /* Admin Dashboard */

@@ -3,6 +3,8 @@ package repository;
 import model.User;
 import utils.DBConnector;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepository {
@@ -84,21 +86,7 @@ public class UserRepository {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setCompanyId(rs.getInt("company_id"));
-                user.setRole(rs.getString("role"));
-                user.setPasswordHash(rs.getString("password_hash"));
-                user.setSalt(rs.getString("salt"));
-                user.setFullName(rs.getString("full_name"));
-                user.setEmail(rs.getString("email"));
-                user.setPhoneNumber(rs.getString("phone_number"));
-                user.setStatus(rs.getString("status"));
-                user.setCreatedAt(rs.getTimestamp("created_at"));
-                user.setOtpCode(rs.getString("otp_code"));
-                user.setOtpExpiry(rs.getTimestamp("otp_expiry"));
-                user.setAvatarPath(rs.getString("avatar_path"));
-                return user;
+                return mapToUser(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -141,6 +129,46 @@ public class UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<User> getAllUsersExceptInCompany(int excludedId, int companyId) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM user WHERE id != ? AND company_id = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, excludedId);
+            stmt.setInt(2, companyId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                users.add(mapToUser(rs));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    private User mapToUser(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getInt("id"));
+        user.setCompanyId(rs.getInt("company_id"));
+        user.setRole(rs.getString("role"));
+        user.setPasswordHash(rs.getString("password_hash"));
+        user.setSalt(rs.getString("salt"));
+        user.setFullName(rs.getString("full_name"));
+        user.setEmail(rs.getString("email"));
+        user.setPhoneNumber(rs.getString("phone_number"));
+        user.setStatus(rs.getString("status"));
+        user.setCreatedAt(rs.getTimestamp("created_at"));
+        user.setOtpCode(rs.getString("otp_code"));
+        user.setOtpExpiry(rs.getTimestamp("otp_expiry"));
+        user.setAvatarPath(rs.getString("avatar_path"));
+        return user;
     }
 }
 

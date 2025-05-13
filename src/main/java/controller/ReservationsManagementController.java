@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import service.NotificationService;
 import service.SessionManager;
 import service.ManageReservationsService;
 import utils.Navigator;
@@ -52,6 +53,7 @@ public class ReservationsManagementController {
 
     private final ManageReservationsService service = new ManageReservationsService();
     private ResourceBundle bundle;
+    private final NotificationService notificationService = new NotificationService();
 
     @FXML
     private void initialize() {
@@ -159,6 +161,17 @@ public class ReservationsManagementController {
                         try {
                             boolean success = service.cancelReservation(reservation.getId(), SessionManager.getInstance().getLoggedInUserId());
                             if (success) {
+
+                                String message = "Your reservation for " + reservation.getWorkspaceName() +
+                                        " on " + reservation.getDate() + " has been canceled.";
+
+                                notificationService.sendSystemNotification(
+                                        reservation.getUserId(),
+                                        "INFO",
+                                        message
+                                );
+
+                                onSearchClicked();
                                 onSearchClicked();
                             } else {
                                 showAlert(Alert.AlertType.ERROR, "", bundle.getString("reservation.management.cancelFailed"));

@@ -85,4 +85,10 @@ public class User {
 
     public String getAvatarPath() {return avatarPath;}
     public void setAvatarPath(String avatarPath) { this.avatarPath = avatarPath; }
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
+
 }

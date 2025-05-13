@@ -61,7 +61,7 @@ public class ManageUsersService {
                     user.getRole(),
                     user.getStatus(),
                     user.getCreatedAt() != null ? sdf.format(user.getCreatedAt()) : "",
-                    "",// Placeholder for lastLogin if available,
+                    "",
                     user.getAvatarPath()
             ));
         }

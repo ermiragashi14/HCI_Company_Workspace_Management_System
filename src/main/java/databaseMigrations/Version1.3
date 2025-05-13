@@ -1,2 +1,16 @@
 ALTER TABLE user
 ADD COLUMN avatar_path VARCHAR(255);
+
+DROP TABLE IF EXISTS notification;
+
+CREATE TABLE notification (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    receiver_id INT NOT NULL,                 -- Kush E MERR njoftimin
+    sender_id INT,                        -- Kush E DËRGON (mund të jetë NULL për sistemin)
+    message TEXT NOT NULL,                -- Përmbajtja
+    type ENUM('INFO', 'REMINDER', 'ACTION', 'WARNING') DEFAULT 'INFO',
+    read_status BOOLEAN DEFAULT FALSE,    -- Nëse është lexuar apo jo
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (receiver_id) REFERENCES user(id),
+    FOREIGN KEY (sender_id) REFERENCES user(id)
+);

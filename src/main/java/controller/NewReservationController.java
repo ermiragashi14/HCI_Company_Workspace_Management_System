@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import service.NewReservationService;
+import service.NotificationService;
 import service.SessionManager;
 import utils.Navigator;
 import utils.TranslationManager;
@@ -31,6 +32,7 @@ public class NewReservationController {
 
     private final NewReservationService service = new NewReservationService();
     ResourceBundle bundle;
+    private final NotificationService notificationService = new NotificationService();
 
     @FXML
     public void initialize() {
@@ -106,7 +108,14 @@ public class NewReservationController {
                 selected.getWorkspaceId(), date, start, end
         );
 
+
         if (success) {
+            notificationService.sendSystemNotification(
+                    SessionManager.getInstance().getLoggedInUserId(),
+                    "INFO",
+                    "Your reservation for " + selected.getWorkspaceId() + " on " + date + " has been confirmed."
+            );
+
             showAlert(bundle.getString("new.reservation.successTitle"), bundle.getString("new.reservation.successMessage"));
         } else {
             showAlert(bundle.getString("new.reservation.errorTitle"), bundle.getString("new.reservation.errorMessage"));

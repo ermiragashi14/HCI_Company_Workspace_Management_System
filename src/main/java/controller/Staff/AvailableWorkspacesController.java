@@ -7,10 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import service.WorkspaceService;
 import service.SessionManager;
+import utils.TranslationManager;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class AvailableWorkspacesController {
 
@@ -24,11 +26,16 @@ public class AvailableWorkspacesController {
     @FXML private TableColumn<WorkspaceResponseDTO, String> nameColumn;
     @FXML private TableColumn<WorkspaceResponseDTO, String> descriptionColumn;
     @FXML private TableColumn<WorkspaceResponseDTO, Integer> capacityColumn;
+    @FXML private Label availableWorkspacesLabel;
 
     private final WorkspaceService workspaceService = new WorkspaceService();
+    private ResourceBundle bundle;
 
     @FXML
     public void initialize() {
+        bundle = TranslationManager.getBundle();
+        TranslationManager.addListener(this::updateLanguage);
+
         for (int hour = 8; hour <= 18; hour++) {
             startTimeCombo.getItems().add(LocalTime.of(hour, 0));
             endTimeCombo.getItems().add(LocalTime.of(hour, 0));
@@ -40,6 +47,29 @@ public class AvailableWorkspacesController {
         capacityColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCapacity()).asObject());
 
         checkAvailabilityButton.setOnAction(e -> checkAvailability());
+
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        bundle = TranslationManager.getBundle();
+
+        if (availableWorkspacesLabel != null)
+            availableWorkspacesLabel.setText(bundle.getString("staff.available.label"));
+
+        if (startTimeCombo != null)
+            startTimeCombo.setPromptText(bundle.getString("new.reservation.startPrompt"));
+
+        if (endTimeCombo != null)
+            endTimeCombo.setPromptText(bundle.getString("new.reservation.endPrompt"));
+
+        if (checkAvailabilityButton != null)
+            checkAvailabilityButton.setText(bundle.getString("new.reservation.check"));
+
+        if (idColumn != null) idColumn.setText(bundle.getString("table.column.id"));
+        if (nameColumn != null) nameColumn.setText(bundle.getString("workspace.table.name"));
+        if (descriptionColumn != null) descriptionColumn.setText(bundle.getString("workspace.table.description"));
+        if (capacityColumn != null) capacityColumn.setText(bundle.getString("workspace.table.capacity"));
     }
 
     @FXML
@@ -49,7 +79,7 @@ public class AvailableWorkspacesController {
         LocalTime end = endTimeCombo.getValue();
 
         if (date == null || start == null || end == null || start.isAfter(end)) {
-            showAlert("Please select valid date and time intervals.");
+            showAlert(bundle.getString("new.reservation.invalidMessage"));
             return;
         }
 
@@ -64,7 +94,7 @@ public class AvailableWorkspacesController {
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
+        alert.setTitle(bundle.getString("error.title"));
         alert.setContentText(message);
         alert.showAndWait();
     }

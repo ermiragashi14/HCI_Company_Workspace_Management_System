@@ -16,19 +16,19 @@
     <VBox layoutX="200.0" layoutY="32.0" prefHeight="500.0" prefWidth="500.0" spacing="20.0" styleClass="admin-container" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="32.0">
         <HBox prefHeight="113.0" prefWidth="500.0" spacing="5.0">
             <VBox alignment="CENTER" prefHeight="103.0" prefWidth="240.0" spacing="5" styleClass="admin-h">
-                <Label styleClass="admin-labels" text="Active Reservations:" />
+                <Label fx:id="activeReservationsText" styleClass="admin-labels" text="Active Reservations:" />
                 <Label fx:id="activeReservationsLabel" styleClass="admin-labels" text="0" />
             </VBox>
             <VBox alignment="CENTER" prefHeight="103.0" prefWidth="240.0" spacing="5" styleClass="admin-h">
-                <Label styleClass="admin-labels" text="Total Reservations:" />
+                <Label fx:id="totalReservationsText" styleClass="admin-labels" text="Total Reservations:" />
                 <Label fx:id="totalReservationsLabel" styleClass="admin-labels" text="0" />
             </VBox>
-         <VBox.margin>
-            <Insets left="6.0" top="5.0" />
-         </VBox.margin>
+            <VBox.margin>
+                <Insets left="6.0" top="5.0" />
+            </VBox.margin>
         </HBox>
         <VBox spacing="10">
-            <Label styleClass="title" stylesheets="@../css/style.css" text=" Recent Reservations:" />
+            <Label fx:id="recentReservationsLabel" styleClass="title" stylesheets="@../css/style.css" text="Recent Reservations:" />
             <TableView fx:id="recentReservationsTable" prefHeight="150" styleClass="tabela" stylesheets="@../css/style.css">
                 <columns>
                     <TableColumn fx:id="dateColumn" prefWidth="100" styleClass="titujt-tabela" text="Date" />
@@ -41,10 +41,10 @@
         <HBox prefHeight="270.0" prefWidth="509.0" spacing="20.0">
             <BarChart fx:id="workspaceUsageBarChart" prefHeight="270.0" prefWidth="460.0">
                 <xAxis>
-                    <CategoryAxis label="Workspace"/>
+                    <CategoryAxis fx:id="xAxis" label="Workspace" />
                 </xAxis>
                 <yAxis>
-                    <NumberAxis fx:id="yAxis" label="Reservations" lowerBound="0" upperBound="50" tickUnit="5"/>
+                    <NumberAxis fx:id="yAxis" label="Reservations" lowerBound="0" upperBound="50" tickUnit="5" />
                 </yAxis>
             </BarChart>
 

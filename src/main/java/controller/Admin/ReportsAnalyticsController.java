@@ -28,6 +28,8 @@ public class ReportsAnalyticsController {
 
     @FXML private PieChart statusPieChart;
     @FXML private LineChart<String, Number> monthlyLineChart;
+    @FXML private javafx.scene.chart.CategoryAxis xAxis;
+    @FXML private javafx.scene.chart.NumberAxis yAxis;
 
     @FXML private TableView<UserStatDTO> topUsersTable;
     @FXML private TableColumn<UserStatDTO, String> fullNameColumn;
@@ -38,26 +40,27 @@ public class ReportsAnalyticsController {
 
     @FXML
     public void initialize() {
-
+        updateLanguage();
+        TranslationManager.addListener(this::updateLanguage);
         loadTotalReservations();
         loadActiveReservations();
         loadReservationStatusChart();
         loadMonthlyTrendsChart();
         setupTopUsersTable();
         loadTopUsers();
-        updateLanguage();
-        TranslationManager.addListener(this::updateLanguage);
     }
 
     private void updateLanguage() {
-
         bundle = TranslationManager.getBundle();
+
         if (totalReservationsText != null) totalReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
         if (activeReservationsText != null) activeReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
         if (chartTitle != null) chartTitle.setText(bundle.getString("admin.chart.reservations"));
         if (topUsersLabel != null) topUsersLabel.setText(bundle.getString("admin.chart.topusers"));
         if (fullNameColumn != null) fullNameColumn.setText(bundle.getString("table.column.name"));
         if (reservationCountColumn != null) reservationCountColumn.setText(bundle.getString("table.column.count"));
+        if (xAxis != null) xAxis.setLabel(bundle.getString("admin.chart.months"));
+        if (yAxis != null) yAxis.setLabel(bundle.getString("admin.chart.reservations"));
     }
 
     private void loadTotalReservations() {
@@ -74,14 +77,14 @@ public class ReportsAnalyticsController {
         Map<String, Integer> statusMap = repository.getReservationsByStatus();
         statusPieChart.getData().clear();
         for (Map.Entry<String, Integer> entry : statusMap.entrySet()) {
-            statusPieChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
+            String translatedLabel = translateStatus(entry.getKey());
+            statusPieChart.getData().add(new PieChart.Data(translatedLabel, entry.getValue()));
         }
     }
 
     private void loadMonthlyTrendsChart() {
         Map<String, Integer> trends = repository.getReservationsPerMonth();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        ResourceBundle bundle = TranslationManager.getBundle();
         series.setName(bundle.getString("admin.chart.reservations"));
 
         for (Map.Entry<String, Integer> entry : trends.entrySet()) {
@@ -102,4 +105,12 @@ public class ReportsAnalyticsController {
         topUsersTable.setItems(FXCollections.observableArrayList(topUsers));
     }
 
+    private String translateStatus(String status) {
+        return switch (status.toUpperCase()) {
+            case "CONFIRMED" -> bundle.getString("status.confirmed");
+            case "CANCELED" -> bundle.getString("status.canceled");
+            case "EXPIRED" -> bundle.getString("status.expired");
+            default -> status;
+        };
+    }
 }

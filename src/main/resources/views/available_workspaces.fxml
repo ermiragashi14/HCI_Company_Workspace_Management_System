@@ -14,7 +14,8 @@
 
     <VBox layoutX="197.0" layoutY="50.0" prefHeight="473.0" prefWidth="498.0" spacing="10.0">
 
-        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Available Workspaces" />
+        <Label fx:id="availableWorkspacesLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Available Workspaces" />
+
 
         <HBox spacing="10">
             <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="98.0" />

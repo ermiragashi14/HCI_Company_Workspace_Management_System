@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="526.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Admin.ReportsAnalyticsController">
+<AnchorPane prefHeight="526.0" prefWidth="700.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.Admin.ReportsAnalyticsController">
     <children>
 
         <VBox fx:id="ribbonContainer" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -19,32 +19,36 @@
         <VBox layoutX="199.0" layoutY="37.0" prefHeight="467.0" prefWidth="495.0" spacing="20" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="37.0">
 
             <HBox prefHeight="22.0" prefWidth="476.0" spacing="40" styleClass="admin-h" stylesheets="@../css/style.css">
-                <Label styleClass="admin-labels" text="Total Reservations:">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin></Label>
+                <Label fx:id="totalReservationsText" styleClass="admin-labels">
+                    <HBox.margin>
+                        <Insets left="5.0" />
+                    </HBox.margin>
+                </Label>
                 <Label fx:id="totalReservationsLabel" style="-fx-font-weight: bold;" styleClass="admin-labels" text="0" />
 
-                <Label styleClass="admin-labels" text="Active Reservations:" />
+                <Label fx:id="activeReservationsText" styleClass="admin-labels" />
                 <Label fx:id="activeReservationsLabel" style="-fx-font-weight: bold;" styleClass="admin-labels" text="0" />
             </HBox>
+
             <HBox spacing="20">
                 <PieChart fx:id="statusPieChart" prefHeight="182.0" prefWidth="233.0" />
                 <LineChart fx:id="monthlyLineChart" prefHeight="227.0" prefWidth="225.0">
                     <xAxis>
-                        <CategoryAxis label="Month" />
+                        <CategoryAxis fx:id="xAxis" />
                     </xAxis>
                     <yAxis>
-                        <NumberAxis label="Reservations" />
+                        <NumberAxis fx:id="yAxis" />
                     </yAxis>
                 </LineChart>
             </HBox>
+
             <VBox spacing="10">
-                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" styleClass="title" stylesheets="@../css/style.css" text="Top Active Users" />
+                <Label fx:id="chartTitle" style="-fx-font-size: 16px; -fx-font-weight: bold;" styleClass="title" stylesheets="@../css/style.css" />
+                <Label fx:id="topUsersLabel" styleClass="admin-labels" />
                 <TableView fx:id="topUsersTable" prefHeight="200.0" styleClass="tabela" stylesheets="@../css/style.css">
                     <columns>
-                        <TableColumn fx:id="fullNameColumn" prefWidth="200.0" styleClass="titujt-tabela" text="Full Name" />
-                        <TableColumn fx:id="reservationCountColumn" prefWidth="266.4000244140625" styleClass="titujt-tabela" text="Reservations" />
+                        <TableColumn fx:id="fullNameColumn" prefWidth="200.0" styleClass="titujt-tabela" />
+                        <TableColumn fx:id="reservationCountColumn" prefWidth="266.4" styleClass="titujt-tabela" />
                     </columns>
                 </TableView>
             </VBox>

@@ -20,7 +20,7 @@ public class StaffMyReservationsController {
     @FXML private TableColumn<ManageReservationDTO, String> startTimeColumn;
     @FXML private TableColumn<ManageReservationDTO, String> endTimeColumn;
     @FXML private TableColumn<ManageReservationDTO, String> statusColumn;
-
+    @FXML private Label myReservationsLabel;
     @FXML private Button cancelButton;
     @FXML private Button refreshButton;
 
@@ -36,16 +36,29 @@ public class StaffMyReservationsController {
 
         cancelButton.setOnAction(e -> handleCancel());
         refreshButton.setOnAction(e -> loadUserReservations());
+
+        updateLanguage();
     }
 
     private void updateLanguage() {
-        workspaceColumn.setText(bundle.getString("reservation.management.workspaceColumn"));
-        dateColumn.setText(bundle.getString("reservation.management.dateColumn"));
-        startTimeColumn.setText(bundle.getString("reservation.management.startTime"));
-        endTimeColumn.setText(bundle.getString("reservation.management.endTime"));
-        statusColumn.setText(bundle.getString("reservation.management.statusColumn"));
-        cancelButton.setText(bundle.getString("reservation.management.cancelButton"));
-        refreshButton.setText(bundle.getString("manage.users.refresh"));
+        bundle = TranslationManager.getBundle();
+
+        if (workspaceColumn != null)
+            workspaceColumn.setText(bundle.getString("reservation.management.workspaceColumn"));
+        if (dateColumn != null)
+            dateColumn.setText(bundle.getString("reservation.management.dateColumn"));
+        if (startTimeColumn != null)
+            startTimeColumn.setText(bundle.getString("reservation.management.startTime"));
+        if (endTimeColumn != null)
+            endTimeColumn.setText(bundle.getString("reservation.management.endTime"));
+        if (statusColumn != null)
+            statusColumn.setText(bundle.getString("reservation.management.statusColumn"));
+        if (cancelButton != null)
+            cancelButton.setText(bundle.getString("reservation.management.cancelButton"));
+        if (refreshButton != null)
+            refreshButton.setText(bundle.getString("manage.users.refresh"));
+        if (myReservationsLabel != null)
+            myReservationsLabel.setText(bundle.getString("staff.myreservations.title"));
     }
 
     private void setupTableColumns() {
@@ -53,7 +66,6 @@ public class StaffMyReservationsController {
         dateColumn.setCellValueFactory(data -> data.getValue().dateProperty());
         statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
 
-        // Split schedule into start and end time
         startTimeColumn.setCellValueFactory(data -> {
             String[] parts = data.getValue().getSchedule().split(" - ");
             return new javafx.beans.property.SimpleStringProperty(parts[0]);

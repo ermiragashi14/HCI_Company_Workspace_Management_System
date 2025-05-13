@@ -24,4 +24,6 @@
 
     <Button text="Send Notification" onAction="#handleSendNotification"
             style="-fx-background-color: #2e8b57; -fx-text-fill: white;" />
+    <Button text="Back" onAction="#handleBackButton" fx:id="backButton"
+            style="-fx-background-color: #2e8b57; -fx-text-fill: white;" />
 </VBox>

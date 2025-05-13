@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import model.User;
 import service.NotificationService;
 import service.SessionManager;
+import utils.Navigator;
 
 public class SendNotificationController {
 
@@ -15,6 +16,7 @@ public class SendNotificationController {
     @FXML private RadioButton sendToAllRadio;
     @FXML private RadioButton sendToOneRadio;
     @FXML private ComboBox<User> userComboBox;
+    @FXML private Button backButton;
 
     private final NotificationService notificationService = new NotificationService();
 
@@ -70,6 +72,10 @@ public class SendNotificationController {
         userComboBox.getSelectionModel().clearSelection();
         userComboBox.setVisible(false);
         sendToAllRadio.setSelected(true);
+    }
+
+    private void handleBackButton(){
+        Navigator.navigateTo("notifications.fxml", backButton);
     }
 
     private void showAlert(Alert.AlertType type, String message) {

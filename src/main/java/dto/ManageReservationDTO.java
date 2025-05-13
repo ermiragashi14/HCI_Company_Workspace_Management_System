@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class ManageReservationDTO {
     private int id;
+    private int userId;
     private String userFullName;
     private String workspaceName;
     private String date;
@@ -14,9 +15,10 @@ public class ManageReservationDTO {
     private String modifiedAt;
     private String createdAt;
 
-    public ManageReservationDTO(int id, String userFullName, String workspaceName, String date, String schedule, String status,
+    public ManageReservationDTO(int id, int userId, String userFullName, String workspaceName, String date, String schedule, String status,
                                 String previousStatus, String modifiedBy, String modifiedAt, String createdAt) {
         this.id = id;
+        this.userId=userId;
         this.userFullName = userFullName;
         this.workspaceName = workspaceName;
         this.date = date;
@@ -39,7 +41,6 @@ public class ManageReservationDTO {
     public String getModifiedAt() { return modifiedAt; }
     public String getCreatedAt() { return createdAt; }
 
-
     public SimpleStringProperty workspaceNameProperty() {
         return new SimpleStringProperty(workspaceName);
     }
@@ -55,4 +56,7 @@ public class ManageReservationDTO {
     public SimpleStringProperty statusProperty() {
         return new SimpleStringProperty(status);
     }
+
+    public int getUserId(){return this.userId;}
 }
+

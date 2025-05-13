@@ -18,6 +18,7 @@ public class ManageReservationsRepository {
             java.time.LocalDate date,
             String modifiedBy,
             java.time.LocalDate modifiedDate
+
     ) throws SQLException {
         List<ManageReservationDTO> dtos = new ArrayList<>();
         StringBuilder sql = new StringBuilder(
@@ -75,6 +76,7 @@ public class ManageReservationsRepository {
 
                 ManageReservationDTO dto = new ManageReservationDTO(
                         rs.getInt("id"),
+                        rs.getInt("user_id"),
                         rs.getString("user_full_name"),
                         rs.getString("workspace_name"),
                         rs.getDate("date").toLocalDate().format(dateFormat),
@@ -114,6 +116,7 @@ public class ManageReservationsRepository {
 
                 ManageReservationDTO dto = new ManageReservationDTO(
                         rs.getInt("id"),
+                        rs.getInt("user_id"),
                         "",
                         rs.getString("workspace_name"),
                         rs.getDate("date").toLocalDate().format(dateFormat),

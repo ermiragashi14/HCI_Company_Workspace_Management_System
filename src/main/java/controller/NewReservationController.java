@@ -113,7 +113,7 @@ public class NewReservationController {
             notificationService.sendSystemNotification(
                     SessionManager.getInstance().getLoggedInUserId(),
                     "INFO",
-                    "Your reservation for " + selected.getWorkspaceId() + " on " + date + " has been confirmed."
+                    "Your reservation for " + selected.getWorkspaceName() + " on " + date + " has been confirmed."
             );
 
             showAlert(bundle.getString("new.reservation.successTitle"), bundle.getString("new.reservation.successMessage"));

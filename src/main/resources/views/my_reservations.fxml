@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="487.0" prefWidth="700" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Staff.StaffMyReservationsController">
+
+
+    <VBox fx:id="ribbonContainer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <fx:include source="ribbon.fxml" />
+    </VBox>
+
+
+    <VBox fx:id="navbarContainer" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+        <fx:include source="staff_navbar.fxml" />
+    </VBox>
+
+
+    <VBox layoutY="30.0" prefHeight="500.0" prefWidth="600.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" styleClass="labels" stylesheets="@../css/style.css" text="My Reservations">
+         <VBox.margin>
+            <Insets left="10.0" top="6.0" />
+         </VBox.margin></Label>
+
+        <TableView fx:id="reservationTable" prefHeight="381.0" prefWidth="591.0" styleClass="tabela" stylesheets="@../css/style.css">
+            <columns>
+                <TableColumn fx:id="workspaceColumn" prefWidth="127.99999696016312" styleClass="titujt-tabela" text="Workspace" />
+                <TableColumn fx:id="dateColumn" prefWidth="156.00001525878906" styleClass="titujt-tabela" text="Date" />
+                <TableColumn fx:id="startTimeColumn" prefWidth="108.79995727539062" styleClass="titujt-tabela" text="Start Time" />
+                <TableColumn fx:id="endTimeColumn" prefWidth="96.79998779296875" styleClass="titujt-tabela" text="End Time" />
+                <TableColumn fx:id="statusColumn" prefWidth="101.0" styleClass="titujt-tabela" text="Status" />
+            </columns>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+        </TableView>
+
+        <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="cancelButton" styleClass="butonat-dialog" stylesheets="@../css/style.css" text="Cancel Reservation" />
+            <Button fx:id="refreshButton" styleClass="butonat-dialog" stylesheets="@../css/style.css" text="Refresh" />
+        </HBox>
+
+    </VBox>
+</AnchorPane>

@@ -4,7 +4,6 @@ import dto.ManageReservationDTO;
 import utils.DBConnector;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +15,9 @@ public class ManageReservationsRepository {
             String userName,
             String workspaceName,
             String status,
-            LocalDate date,
+            java.time.LocalDate date,
             String modifiedBy,
-            LocalDate modifiedDate
+            java.time.LocalDate modifiedDate
     ) throws SQLException {
         List<ManageReservationDTO> dtos = new ArrayList<>();
         StringBuilder sql = new StringBuilder(
@@ -93,7 +92,44 @@ public class ManageReservationsRepository {
         return dtos;
     }
 
+    public List<ManageReservationDTO> getReservationsByUserId(int userId) throws SQLException {
+        List<ManageReservationDTO> dtos = new ArrayList<>();
+        String sql = "SELECT r.*, w.name AS workspace_name " +
+                "FROM reservation r " +
+                "JOIN workspace w ON r.workspace_id = w.id " +
+                "WHERE r.user_id = ? ORDER BY r.date DESC, r.start_time";
 
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+            DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            while (rs.next()) {
+                String schedule = rs.getTime("start_time").toLocalTime().format(timeFormat) + " - " +
+                        rs.getTime("end_time").toLocalTime().format(timeFormat);
+
+                ManageReservationDTO dto = new ManageReservationDTO(
+                        rs.getInt("id"),
+                        "",
+                        rs.getString("workspace_name"),
+                        rs.getDate("date").toLocalDate().format(dateFormat),
+                        schedule,
+                        rs.getString("status"),
+                        rs.getString("previous_status"),
+                        "",
+                        "",
+                        rs.getTimestamp("created_at").toLocalDateTime().format(dateTimeFormat)
+                );
+                dtos.add(dto);
+            }
+        }
+
+        return dtos;
+    }
 
     public boolean cancelReservation(int reservationId, int modifierId) throws SQLException {
         String query = "UPDATE reservation SET status = 'CANCELED', previous_status = status, modified_by = ?, modified_at = NOW() WHERE id = ?";
@@ -103,4 +139,5 @@ public class ManageReservationsRepository {
             stmt.setInt(2, reservationId);
             return stmt.executeUpdate() > 0;
         }
-    }}
+    }
+}

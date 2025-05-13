@@ -1,5 +1,7 @@
 package dto;
 
+import javafx.beans.property.SimpleStringProperty;
+
 public class ManageReservationDTO {
     private int id;
     private String userFullName;
@@ -26,7 +28,6 @@ public class ManageReservationDTO {
         this.createdAt = createdAt;
     }
 
-    // Getters only
     public int getId() { return id; }
     public String getUserFullName() { return userFullName; }
     public String getWorkspaceName() { return workspaceName; }
@@ -37,4 +38,21 @@ public class ManageReservationDTO {
     public String getModifiedBy() { return modifiedBy; }
     public String getModifiedAt() { return modifiedAt; }
     public String getCreatedAt() { return createdAt; }
+
+
+    public SimpleStringProperty workspaceNameProperty() {
+        return new SimpleStringProperty(workspaceName);
+    }
+
+    public SimpleStringProperty dateProperty() {
+        return new SimpleStringProperty(date);
+    }
+
+    public SimpleStringProperty scheduleProperty() {
+        return new SimpleStringProperty(schedule);
+    }
+
+    public SimpleStringProperty statusProperty() {
+        return new SimpleStringProperty(status);
+    }
 }

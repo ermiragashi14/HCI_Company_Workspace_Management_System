@@ -38,6 +38,14 @@ public class ManageReservationsService {
         }
     }
 
+    public List<ManageReservationDTO> getReservationsByUserId(int userId) {
+        try {
+            return repo.getReservationsByUserId(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 
     public boolean cancelReservation(int reservationId, int modifiedByUserId) {
         try {
@@ -56,5 +64,4 @@ public class ManageReservationsService {
             return new ArrayList<>();
         }
     }
-
 }

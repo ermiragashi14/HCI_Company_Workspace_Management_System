@@ -19,8 +19,10 @@ public class AdminDashboardController {
     @FXML private Label staffLabel;
     @FXML private Label workspaceLabel;
     @FXML private Label reservationLabel;
+    @FXML private Label mostUsedChartTitle;
 
-    @FXML private PieChart workspaceUsageChart;
+    @FXML private PieChart mostUsedWorkspacesChart;
+
     @FXML private LineChart<String, Number> reservationTrendsChart;
 
     private final AdminRepository adminRepository = new AdminRepository();
@@ -30,7 +32,8 @@ public class AdminDashboardController {
     public void initialize() {
 
         loadDashboardStats();
-        setupCharts();
+        loadMostUsedWorkspacesChart();
+        loadReservationTrendsChart();
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
     }
@@ -43,6 +46,7 @@ public class AdminDashboardController {
         reservationLabel.setText(bundle.getString("admin.dashboard.totalreservations"));
         reservationTrendsChart.getXAxis().setLabel(bundle.getString("admin.chart.months"));
         reservationTrendsChart.getYAxis().setLabel(bundle.getString("admin.chart.reservations"));
+        mostUsedChartTitle.setText("PieChart: " + bundle.getString("admin.chart.mostusedworkspaces"));
     }
 
     private void loadDashboardStats() {
@@ -52,23 +56,45 @@ public class AdminDashboardController {
         reservationCountLabel.setText(String.valueOf(adminRepository.countTotalActiveReservations()));
     }
 
-    private void setupCharts() {
+    private void loadMostUsedWorkspacesChart() {
+        mostUsedWorkspacesChart.getData().clear();
+        Map<String, Integer> usageStats = adminRepository.getMostUsedWorkspaces();
 
-        workspaceUsageChart.getData().clear();
-        Map<String, Integer> usageStats = adminRepository.getWorkspaceUsageStats();
         for (Map.Entry<String, Integer> entry : usageStats.entrySet()) {
-            workspaceUsageChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
+            mostUsedWorkspacesChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
         }
+    }
 
+    private void loadReservationTrendsChart() {
         reservationTrendsChart.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Reservations Trend");
 
         Map<String, Integer> trends = adminRepository.getMonthlyReservationTrends();
+        int count = 0;
+
+        int maxReservation = 0;
+
         for (Map.Entry<String, Integer> entry : trends.entrySet()) {
+            if (count >= 7) break; // maksimum 7 muaj
             series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+
+            if (entry.getValue() > maxReservation) {
+                maxReservation = entry.getValue();
+            }
+
+            count++;
         }
 
         reservationTrendsChart.getData().add(series);
+
+
+        if (reservationTrendsChart.getYAxis() instanceof javafx.scene.chart.NumberAxis yAxis) {
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(0);
+            yAxis.setUpperBound(Math.max(7, maxReservation + 1));
+            yAxis.setTickUnit(1);
+        }
     }
+
 }

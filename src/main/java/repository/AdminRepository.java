@@ -48,9 +48,12 @@ public class AdminRepository {
 
     public int countTotalActiveReservations() {
         int companyId = SessionManager.getInstance().getLoggedInCompanyId();
-        String query = "SELECT COUNT(*) FROM reservation r JOIN user u ON r.user_id = u.id WHERE r.status = 'CONFIRMED' AND u.company_id = ?";
+        int adminId = SessionManager.getInstance().getLoggedInUserId();
+        String query = "SELECT COUNT(*) FROM reservation r JOIN user u ON r.user_id = u.id " +
+                "WHERE r.status = 'CONFIRMED' AND u.company_id = ? AND (u.role = 'STAFF' OR u.id = ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, companyId);
+            stmt.setInt(2, adminId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) return rs.getInt(1);
             }
@@ -62,14 +65,18 @@ public class AdminRepository {
 
     public Map<String, Integer> getWorkspaceUsageStats() {
         int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+        int adminId = SessionManager.getInstance().getLoggedInUserId();
         Map<String, Integer> stats = new HashMap<>();
-        String occupiedQuery = "SELECT COUNT(*) FROM reservation r JOIN workspace w ON r.workspace_id = w.id WHERE r.status = 'CONFIRMED' AND w.company_id = ? AND r.date = CURDATE()";
+        String occupiedQuery = "SELECT COUNT(*) FROM reservation r JOIN workspace w ON r.workspace_id = w.id " +
+                "JOIN user u ON r.user_id = u.id WHERE r.status = 'CONFIRMED' AND w.company_id = ? " +
+                "AND (u.role = 'STAFF' OR u.id = ?) AND r.date = CURDATE()";
         String totalQuery = "SELECT COUNT(*) FROM workspace WHERE company_id = ?";
 
         try (PreparedStatement occupiedStmt = connection.prepareStatement(occupiedQuery);
              PreparedStatement totalStmt = connection.prepareStatement(totalQuery)) {
 
             occupiedStmt.setInt(1, companyId);
+            occupiedStmt.setInt(2, adminId);
             totalStmt.setInt(1, companyId);
 
             int occupied = 0;
@@ -96,15 +103,18 @@ public class AdminRepository {
 
     public Map<String, Integer> getMonthlyReservationTrends() {
         int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+        int adminId = SessionManager.getInstance().getLoggedInUserId();
         Map<String, Integer> trends = new LinkedHashMap<>();
 
         String query = "SELECT MONTHNAME(r.date) AS month, COUNT(*) AS count " +
                 "FROM reservation r JOIN user u ON r.user_id = u.id " +
                 "WHERE YEAR(r.date) = YEAR(CURDATE()) AND u.company_id = ? " +
+                "AND (u.role = 'STAFF' OR u.id = ?) " +
                 "GROUP BY MONTH(r.date), MONTHNAME(r.date) ORDER BY MONTH(r.date)";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, companyId);
+            stmt.setInt(2, adminId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     trends.put(rs.getString("month"), rs.getInt("count"));
@@ -116,4 +126,32 @@ public class AdminRepository {
 
         return trends;
     }
+    public Map<String, Integer> getMostUsedWorkspaces() {
+        int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+        Map<String, Integer> usage = new LinkedHashMap<>();
+
+        String query = """
+        SELECT w.name, COUNT(*) AS usage_count
+        FROM reservation r
+        JOIN workspace w ON r.workspace_id = w.id
+        JOIN user u ON r.user_id = u.id
+        WHERE u.company_id = ? AND r.status = 'CONFIRMED'
+        GROUP BY w.name
+        ORDER BY usage_count DESC
+        LIMIT 5
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, companyId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                usage.put(rs.getString("name"), rs.getInt("usage_count"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usage;
+    }
+
 }

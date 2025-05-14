@@ -24,7 +24,7 @@ public class ReportsAnalyticsController {
     @FXML private Label totalReservationsText;
     @FXML private Label activeReservationsText;
     @FXML private Label chartTitle;
-    @FXML private Label topUsersLabel;
+    @FXML private Label statusPieChartTitle;
 
     @FXML private PieChart statusPieChart;
     @FXML private LineChart<String, Number> monthlyLineChart;
@@ -53,14 +53,22 @@ public class ReportsAnalyticsController {
     private void updateLanguage() {
         bundle = TranslationManager.getBundle();
 
-        if (totalReservationsText != null) totalReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
-        if (activeReservationsText != null) activeReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
-        if (chartTitle != null) chartTitle.setText(bundle.getString("admin.chart.reservations"));
-        if (topUsersLabel != null) topUsersLabel.setText(bundle.getString("admin.chart.topusers"));
-        if (fullNameColumn != null) fullNameColumn.setText(bundle.getString("table.column.name"));
-        if (reservationCountColumn != null) reservationCountColumn.setText(bundle.getString("table.column.count"));
-        if (xAxis != null) xAxis.setLabel(bundle.getString("admin.chart.months"));
-        if (yAxis != null) yAxis.setLabel(bundle.getString("admin.chart.reservations"));
+        if (totalReservationsText != null)
+            totalReservationsText.setText(bundle.getString("admin.dashboard.totalreservations"));
+        if (activeReservationsText != null)
+            activeReservationsText.setText(bundle.getString("admin.dashboard.activereservations"));
+        if (chartTitle != null)
+            chartTitle.setText(bundle.getString("admin.chart.reservations"));
+        if (fullNameColumn != null)
+            fullNameColumn.setText(bundle.getString("table.column.name"));
+        if (reservationCountColumn != null)
+            reservationCountColumn.setText(bundle.getString("table.column.count"));
+        if (xAxis != null)
+            xAxis.setLabel(bundle.getString("admin.chart.months"));
+        if (yAxis != null)
+            yAxis.setLabel(bundle.getString("admin.chart.reservations"));
+        if (statusPieChartTitle != null)
+            statusPieChartTitle.setText(bundle.getString("admin.chart.statusoverview")); // ADDED
     }
 
     private void loadTotalReservations() {
@@ -87,13 +95,23 @@ public class ReportsAnalyticsController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName(bundle.getString("admin.chart.reservations"));
 
+        int maxValue = 0;
         for (Map.Entry<String, Integer> entry : trends.entrySet()) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+            int value = entry.getValue();
+            if (value > maxValue) maxValue = value;
+            series.getData().add(new XYChart.Data<>(entry.getKey(), value));
         }
 
         monthlyLineChart.getData().clear();
         monthlyLineChart.getData().add(series);
+
+
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setTickUnit(1);
+        yAxis.setUpperBound(7);
     }
+
 
     private void setupTopUsersTable() {
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));

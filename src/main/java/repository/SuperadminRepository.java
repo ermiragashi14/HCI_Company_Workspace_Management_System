@@ -20,6 +20,7 @@ public class SuperadminRepository {
             throw new RuntimeException("Database connection failed", e);
         }
     }
+
     private int countByQuery(String query, int companyId) {
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -32,7 +33,6 @@ public class SuperadminRepository {
         }
         return 0;
     }
-
 
     public int countAdmins(int companyId) {
         return countByQuery("SELECT COUNT(*) FROM user WHERE role = 'ADMIN' AND company_id = ?", companyId);
@@ -52,10 +52,10 @@ public class SuperadminRepository {
 
     public Map<String, Integer> getMonthlyReservationTrends(int companyId) {
         Map<String, Integer> trends = new LinkedHashMap<>();
-        String query = "SELECT MONTHNAME(r.date) AS month, COUNT(*) AS count " +
+        String query = "SELECT DATE_FORMAT(r.date, '%b') AS month, COUNT(*) AS count " +
                 "FROM reservation r JOIN user u ON r.user_id = u.id " +
-                "WHERE YEAR(r.date) = YEAR(CURDATE()) AND u.company_id = ? " +
-                "GROUP BY MONTH(r.date), MONTHNAME(r.date) ORDER BY MONTH(r.date)";
+                "WHERE r.date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH) AND u.company_id = ? " +
+                "GROUP BY MONTH(r.date), DATE_FORMAT(r.date, '%b') ORDER BY MONTH(r.date)";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {

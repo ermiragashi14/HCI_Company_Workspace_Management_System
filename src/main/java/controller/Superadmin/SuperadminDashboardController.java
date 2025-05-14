@@ -11,6 +11,7 @@ import service.SessionManager;
 import utils.TranslationManager;
 
 import java.util.ResourceBundle;
+import java.util.Map;
 
 public class SuperadminDashboardController {
 
@@ -32,7 +33,6 @@ public class SuperadminDashboardController {
 
     @FXML
     public void initialize() {
-
         loadData();
         loadReservationTrendsChart();
         updateLanguage();
@@ -40,7 +40,6 @@ public class SuperadminDashboardController {
     }
 
     private void updateLanguage() {
-
         bundle = TranslationManager.getBundle();
         adminLabel.setText(bundle.getString("super.dashboard.admins"));
         staffLabel.setText(bundle.getString("super.dashboard.staff"));
@@ -58,11 +57,18 @@ public class SuperadminDashboardController {
     }
 
     private void loadReservationTrendsChart() {
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        repo.getMonthlyReservationTrends(companyId).forEach((month, count) ->
-                series.getData().add(new XYChart.Data<>(month, count))
-        );
         reservationTrendsChart.getData().clear();
+        yAxis.setTickUnit(1);
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setUpperBound(10);
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        Map<String, Integer> trends = repo.getMonthlyReservationTrends(companyId);
+        trends.forEach((month, count) -> {
+            series.getData().add(new XYChart.Data<>(month, count));
+        });
+
         reservationTrendsChart.getData().add(series);
     }
 }

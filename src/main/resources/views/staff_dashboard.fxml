@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -10,45 +9,44 @@
     <VBox fx:id="ribbonContainer" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <fx:include source="ribbon.fxml" />
     </VBox>
+
     <VBox fx:id="navbarContainer" minHeight="480.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
         <fx:include source="staff_navbar.fxml" />
     </VBox>
+
     <VBox layoutX="200.0" layoutY="32.0" prefHeight="500.0" prefWidth="500.0" spacing="20.0" styleClass="admin-container" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="32.0">
-        <HBox prefHeight="113.0" prefWidth="500.0" spacing="5.0">
-            <VBox alignment="CENTER" prefHeight="103.0" prefWidth="240.0" spacing="5" styleClass="admin-h">
+
+
+        <HBox prefHeight="113.0" spacing="5.0">
+            <VBox alignment="CENTER" prefWidth="240.0" spacing="5" styleClass="admin-h">
                 <Label fx:id="activeReservationsText" styleClass="admin-labels" text="Active Reservations:" />
                 <Label fx:id="activeReservationsLabel" styleClass="admin-labels" text="0" />
             </VBox>
-            <VBox alignment="CENTER" prefHeight="103.0" prefWidth="240.0" spacing="5" styleClass="admin-h">
+            <VBox alignment="CENTER" prefWidth="240.0" spacing="5" styleClass="admin-h">
                 <Label fx:id="totalReservationsText" styleClass="admin-labels" text="Total Reservations:" />
                 <Label fx:id="totalReservationsLabel" styleClass="admin-labels" text="0" />
             </VBox>
-            <VBox.margin>
-                <Insets left="6.0" top="5.0" />
-            </VBox.margin>
+            <VBox.margin><Insets left="6.0" top="5.0" /></VBox.margin>
         </HBox>
+
+
         <VBox spacing="10">
-            <Label fx:id="recentReservationsLabel" styleClass="title" stylesheets="@../css/style.css" text="Recent Reservations:" />
-            <TableView fx:id="recentReservationsTable" prefHeight="150" styleClass="tabela" stylesheets="@../css/style.css">
+            <Label fx:id="recentReservationsLabel" styleClass="title" text="Recent Reservations:" />
+            <TableView fx:id="recentReservationsTable" prefHeight="150" styleClass="tabela">
                 <columns>
-                    <TableColumn fx:id="dateColumn" prefWidth="100" styleClass="titujt-tabela" text="Date" />
-                    <TableColumn fx:id="timeColumn" prefWidth="120" styleClass="titujt-tabela" text="Time" />
-                    <TableColumn fx:id="workspaceColumn" prefWidth="277.4000244140625" styleClass="titujt-tabela" text="Workspace" />
+                    <TableColumn fx:id="dateColumn" prefWidth="114.0" styleClass="titujt-tabela" text="Date" />
+                    <TableColumn fx:id="timeColumn" prefWidth="134.8" styleClass="titujt-tabela" text="Time" />
+                    <TableColumn fx:id="workspaceColumn" prefWidth="133.6" styleClass="titujt-tabela" text="Workspace" />
+                    <TableColumn fx:id="statusColumn" prefWidth="117.6" styleClass="titujt-tabela" text="Status" />
                 </columns>
             </TableView>
         </VBox>
 
-        <HBox prefHeight="270.0" prefWidth="509.0" spacing="20.0">
-            <BarChart fx:id="workspaceUsageBarChart" prefHeight="270.0" prefWidth="460.0">
-                <xAxis>
-                    <CategoryAxis fx:id="xAxis" label="Workspace" />
-                </xAxis>
-                <yAxis>
-                    <NumberAxis fx:id="yAxis" label="Reservations" lowerBound="0" upperBound="50" tickUnit="5" />
-                </yAxis>
-            </BarChart>
 
-        </HBox>
+        <VBox spacing="10">
+            <Label fx:id="upcomingReservationsLabel" styleClass="title" text="Upcoming Reservations (next 24h):" />
+            <ListView fx:id="upcomingReservationList" prefHeight="148.0" prefWidth="500.0" />
+        </VBox>
+
     </VBox>
-
 </AnchorPane>

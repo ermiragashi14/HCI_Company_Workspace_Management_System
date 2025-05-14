@@ -31,9 +31,9 @@
             <VBox alignment="CENTER" prefHeight="114.0" prefWidth="160.0" spacing="5" styleClass="admin-h">
                 <Label fx:id="reservationLabel" styleClass="admin-labels" text="Reservations:" />
                 <Label fx:id="reservationCountLabel" styleClass="admin-labels" text="0" />
-            <HBox.margin>
-               <Insets />
-            </HBox.margin>
+                <HBox.margin>
+                    <Insets />
+                </HBox.margin>
             </VBox>
             <VBox.margin>
                 <Insets left="5.0" top="5.0" />
@@ -41,7 +41,12 @@
         </HBox>
 
         <HBox prefHeight="270.0" prefWidth="509.0" spacing="20.0">
-            <PieChart fx:id="workspaceUsageChart" prefHeight="270.0" prefWidth="200.0" />
+            <VBox spacing="10">
+                <Label fx:id="mostUsedChartTitle" prefHeight="120.0" prefWidth="200.0" styleClass="labels" text="Most Used Workspaces" wrapText="true" />
+                <PieChart fx:id="mostUsedWorkspacesChart" prefHeight="270.0" prefWidth="200.0" />
+            </VBox>
+
+
             <LineChart fx:id="reservationTrendsChart" prefHeight="270.0" prefWidth="298.0">
                 <xAxis>
                     <CategoryAxis label="Months" fx:id="xAxis" />
@@ -52,5 +57,4 @@
             </LineChart>
         </HBox>
     </VBox>
-
 </AnchorPane>

@@ -89,19 +89,7 @@ public class HelpController {
 
     @FXML
     private void closeHelp() {
-        String role = SessionManager.getInstance().getLoggedInUserRole();
-
-        String fxml = switch (role.toUpperCase()) {
-            case "SUPER_ADMIN" -> "superadmin_dashboard.fxml";
-            case "ADMIN" -> "admin_dashboard.fxml";
-            case "STAFF" -> "staff_dashboard.fxml";
-            default -> null;
-        };
-
-        if (fxml != null) {
-            Navigator.navigateTo(fxml, closeButton);
-        } else {
-            System.err.println("Unknown role or no dashboard assigned.");
-        }
+        Stage stage = (Stage) helpBox.getScene().getWindow();
+        stage.close();
     }
 }

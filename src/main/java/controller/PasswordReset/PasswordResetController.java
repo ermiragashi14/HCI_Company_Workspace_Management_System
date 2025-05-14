@@ -97,6 +97,11 @@ public class PasswordResetController {
     }
 
     @FXML
+    private void openHelp() {
+        Navigator.openHelpWindow("forgetpassword");
+    }
+
+    @FXML
     private void goBackToLogin() {
         Navigator.navigateTo("login.fxml", goBackToLoginLink);
     }

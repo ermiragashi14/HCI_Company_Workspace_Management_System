@@ -73,7 +73,7 @@ public class SendNotificationController {
         userComboBox.setVisible(false);
         sendToAllRadio.setSelected(true);
     }
-
+    @FXML
     private void handleBackButton(){
         Navigator.navigateTo("notifications.fxml", backButton);
     }

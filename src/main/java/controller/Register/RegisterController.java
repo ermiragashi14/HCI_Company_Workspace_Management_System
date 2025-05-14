@@ -115,6 +115,11 @@ public class RegisterController {
         Navigator.navigateTo("login.fxml", backToLoginLink);
     }
 
+    @FXML
+    private void openHelp() {
+        Navigator.openHelpWindow("register");
+    }
+
     private void showAlert(Alert.AlertType alertType, String titleKey, String messageKey) {
 
         bundle = TranslationManager.getBundle();

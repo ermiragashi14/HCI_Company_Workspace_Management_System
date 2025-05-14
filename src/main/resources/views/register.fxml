@@ -55,7 +55,8 @@
          </children>
       </Pane>
       <Hyperlink fx:id="backToLoginLink" layoutX="459.0" layoutY="402.0" onAction="#backToLogin" styleClass="links" text="Back to Login" />
-      <ComboBox fx:id="languageSelector" layoutX="608.0" layoutY="1.0" prefHeight="25.0" prefWidth="92.0" />
+       <Button fx:id="helpButton" layoutX="608.0" minHeight="25.0" minWidth="92.0" mnemonicParsing="false" onAction="#openHelp" prefHeight="25.0" prefWidth="92.0" styleClass="butonat-dialog" text="Help" />
+       <ComboBox fx:id="languageSelector" layoutX="516.0" layoutY="1.0" prefHeight="25.0" prefWidth="92.0" />
       <Button fx:id="registerButton" layoutX="319.0" layoutY="401.0" maxHeight="-Infinity" minHeight="26.0" minWidth="110.0" mnemonicParsing="false" onAction="#register" styleClass="butonat-dialog" text="Register" />
    </children>
 </AnchorPane>

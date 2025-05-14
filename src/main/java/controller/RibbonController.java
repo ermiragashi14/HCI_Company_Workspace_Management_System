@@ -27,7 +27,17 @@ public class RibbonController {
     public void goToNotifications() {Navigator.navigateTo("notifications.fxml", goToNotifications);}
 
     @FXML
-    public void goToHelp() {Navigator.navigateTo("help.fxml", goToHelp);};
+    private void openHelp() {
+        String role = SessionManager.getInstance().getLoggedInUserRole();
+
+        switch (role.toUpperCase()) {
+            case "SUPER_ADMIN" -> Navigator.openHelpWindow("superadmin");
+            case "ADMIN" -> Navigator.openHelpWindow("admin");
+            case "STAFF" -> Navigator.openHelpWindow("staff");
+            default -> Navigator.openHelpWindow("default");
+        }
+    }
+
 
     @FXML
     public void logout() {

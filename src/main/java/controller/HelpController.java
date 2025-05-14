@@ -61,6 +61,28 @@ public class HelpController {
                 addHelpContent(bundle, "help.forgetpassword.q3", "help.forgetpassword.a3");
                 break;
 
+            case "staff":
+                addHelpContent(bundle, "help.staff.q1", "help.staff.a1");
+                addHelpContent(bundle, "help.staff.q2", "help.staff.a2");
+                addHelpContent(bundle, "help.staff.q3", "help.staff.a3");
+                addHelpContent(bundle, "help.staff.q4", "help.staff.a4");
+                addHelpContent(bundle, "help.staff.q5", "help.staff.a5");
+                break;
+
+            case "admin":
+                addHelpContent(bundle, "help.admin.q1", "help.admin.a1");
+                addHelpContent(bundle, "help.admin.q2", "help.admin.a2");
+                addHelpContent(bundle, "help.admin.q3", "help.admin.a3");
+                addHelpContent(bundle, "help.admin.q4", "help.admin.a4");
+                break;
+
+            case "superadmin":
+                addHelpContent(bundle, "help.superadmin.q1", "help.superadmin.a1");
+                addHelpContent(bundle, "help.superadmin.q2", "help.superadmin.a2");
+                addHelpContent(bundle, "help.superadmin.q3", "help.superadmin.a3");
+                addHelpContent(bundle, "help.superadmin.q4", "help.superadmin.a4");
+                break;
+
             default:
                 helpTitle.setText(bundle.getString("help.default.title"));
         }

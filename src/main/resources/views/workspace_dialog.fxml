@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="250" prefWidth="314.0" spacing="10" style="-fx-padding: 15;" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkspaceDialogController">
+<VBox fx:id="workscpaceDialog" alignment="CENTER" prefHeight="250" prefWidth="314.0" spacing="10" style="-fx-padding: 15;" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkspaceDialogController">
 
     <HBox alignment="CENTER_LEFT" spacing="10">
         <Label fx:id="nameLabel" styleClass="labels" text="Workspace Name:" />

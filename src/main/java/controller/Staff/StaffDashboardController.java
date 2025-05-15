@@ -6,8 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import repository.StaffRepository;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 
 import java.util.List;
@@ -28,6 +30,10 @@ public class StaffDashboardController {
     @FXML private TableColumn<RecentReservationsDTO, String> workspaceColumn;
     @FXML private TableColumn<RecentReservationsDTO, String> statusColumn;
 
+    @FXML private VBox navbarContainer;
+    @FXML private VBox ribbonContainer;
+    @FXML private VBox mainContentContainer;
+
     @FXML private ListView<String> upcomingReservationList;
 
     private final StaffRepository staffRepository = new StaffRepository();
@@ -47,6 +53,7 @@ public class StaffDashboardController {
         loadUpcomingReminders(userId);
 
         updateLanguage();
+        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

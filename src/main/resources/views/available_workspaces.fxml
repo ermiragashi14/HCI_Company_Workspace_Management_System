@@ -12,7 +12,7 @@
         <fx:include source="staff_navbar.fxml" />
     </VBox>
 
-    <VBox layoutX="197.0" layoutY="50.0" prefHeight="473.0" prefWidth="498.0" spacing="10.0">
+    <VBox fx:id="mainContentContainer" layoutX="197.0" layoutY="50.0" prefHeight="473.0" prefWidth="498.0" spacing="10.0">
 
         <Label fx:id="availableWorkspacesLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Available Workspaces" />
 
@@ -21,7 +21,7 @@
             <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="98.0" />
             <ComboBox fx:id="startTimeCombo" promptText="Start Time" />
             <ComboBox fx:id="endTimeCombo" promptText="End Time" />
-            <Button fx:id="checkAvailabilityButton" onAction="#checkAvailability" text="Check Availability" />
+            <Button fx:id="checkAvailabilityButton" onAction="#checkAvailability" styleClass="butonat" stylesheets="@../css/style.css" text="Check Availability" />
         </HBox>
 
         <TableView fx:id="workspaceTable" prefHeight="350.0" styleClass="tabela" stylesheets="@../css/style.css">

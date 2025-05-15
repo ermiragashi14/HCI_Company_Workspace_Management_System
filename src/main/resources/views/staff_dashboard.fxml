@@ -14,7 +14,7 @@
         <fx:include source="staff_navbar.fxml" />
     </VBox>
 
-    <VBox layoutX="200.0" layoutY="32.0" prefHeight="500.0" prefWidth="500.0" spacing="20.0" styleClass="admin-container" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="32.0">
+    <VBox fx:id="mainContentContainer" layoutX="200.0" layoutY="32.0" prefHeight="500.0" prefWidth="500.0" spacing="20.0" styleClass="admin-container" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="32.0">
 
 
         <HBox prefHeight="113.0" spacing="5.0">

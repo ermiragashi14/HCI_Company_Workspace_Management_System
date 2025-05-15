@@ -4,9 +4,11 @@ import dto.NotificationDTO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import model.User;
 import service.NotificationService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 
 public class SendNotificationController {
@@ -17,6 +19,7 @@ public class SendNotificationController {
     @FXML private RadioButton sendToOneRadio;
     @FXML private ComboBox<User> userComboBox;
     @FXML private Button backButton;
+    @FXML private VBox notificationsPage;
 
     private final NotificationService notificationService = new NotificationService();
 
@@ -36,6 +39,7 @@ public class SendNotificationController {
         group.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
             userComboBox.setVisible(sendToOneRadio.isSelected());
         });
+        KeyboardNavigator.enableNavigation(notificationsPage);
     }
 
     @FXML

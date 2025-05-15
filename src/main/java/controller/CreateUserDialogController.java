@@ -3,9 +3,11 @@ package controller;
 import dto.CreateUserDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import service.CreateUserService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 import java.util.ResourceBundle;
@@ -27,6 +29,7 @@ public class CreateUserDialogController {
     @FXML private Label phoneLabel;
     @FXML private Button createButton;
     @FXML private Text createNewUserText;
+    @FXML private AnchorPane createUser;
 
     private final CreateUserService createUserService = new CreateUserService();
     String role = SessionManager.getInstance().getLoggedInUserRole();
@@ -45,6 +48,7 @@ public class CreateUserDialogController {
             roleComboBox.getItems().add("STAFF");
         }
         roleComboBox.getSelectionModel().selectFirst();
+        KeyboardNavigator.enableNavigation(createUser);
     }
 
     private void updateLanguage(){

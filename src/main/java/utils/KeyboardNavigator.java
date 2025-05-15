@@ -100,7 +100,6 @@ public class KeyboardNavigator {
     }
 
     private static void traverseFocusableNodes(Node node, List<Node> result) {
-        // Vetëm komponentët që janë realisht interaktivë dhe jo konteinerë
         if (node.isFocusTraversable() && !(node instanceof Pane)) {
             result.add(node);
         }

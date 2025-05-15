@@ -2,9 +2,11 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 import utils.TranslationUtils;
@@ -20,6 +22,7 @@ public class HelpController {
     @FXML private VBox helpBox;
     @FXML private ComboBox<String> languageSelector;
     @FXML private Button closeButton;
+    @FXML private AnchorPane dialogRoot;
 
     private String helpSection = "default";
     private final Map<String, String> questionsAndAnswers = new HashMap<>();
@@ -31,6 +34,7 @@ public class HelpController {
         TranslationUtils.setupLanguageSelector(languageSelector);
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+        KeyboardNavigator.enableNavigation(dialogRoot);
     }
 
     private void updateLanguage() {

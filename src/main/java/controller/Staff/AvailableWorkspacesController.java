@@ -5,8 +5,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import service.WorkspaceService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 
 import java.time.LocalDate;
@@ -27,6 +29,10 @@ public class AvailableWorkspacesController {
     @FXML private TableColumn<WorkspaceResponseDTO, String> descriptionColumn;
     @FXML private TableColumn<WorkspaceResponseDTO, Integer> capacityColumn;
     @FXML private Label availableWorkspacesLabel;
+    @FXML private VBox mainContentContainer;
+    @FXML private VBox navbarContainer;
+    @FXML private VBox ribbonContainer;
+
 
     private final WorkspaceService workspaceService = new WorkspaceService();
     private ResourceBundle bundle;
@@ -49,6 +55,7 @@ public class AvailableWorkspacesController {
         checkAvailabilityButton.setOnAction(e -> checkAvailability());
 
         updateLanguage();
+        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

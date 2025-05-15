@@ -3,7 +3,9 @@ package controller;
 import dto.Workspace.WorkspaceRequestDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 
 import java.util.Optional;
@@ -19,6 +21,7 @@ public class WorkspaceDialogController {
     @FXML private Label nameLabel;
     @FXML private Label capacityLabel;
     @FXML private Label descriptionLabel;
+    @FXML private VBox workscpaceDialog;
 
     private Stage dialogStage;
     private WorkspaceRequestDTO result;
@@ -45,6 +48,7 @@ public class WorkspaceDialogController {
         });
 
         cancelButton.setOnAction(e -> dialogStage.close());
+        KeyboardNavigator.enableNavigation(workscpaceDialog);
     }
 
     private void updateLanguage() {

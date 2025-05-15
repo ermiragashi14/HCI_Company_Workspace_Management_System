@@ -5,9 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import service.SessionManager;
 import service.UserProfileService;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 
@@ -37,6 +39,7 @@ public class SettingsController {
     @FXML private Label companyEmailTextLabel;
     @FXML private Label fullNameTextLabel;
     @FXML private TitledPane companyInfoPane;
+    @FXML private AnchorPane settingsPage;
 
     private final UserProfileService userSettingsService = new UserProfileService();
     private ResourceBundle bundle;
@@ -67,6 +70,8 @@ public class SettingsController {
 
             companyNameLabel.setText(profile.getCompanyName());
             companyEmailLabel.setText(profile.getCompanyEmail());
+
+            KeyboardNavigator.enableNavigation(settingsPage);
         }
 
     private void updateLanguage() {

@@ -7,9 +7,11 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import model.Notification;
 import service.NotificationService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class NotificationController {
     @FXML private DatePicker dateFilter;
     @FXML private Button sendBtn;
     @FXML private Button goBackBtn;
+    @FXML private AnchorPane notify;
 
     private NotificationService notificationService=new NotificationService();
     private FilteredList<Notification> filteredData;
@@ -42,6 +45,7 @@ public class NotificationController {
         setupTable();
         loadNotifications();
         setupFilters();
+        KeyboardNavigator.enableNavigation(notify);
     }
 
     private void setupTable() {

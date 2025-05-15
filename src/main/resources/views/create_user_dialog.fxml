@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="390.0" prefWidth="471.0" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUserDialogController">
+<AnchorPane fx:id="createUser" prefHeight="390.0" prefWidth="471.0" styleClass="dialogjet" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUserDialogController">
 
     <children>
         <VBox layoutX="92.0" layoutY="103.0" prefHeight="219.0" prefWidth="310.0" spacing="15">

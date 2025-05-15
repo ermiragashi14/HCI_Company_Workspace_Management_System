@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minWidth="650.0" prefHeight="532.0" prefWidth="700.0" style="-fx-background-color: #B9CCBF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
+<AnchorPane fx:id="NewRez" minWidth="650.0" prefHeight="532.0" prefWidth="700.0" style="-fx-background-color: #B9CCBF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
 
     <children>
         <VBox layoutX="254.0" layoutY="121.0" prefHeight="337.0" prefWidth="253.0" spacing="10.0" styleClass="vbox-container" stylesheets="@../css/trying.css" AnchorPane.leftAnchor="254.0" AnchorPane.topAnchor="121.0">

@@ -4,8 +4,10 @@ import dto.ManageReservationDTO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import service.ManageReservationsService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 
 import java.util.List;
@@ -24,6 +26,10 @@ public class StaffMyReservationsController {
     @FXML private Button cancelButton;
     @FXML private Button refreshButton;
 
+    @FXML private VBox navbarContainer;
+    @FXML private VBox ribbonContainer;
+    @FXML private VBox mainContentContainer;
+
     private final ManageReservationsService service = new ManageReservationsService();
     private ResourceBundle bundle;
 
@@ -38,6 +44,7 @@ public class StaffMyReservationsController {
         refreshButton.setOnAction(e -> loadUserReservations());
 
         updateLanguage();
+        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

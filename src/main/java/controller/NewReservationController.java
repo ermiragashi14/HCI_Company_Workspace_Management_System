@@ -4,10 +4,12 @@ import dto.NewReservationDTO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import service.NewReservationService;
 import service.NotificationService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 
@@ -29,6 +31,7 @@ public class NewReservationController {
     @FXML private Button backButton;
     @FXML private VBox navbarContainer;
     @FXML private VBox ribbonContainer;
+    @FXML private AnchorPane NewRez;
 
     private final NewReservationService service = new NewReservationService();
     ResourceBundle bundle;
@@ -55,6 +58,7 @@ public class NewReservationController {
         
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+        KeyboardNavigator.enableNavigation(NewRez);
     }
 
     private void updateLanguage() {

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="510.0" prefWidth="700.0" style="-fx-background-color: #C7D8CC;" styleClass="&lt;StackPane layoutX=&quot;164.0&quot; layoutY=&quot;55.0&quot; prefHeight=&quot;371.0&quot; prefWidth=&quot;311.0&quot; styleClass=&quot;vbox-wrapper&quot;&gt;    &lt;VBox spacing=&quot;10&quot; styleClass=&quot;vbox-inner&quot;&gt;        &lt;!-- your VBox contents here --&gt;    &lt;/VBox&gt;&lt;/StackPane&gt;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingsController">
+<AnchorPane fx:id="settingsPage" prefHeight="510.0" prefWidth="700.0" style="-fx-background-color: #C7D8CC;" styleClass="&lt;StackPane layoutX=&quot;164.0&quot; layoutY=&quot;55.0&quot; prefHeight=&quot;371.0&quot; prefWidth=&quot;311.0&quot; styleClass=&quot;vbox-wrapper&quot;&gt;    &lt;VBox spacing=&quot;10&quot; styleClass=&quot;vbox-inner&quot;&gt;        &lt;!-- your VBox contents here --&gt;    &lt;/VBox&gt;&lt;/StackPane&gt;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingsController">
     <VBox layoutX="145.0" layoutY="11.0" prefHeight="483.0" prefWidth="400.0" spacing="10" style="-fx-background-color: #B9CCBF;" styleClass="vbox-container" stylesheets="@../css/trying.css">
 
         <HBox alignment="CENTER_LEFT" spacing="20">

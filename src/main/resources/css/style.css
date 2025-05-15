@@ -106,3 +106,23 @@ pinkish #FF5733
     -fx-font-style: italic;
     -fx-font-size: 14px;
 }
+.button:focused {
+    -fx-background-color: #d0e6f7;
+    -fx-border-color: #5aa9e6;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, #5aa9e6, 5, 0.5, 0, 0);
+}
+
+
+.text-field:focused {
+    -fx-background-color: #f0f8ff;
+    -fx-border-color: #5aa9e6;
+    -fx-border-width: 2px;
+}
+
+
+.combo-box:focused {
+    -fx-background-color: #f0f8ff;
+    -fx-border-color: #5aa9e6;
+    -fx-border-width: 2px;
+}

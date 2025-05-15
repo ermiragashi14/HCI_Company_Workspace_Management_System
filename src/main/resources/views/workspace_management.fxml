@@ -10,7 +10,7 @@
     </VBox>
     <VBox fx:id="navbarContainer" layoutX="0" layoutY="30.0" minHeight="480" prefWidth="195.0" />
 
-    <VBox layoutX="197.0" layoutY="50.0" prefHeight="430.0" prefWidth="498.0" spacing="10.0">
+    <VBox fx:id="mainContentContainer" layoutX="197.0" layoutY="50.0" prefHeight="430.0" prefWidth="498.0" spacing="10.0">
         <TableView fx:id="workspaceTable" prefHeight="394.0" prefWidth="510.0" styleClass="tabela" stylesheets="@../css/style.css">
             <columns>
                 <TableColumn fx:id="nameColumn" prefWidth="141.3999786376953" styleClass="titujt-tabela" text="Name" />

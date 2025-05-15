@@ -10,7 +10,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import dto.UserStatDTO;
+import javafx.scene.layout.VBox;
 import repository.ReportsAnalyticsRepository;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 
 import java.util.List;
@@ -34,6 +36,10 @@ public class ReportsAnalyticsController {
     @FXML private TableView<UserStatDTO> topUsersTable;
     @FXML private TableColumn<UserStatDTO, String> fullNameColumn;
     @FXML private TableColumn<UserStatDTO, Integer> reservationCountColumn;
+    @FXML private VBox navbarContainer;
+    @FXML private VBox ribbonContainer;
+    @FXML private VBox mainContentContainer;
+
 
     private final ReportsAnalyticsRepository repository = new ReportsAnalyticsRepository();
     ResourceBundle bundle;
@@ -48,6 +54,7 @@ public class ReportsAnalyticsController {
         loadMonthlyTrendsChart();
         setupTopUsersTable();
         loadTopUsers();
+        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

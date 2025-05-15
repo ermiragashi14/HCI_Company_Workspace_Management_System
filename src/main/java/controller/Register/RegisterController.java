@@ -5,9 +5,11 @@ import dto.Register.RegisterRequestDTO;
 import dto.Register.RegisterResultDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import service.SessionManager;
 import service.RegisterService;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 import utils.TranslationUtils;
@@ -26,6 +28,7 @@ public class RegisterController {
     @FXML private Label companyNameLabel, companyEmailLabel, companyPhoneLabel;
     @FXML private Label superadminNameLabel, superadminEmailLabel, superadminPhoneLabel;
     @FXML private Label passwordLabel, confirmPasswordLabel;
+    @FXML private AnchorPane registerRootPane;
 
     private final RegisterService registerService = new RegisterService();
     ResourceBundle bundle;
@@ -36,6 +39,7 @@ public class RegisterController {
         TranslationUtils.setupLanguageSelector(languageSelector);
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+        KeyboardNavigator.enableNavigation(registerRootPane);
     }
 
     private void updateLanguage() {

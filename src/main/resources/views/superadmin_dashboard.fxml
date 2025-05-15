@@ -18,7 +18,7 @@
         <fx:include source="superadmin_navbar.fxml" />
     </VBox>
 
-    <VBox layoutX="210.0" layoutY="50.0" prefHeight="500.0" prefWidth="500.0" spacing="20.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="30.0">
+    <VBox fx:id="mainContentContainer" layoutX="210.0" layoutY="50.0" prefHeight="500.0" prefWidth="500.0" spacing="20.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="30.0">
 
         <HBox prefHeight="113.0" prefWidth="500.0" spacing="5">
             <VBox alignment="CENTER" prefHeight="103.0" prefWidth="118.0" spacing="5" styleClass="admin-h" stylesheets="@../css/style.css">

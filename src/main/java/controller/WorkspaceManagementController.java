@@ -18,6 +18,7 @@ import javafx.util.converter.IntegerStringConverter;
 import service.SessionManager;
 import service.WorkspaceService;
 import javafx.scene.control.cell.TextFieldTableCell;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 import utils.TranslationUtils;
 
@@ -35,6 +36,8 @@ public class WorkspaceManagementController {
     @FXML private Button addButton;
     @FXML private Button deleteButton;
     @FXML private VBox navbarContainer;
+    @FXML private VBox ribbonContainer;
+    @FXML private VBox mainContentContainer;
 
 
     private final WorkspaceService service = new WorkspaceService();
@@ -53,6 +56,7 @@ public class WorkspaceManagementController {
         loadNavbar();
         addButton.setOnAction(e -> handleAdd());
         deleteButton.setOnAction(e -> handleDelete());
+        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

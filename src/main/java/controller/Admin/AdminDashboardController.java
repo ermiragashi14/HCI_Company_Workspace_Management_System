@@ -5,7 +5,9 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import repository.AdminRepository;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -25,6 +27,11 @@ public class AdminDashboardController {
 
     @FXML private LineChart<String, Number> reservationTrendsChart;
 
+    @FXML private VBox navbarContainer;
+    @FXML private VBox ribbonContainer;
+    @FXML private VBox mainContentContainer;
+
+
     private final AdminRepository adminRepository = new AdminRepository();
     ResourceBundle bundle;
 
@@ -36,6 +43,7 @@ public class AdminDashboardController {
         loadReservationTrendsChart();
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

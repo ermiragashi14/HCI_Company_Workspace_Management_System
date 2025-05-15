@@ -3,8 +3,10 @@ package controller.PasswordReset;
 import dto.PasswordReset.PasswordResetDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import service.PasswordResetService;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 import utils.TranslationUtils;
@@ -22,6 +24,7 @@ public class PasswordResetController {
     @FXML private ComboBox<String> languageSelector;
     @FXML private Text titleText;
     @FXML private Label emailLabel, otpLabel, newPasswordLabel, confirmPasswordLabel;
+    @FXML private AnchorPane passwordRootPane;
 
     private final PasswordResetService resetService = new PasswordResetService();
     ResourceBundle bundle;
@@ -32,6 +35,7 @@ public class PasswordResetController {
         TranslationUtils.setupLanguageSelector(languageSelector);
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+        KeyboardNavigator.enableNavigation(passwordRootPane);
     }
 
     private void updateLanguage() {

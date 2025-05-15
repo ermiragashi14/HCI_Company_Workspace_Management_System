@@ -4,9 +4,11 @@ import dto.LogIn.LoginRequestDTO;
 import dto.LoginResultDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import service.AuthService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 import utils.TranslationUtils;
@@ -27,6 +29,7 @@ public class LogInController {
     @FXML private Text welcomeText;
     @FXML private Text titleText;
     @FXML private Button helpButton;
+    @FXML private AnchorPane loginRootPane;
 
     private final AuthService authService = new AuthService();
     ResourceBundle bundle;
@@ -37,6 +40,8 @@ public class LogInController {
         TranslationUtils.setupLanguageSelector(languageSelector);
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+        KeyboardNavigator.enableNavigation(loginRootPane);
+
     }
 
     private void updateLanguage() {

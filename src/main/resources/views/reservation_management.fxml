@@ -10,10 +10,10 @@
             <fx:include source="ribbon.fxml" />
         </VBox>
         <VBox fx:id="navbarContainer" layoutX="0" layoutY="30.0" minHeight="480" prefWidth="195.0" />
-        <VBox layoutX="198.0" prefHeight="450.0" prefWidth="500.0" spacing="15" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="50.0">
+        <VBox fx:id="mainContentContainer" layoutX="198.0" prefHeight="450.0" prefWidth="500.0" spacing="15" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="50.0">
             <TitledPane fx:id="advancedfilterss" expanded="false" prefHeight="195.0" prefWidth="491.0" styleClass="tabela" stylesheets="@../css/style.css" text="🔍 Filters">
-                <VBox prefHeight="151.0" prefWidth="483.0" spacing="10" styleClass="tabela" stylesheets="@../css/style.css">
-                    <GridPane hgap="15" prefHeight="98.0" prefWidth="239.0" vgap="10">
+                <VBox fx:id="advancedFiltersContent"  focusTraversable="true" prefHeight="151.0" prefWidth="483.0" spacing="10" styleClass="tabela" stylesheets="@../css/style.css">
+                    <GridPane hgap="15"  focusTraversable="true" prefHeight="98.0" prefWidth="239.0" vgap="10">
                         <columnConstraints>
                             <ColumnConstraints percentWidth="30.0" />
                             <ColumnConstraints percentWidth="30.0" />

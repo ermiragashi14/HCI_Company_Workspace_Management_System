@@ -16,7 +16,7 @@
             <fx:include source="admin_navbar.fxml" />
         </VBox>
 
-        <VBox layoutX="199.0" layoutY="37.0" prefHeight="467.0" prefWidth="495.0" spacing="20" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="37.0">
+        <VBox fx:id="mainContentContainer" layoutX="199.0" layoutY="37.0" prefHeight="467.0" prefWidth="495.0" spacing="20" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="37.0">
 
             <HBox prefHeight="22.0" prefWidth="476.0" spacing="40" styleClass="admin-h" stylesheets="@../css/style.css">
                 <Label fx:id="totalReservationsText" styleClass="admin-labels">

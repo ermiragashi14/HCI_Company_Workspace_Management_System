@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import service.NotificationService;
 import service.SessionManager;
 import service.ManageReservationsService;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 
@@ -50,6 +51,10 @@ public class ReservationsManagementController {
     @FXML private TableColumn<ManageReservationDTO, Void> actionColumn;
     @FXML private VBox navbarContainer;
     @FXML private TitledPane advancedfilterss;
+    @FXML private VBox ribbonContainer;
+    @FXML private VBox mainContentContainer;
+    @FXML private VBox advancedFiltersContent;
+
 
     private final ManageReservationsService service = new ManageReservationsService();
     private ResourceBundle bundle;
@@ -65,6 +70,9 @@ public class ReservationsManagementController {
         loadAllReservations();
         applyRoleBasedAccessControl();
         loadNavbar();
+        advancedfilterss.setFocusTraversable(true);
+        KeyboardNavigator.enableTitledPaneKeyboardSupport(advancedfilterss, advancedFiltersContent);
+        KeyboardNavigator.enableAdvancedNavigation(ribbonContainer,navbarContainer,mainContentContainer,advancedfilterss,advancedFiltersContent);
     }
 
     public void updateLanguage() {

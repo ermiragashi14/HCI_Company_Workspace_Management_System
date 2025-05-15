@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #B9CCBF;" styleClass="login-register" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogIn.LogInController">
+<AnchorPane fx:id="loginRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #B9CCBF;" styleClass="login-register" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogIn.LogInController">
    <children>
       <Pane layoutX="188.0" layoutY="149.0" prefHeight="153.0" prefWidth="323.0">
          <children>
@@ -36,11 +36,11 @@
             <Text fx:id="welcomeText" fill="#900c3f" layoutX="131.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="labels" text="Welcome" />
          </children>
       </Pane>
+       <Button fx:id="loginButton" layoutX="295.0" layoutY="302.0" maxWidth="110.0" minHeight="26.0" minWidth="110.0" mnemonicParsing="false" onAction="#login" styleClass="butonat-dialog" text="Log In" />
       <Text fx:id="titleText" fill="#632020" layoutX="40.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Company Workspace Management System" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="619.3333740234375" />
       <Hyperlink fx:id="forgotYourPasswordLink" layoutX="410.0" layoutY="303.0" minWidth="146.0" onAction="#passwordReset" styleClass="links" stylesheets="@../css/style.css" text="Forgot your password?" />
       <Hyperlink fx:id="register" layoutX="483.0" layoutY="330.0" minWidth="70.0" onAction="#goToRegister" styleClass="links" stylesheets="@../css/style.css" text="Register" textFill="WHITE" />
        <ComboBox fx:id="languageSelector" layoutX="510.0" layoutY="13.0" minHeight="25.0" minWidth="92.0" prefHeight="25.0" prefWidth="92.0" />
        <Button fx:id="helpButton" layoutX="602.0" layoutY="13.0" minHeight="25.0" minWidth="92.0" mnemonicParsing="false" onAction="#openHelp" prefHeight="25.0" prefWidth="92.0" styleClass="butonat-dialog" text="Help" />
-      <Button fx:id="loginButton" layoutX="295.0" layoutY="302.0" maxWidth="110.0" minHeight="26.0" minWidth="110.0" mnemonicParsing="false" onAction="#login" styleClass="butonat-dialog" text="Log In" />
    </children>
 </AnchorPane>

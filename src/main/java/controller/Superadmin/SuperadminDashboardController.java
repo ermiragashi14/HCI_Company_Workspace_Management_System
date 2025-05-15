@@ -6,8 +6,10 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import repository.SuperadminRepository;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 
 import java.util.ResourceBundle;
@@ -26,6 +28,10 @@ public class SuperadminDashboardController {
     @FXML private LineChart<String, Number> reservationTrendsChart;
     @FXML private CategoryAxis xAxis;
     @FXML private NumberAxis yAxis;
+    @FXML private VBox navbarContainer;
+    @FXML private VBox ribbonContainer;
+    @FXML private VBox mainContentContainer;
+
 
     private final SuperadminRepository repo = new SuperadminRepository();
     private final int companyId = SessionManager.getInstance().getLoggedInCompanyId();
@@ -37,6 +43,7 @@ public class SuperadminDashboardController {
         loadReservationTrendsChart();
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
+        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

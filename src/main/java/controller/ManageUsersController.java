@@ -10,9 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import service.ManageUsersService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
 
@@ -47,7 +49,11 @@ public class ManageUsersController {
     @FXML private Label createdAtFilterLabel;
     @FXML private Label roleFilterLabel;
     @FXML private VBox navbarContainer;
-    @FXML private TitledPane AdvancedFilters;
+    @FXML private TitledPane advancedFilters;
+    @FXML private VBox ribbonContainer;
+    @FXML private VBox mainContentContainer;
+    @FXML private GridPane advancedFiltersContent;
+
 
     private final ManageUsersService userService = new ManageUsersService();
     ResourceBundle bundle;
@@ -62,6 +68,15 @@ public class ManageUsersController {
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
         loadNavbar();
+        KeyboardNavigator.enableTitledPaneKeyboardSupport(advancedFilters, advancedFiltersContent);
+        KeyboardNavigator.enableAdvancedNavigation(
+                navbarContainer,
+                ribbonContainer,
+                mainContentContainer,
+                advancedFilters,
+                advancedFiltersContent
+        );
+
     }
 
     private void updateLanguage() {
@@ -83,7 +98,7 @@ public class ManageUsersController {
         createdAtColumn.setText(bundle.getString("manage.users.createdAt"));
         actionColumn.setText(bundle.getString("manage.users.action"));
         avatarColumn.setText("Avatar");
-        AdvancedFilters.setText(bundle.getString("advanced.filters"));
+        advancedFilters.setText(bundle.getString("advanced.filters"));
     }
 
     private void loadNavbar() {

@@ -56,6 +56,14 @@ public class ManageReservationsService {
         }
     }
 
+    public boolean cancelAllReservationsByUser(int userId, int modifierId){
+        try {
+            return repo.cancelAllReservationsByUser(userId, modifierId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<String> getAllWorkspaceNames(int companyId) {
         try {
             return workspaceRepo.getWorkspaceNamesByCompanyId(companyId);

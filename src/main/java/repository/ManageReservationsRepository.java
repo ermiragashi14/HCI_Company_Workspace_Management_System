@@ -143,4 +143,20 @@ public class ManageReservationsRepository {
             return stmt.executeUpdate() > 0;
         }
     }
+
+    public boolean cancelAllReservationsByUser(int userId, int modifierId) throws SQLException {
+        String sql = "UPDATE reservation " +
+                "SET status = 'CANCELED', previous_status = status, modified_at = NOW(), modified_by = ? " +
+                "WHERE user_id = ? AND status = 'CONFIRMED'";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, modifierId);
+            stmt.setInt(2, userId);
+
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
 }

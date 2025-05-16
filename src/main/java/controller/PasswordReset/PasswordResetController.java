@@ -22,7 +22,7 @@ public class PasswordResetController {
     @FXML private PasswordField confirmPasswordField;
     @FXML private Button sendOtpButton;
     @FXML private Button submitButton;
-    @FXML private Hyperlink goBackToLoginLink;
+    @FXML private Hyperlink goBackLink;
     @FXML private ComboBox<String> languageSelector;
     @FXML private Text titleText;
     @FXML private Label emailLabel, otpLabel, newPasswordLabel, confirmPasswordLabel;
@@ -51,7 +51,7 @@ public class PasswordResetController {
         confirmPasswordLabel.setText(bundle.getString("passwordreset.confirmPassword"));
         sendOtpButton.setText(bundle.getString("passwordreset.sendOtp"));
         submitButton.setText(bundle.getString("passwordreset.submit"));
-        goBackToLoginLink.setText(bundle.getString("passwordreset.backToLogin"));
+        goBackLink.setText(bundle.getString("passwordreset.goBack"));
         languageSelector.setPromptText(bundle.getString("passwordreset.language"));
     }
 
@@ -112,8 +112,12 @@ public class PasswordResetController {
     }
 
     @FXML
-    private void goBackToLogin() {
-        Navigator.navigateTo("login.fxml", goBackToLoginLink);
+    private void goBack() {
+        if (SessionManager.getInstance().getLoggedInUserId() > 0) {
+            Navigator.navigateTo("settings.fxml", goBackLink);
+        } else {
+            Navigator.navigateTo("login.fxml", goBackLink);
+        }
     }
 
     private void showAlert(Alert.AlertType alertType, String titleKey, String messageKey) {

@@ -144,10 +144,24 @@ public class SettingsController {
 
     @FXML
     private void disableAccount() {
-        userSettingsService.disableUser(SessionManager.getInstance().getLoggedInUserId());
-        auditlog.log("DELETE", "This user deactivated their account!");
-        SessionManager.getInstance().clearSession();
-        Navigator.navigateTo("login.fxml", disableAccountButton);
+
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle(bundle.getString("settings.disable.confirm.title"));
+            confirm.setHeaderText(null);
+            confirm.setContentText(bundle.getString("settings.disable.confirm.message"));
+
+            ButtonType yes = new ButtonType(bundle.getString("button.yes"), ButtonBar.ButtonData.YES);
+            ButtonType no = new ButtonType(bundle.getString("button.no"), ButtonBar.ButtonData.NO);
+            confirm.getButtonTypes().setAll(yes, no);
+
+            confirm.showAndWait().ifPresent(response -> {
+                if (response == yes) {
+                    userSettingsService.disableUser(SessionManager.getInstance().getLoggedInUserId());
+                    auditlog.log("DELETE", "This user deactivated their account!");
+                    SessionManager.getInstance().clearSession();
+                    Navigator.navigateTo("login.fxml", disableAccountButton);
+                }
+            });
     }
 
     @FXML

@@ -21,7 +21,6 @@ public class StaffNavbarController {
     @FXML private Button reportsButton;
     @FXML private ImageView navbarProfileImage;
 
-    private final UserProfileService userSettingsService = new UserProfileService();
     ResourceBundle bundle;
 
     @FXML

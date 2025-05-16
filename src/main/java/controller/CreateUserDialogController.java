@@ -87,8 +87,7 @@ public class CreateUserDialogController {
             goBackToManageUsers();
 
         } catch (Exception e) {
-
-            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+            showAlert(Alert.AlertType.ERROR, bundle.getString("error.title"), e.getMessage());
         }
     }
 

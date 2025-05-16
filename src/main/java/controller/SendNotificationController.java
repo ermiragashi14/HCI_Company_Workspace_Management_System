@@ -75,24 +75,24 @@ public class SendNotificationController {
         int senderId = SessionManager.getInstance().getLoggedInUserId();
 
         if (message.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "sendNotification.alert.empty");
+            showAlert(Alert.AlertType.WARNING, bundle.getString("sendNotification.alert.empty"));
             return;
         }
 
         if (sendToAllRadio.isSelected()) {
             NotificationDTO dto = new NotificationDTO(-1, senderId, message, type);
             notificationService.sendToAll(dto);
-            showAlert(Alert.AlertType.INFORMATION, "sendNotification.alert.successAll");
+            showAlert(Alert.AlertType.INFORMATION, bundle.getString("sendNotification.alert.successAll"));
             auditlog.log("CREATE","A new notification was sent to all users!");
         } else {
             User selectedUser = userComboBox.getValue();
             if (selectedUser == null) {
-                showAlert(Alert.AlertType.WARNING, "sendNotification.alert.selectUser");
+                showAlert(Alert.AlertType.WARNING, bundle.getString("sendNotification.alert.selectUser"));
                 return;
             }
             NotificationDTO dto = new NotificationDTO(selectedUser.getId(), senderId, message, type);
             notificationService.sendToUser(dto);
-            showAlert(Alert.AlertType.INFORMATION, "sendNotification.alert.successOne");
+            showAlert(Alert.AlertType.INFORMATION, bundle.getString("sendNotification.alert.successOne"));
         }
         resetForm();
     }

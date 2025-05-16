@@ -23,13 +23,7 @@ public class NewReservationService {
         if (!start.isBefore(end)) {
             throw new IllegalArgumentException("Start time must be before end time.");
         }
-
-        try {
             return repo.getAvailableWorkspaces(date, start, end, companyId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return List.of();
-        }
     }
 
     public boolean createReservation(int userId, int workspaceId, LocalDate date, LocalTime start, LocalTime end) {
@@ -44,15 +38,11 @@ public class NewReservationService {
             throw new IllegalArgumentException("Start time must be before end time.");
         }
 
-        try {
             boolean isAvailable = repo.isWorkspaceAvailable(workspaceId, date, start, end);
             if (!isAvailable) {
                 throw new IllegalStateException("The workspace is already reserved during this time.");
             }
             return repo.createReservation(userId, workspaceId, date, start, end);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+
     }
 }

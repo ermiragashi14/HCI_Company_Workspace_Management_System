@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import service.ManageReservationsService;
 import service.ManageUsersService;
 import service.SessionManager;
 import utils.KeyboardNavigator;
@@ -57,6 +58,7 @@ public class ManageUsersController {
 
     private final ManageUsersService userService = new ManageUsersService();
     ResourceBundle bundle;
+    private final ManageReservationsService reservationservice= new ManageReservationsService();
 
     @FXML
     private void initialize() {
@@ -248,6 +250,10 @@ public class ManageUsersController {
                     confirm.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.YES) {
                             boolean success = userService.updateUserStatus(user.getId(), targetStatus);
+                            if(targetStatus.equals("DISABLED")){
+                                reservationservice.cancelAllReservationsByUser(user.getId(), SessionManager.getInstance().getLoggedInUserId());
+                            }
+
                             if (success) {
                                 onSearchClicked();
                             } else {

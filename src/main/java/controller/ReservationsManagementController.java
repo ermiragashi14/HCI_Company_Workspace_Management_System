@@ -68,7 +68,6 @@ public class ReservationsManagementController {
         setupComboBoxes();
         setupTableColumns();
         loadAllReservations();
-        applyRoleBasedAccessControl();
         loadNavbar();
         advancedfilterss.setFocusTraversable(true);
         KeyboardNavigator.enableTitledPaneKeyboardSupport(advancedfilterss, advancedFiltersContent);
@@ -239,12 +238,6 @@ public class ReservationsManagementController {
                 null, null, null, null, null, null
         );
         reservationTable.setItems(FXCollections.observableArrayList(reservations));
-    }
-
-    private void applyRoleBasedAccessControl() {
-        if ("ADMIN".equals(SessionManager.getInstance().getLoggedInUserRole())) {
-            // reserved for future role-specific UI controls
-        }
     }
 
     private String emptyOrNull(String input) {

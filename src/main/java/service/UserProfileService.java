@@ -4,6 +4,7 @@ import dto.UserProfileDTO;
 import model.Company;
 import model.User;
 import repository.CompanyRepository;
+import repository.ManageReservationsRepository;
 import repository.UserRepository;
 
 import java.io.File;
@@ -15,6 +16,7 @@ public class UserProfileService {
 
     private final UserRepository userRepository = new UserRepository();
     private final CompanyRepository companyRepository = new CompanyRepository();
+    private final ManageReservationsRepository reservationsRepository= new ManageReservationsRepository();
 
     public UserProfileDTO getUserProfile(int userId) {
         User user = userRepository.findById(userId);
@@ -55,6 +57,7 @@ public class UserProfileService {
     public void disableUser(int userId) {
         try {
             userRepository.updateUserStatus(userId, "DISABLED");
+            reservationsRepository.cancelAllReservationsByUser(userId, userId);
         } catch (Exception e) {
             e.printStackTrace();
         }

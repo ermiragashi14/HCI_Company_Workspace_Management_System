@@ -143,7 +143,7 @@ public class NotificationController {
                 selected.setReadStatus(true);
                 notificationsTable.refresh();
             } else {
-                showAlert("notifications.alert.notReceiver");
+                showAlert(bundle.getString("notifications.alert.notReceiver"));
             }
         }
     }
@@ -161,7 +161,7 @@ public class NotificationController {
 
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("notifications.alert.title");
+        alert.setTitle(bundle.getString("notifications.alert.title"));
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();

@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="510.0" prefWidth="695.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AuditLogController">
+<AnchorPane prefHeight="510.0" prefWidth="695.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AuditLogController">
 
     <VBox fx:id="ribbonContainer" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <fx:include source="ribbon.fxml" />
@@ -19,33 +13,48 @@
     <VBox fx:id="navbarContainer" minHeight="480.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
         <fx:include source="superadmin_navbar.fxml" />
     </VBox>
-    
-      
-          <VBox layoutX="206.0" layoutY="218.0" prefHeight="311.0" prefWidth="487.0" spacing="10">
 
-              <TableView fx:id="auditTable" prefHeight="273.0" prefWidth="501.0">
+    <VBox layoutX="206.0" layoutY="218.0" prefHeight="311.0" prefWidth="487.0" spacing="10">
+        <TableView fx:id="auditTable" prefHeight="256.0" prefWidth="487.0" styleClass="tabela" stylesheets="@../css/style.css">
             <columns>
-                <TableColumn fx:id="userFullNameColumn" prefWidth="110.0" text="User Full Name" />
-                <TableColumn fx:id="actionTypeColumn" prefWidth="110.0" text="Action Type" />
-                <TableColumn fx:id="detailsColumn" prefWidth="120.0" text="Details" />
-                <TableColumn fx:id="timestampColumn" prefWidth="120.0" text="Timestamp" />
+                <TableColumn fx:id="userFullNameColumn" prefWidth="110.0" styleClass="titujt-tabela" text="User Full Name" />
+                <TableColumn fx:id="actionTypeColumn" prefWidth="110.0" styleClass="titujt-tabela" text="Action Type" />
+                <TableColumn fx:id="detailsColumn" prefWidth="120.0" styleClass="titujt-tabela" text="Details" />
+                <TableColumn fx:id="timestampColumn" prefWidth="145.0" styleClass="titujt-tabela" text="Timestamp" />
             </columns>
         </TableView>
 
-              <HBox alignment="CENTER_RIGHT" spacing="10">
-            <Button fx:id="exportButton" onAction="#exportToPDF" text="Export to PDF" />
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button fx:id="exportButton" onAction="#exportToPDF" styleClass="butonat" stylesheets="@../css/style.css" text="📄 Export to PDF">
+            <HBox.margin>
+               <Insets right="5.0" top="5.0" />
+            </HBox.margin></Button>
         </HBox>
     </VBox>
-     <Label layoutX="371.0" layoutY="53.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Audit Logs" />
-         <Label layoutX="206.0" layoutY="106.0" text="Company:" />
-         <Label fx:id="companyNameLabel" layoutX="284.0" layoutY="106.0" prefHeight="17.0" prefWidth="79.0" text="-" />
-      <Button fx:id="searchButton" layoutX="450.0" layoutY="185.0" onAction="#onSearch" prefHeight="25.0" prefWidth="120.0" text="Search" />
-      <Button fx:id="resetButton" layoutX="580.0" layoutY="185.0" onAction="#onResetFilters" prefHeight="25.0" prefWidth="120.0" text="Reset" />
-     <HBox alignment="CENTER_LEFT" layoutX="199.0" layoutY="152.0" prefHeight="26.0" prefWidth="501.0" spacing="10">
-         <ComboBox fx:id="userFilter" prefHeight="25.0" prefWidth="120.0" promptText="User's Name" />
-         <ComboBox fx:id="actionTypeFilter" prefWidth="120.0" promptText="Action Type" />
-         <DatePicker fx:id="startDateFilter" prefHeight="25.0" prefWidth="120.0" promptText="From" />
-         <DatePicker fx:id="endDateFilter" prefHeight="25.0" prefWidth="120.0" promptText="To" />
-     </HBox>
+
+    <Label layoutX="371.0" layoutY="53.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Audit Logs" />
+
+    <Label layoutX="206.0" layoutY="106.0" styleClass="labels" stylesheets="@../css/style.css" text="Company:" />
+    <Label fx:id="companyNameLabel" layoutX="284.0" layoutY="106.0" prefHeight="17.0" prefWidth="79.0" styleClass="labels" stylesheets="@../css/style.css" text="-" />
+
+    <Button fx:id="searchButton" layoutX="450.0" layoutY="185.0" onAction="#onSearch" prefHeight="26.0" prefWidth="110.0" styleClass="butonat" stylesheets="@../css/style.css" text="🔍 Search">
+      <padding>
+         <Insets right="5.0" />
+      </padding></Button>
+
+    <Button fx:id="resetButton" layoutX="580.0" layoutY="185.0" onAction="#onResetFilters" prefHeight="26.0" prefWidth="103.0" styleClass="butonat" stylesheets="@../css/style.css" text="↻ Reset">
+      <padding>
+         <Insets right="10.0" />
+      </padding></Button>
+
+    <HBox alignment="CENTER_LEFT" layoutX="199.0" layoutY="152.0" prefHeight="26.0" prefWidth="501.0" spacing="10">
+        <ComboBox fx:id="userFilter" prefHeight="25.0" prefWidth="120.0" promptText="User's Name" />
+        <ComboBox fx:id="actionTypeFilter" prefHeight="25.0" prefWidth="120.0" promptText="Action Type" />
+        <DatePicker fx:id="startDateFilter" prefHeight="25.0" prefWidth="120.0" promptText="From" />
+        <DatePicker fx:id="endDateFilter" prefHeight="25.0" prefWidth="120.0" promptText="To">
+         <HBox.margin>
+            <Insets right="5.0" />
+         </HBox.margin></DatePicker>
+    </HBox>
 
 </AnchorPane>

@@ -13,7 +13,7 @@
 <AnchorPane fx:id="NewRez" minWidth="650.0" prefHeight="532.0" prefWidth="700.0" style="-fx-background-color: #B9CCBF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
 
     <children>
-        <VBox layoutX="254.0" layoutY="121.0" prefHeight="337.0" prefWidth="253.0" spacing="10.0" styleClass="vbox-container" stylesheets="@../css/trying.css" AnchorPane.leftAnchor="254.0" AnchorPane.topAnchor="121.0">
+        <VBox layoutX="254.0" layoutY="121.0" prefHeight="337.0" prefWidth="253.0" spacing="10.0" styleClass="vbox-container" stylesheets="@../css/style.css" AnchorPane.leftAnchor="254.0" AnchorPane.topAnchor="121.0">
          <VBox prefHeight="219.0" prefWidth="221.0">
             <children>
                    <DatePicker fx:id="datePicker" minWidth="221.0" prefHeight="25.0" prefWidth="119.0" styleClass="butonat" />
@@ -32,9 +32,9 @@
          <Label layoutX="293.0" layoutY="78.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" styleClass="admin-labels" stylesheets="@../css/style.css" text="New Reservation" />
 
          <HBox alignment="CENTER_RIGHT" layoutX="-31.0" layoutY="471.0" spacing="10" style="-fx-background-color: #B9CCBF;" styleClass="dialogjet" stylesheets="@../css/style.css" />
-          <Button fx:id="backButton" layoutX="576.0" layoutY="485.0" minWidth="110.0" onAction="#onBackClicked" styleClass="butonat" stylesheets="@../css/trying.css" />
-          <Button fx:id="cancelButton" layoutX="388.0" layoutY="485.0" minWidth="110.0" onAction="#onCancelClicked" styleClass="butonat" stylesheets="@../css/trying.css" />
-          <Button fx:id="reserveButton" layoutX="271.0" layoutY="485.0" minWidth="110.0" onAction="#onReserveClicked" styleClass="butonat" stylesheets="@../css/trying.css" />
+          <Button fx:id="backButton" layoutX="576.0" layoutY="485.0" minWidth="110.0" onAction="#onBackClicked" styleClass="butonat1" stylesheets="@../css/style.css" />
+          <Button fx:id="cancelButton" layoutX="388.0" layoutY="485.0" minWidth="110.0" onAction="#onCancelClicked" styleClass="butonat1" stylesheets="@../css/style.css" />
+          <Button fx:id="reserveButton" layoutX="271.0" layoutY="485.0" minWidth="110.0" onAction="#onReserveClicked" styleClass="butonat1" stylesheets="@../css/style.css" />
         <VBox fx:id="navbarContainer" minHeight="480.0" prefWidth="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
             <fx:include source="staff_navbar.fxml" />
         </VBox>

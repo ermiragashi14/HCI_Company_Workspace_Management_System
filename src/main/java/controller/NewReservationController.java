@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import service.AuditLogService;
 import service.NewReservationService;
 import service.NotificationService;
 import service.SessionManager;
@@ -36,6 +37,7 @@ public class NewReservationController {
     private final NewReservationService service = new NewReservationService();
     ResourceBundle bundle;
     private final NotificationService notificationService = new NotificationService();
+    private final AuditLogService auditlog=new AuditLogService();
 
     @FXML
     public void initialize() {
@@ -120,6 +122,7 @@ public class NewReservationController {
                     "Your reservation for " + selected.getWorkspaceName() + " on " + date + " has been confirmed."
             );
 
+            auditlog.log("CREATE", "This user made a reservation for "+selected.getWorkspaceName()+" on " + date + "!");
             showAlert(bundle.getString("new.reservation.successTitle"), bundle.getString("new.reservation.successMessage"));
         } else {
             showAlert(bundle.getString("new.reservation.errorTitle"), bundle.getString("new.reservation.errorMessage"));

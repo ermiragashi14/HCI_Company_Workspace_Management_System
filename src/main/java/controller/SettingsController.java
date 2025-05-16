@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import service.AuditLogService;
 import service.SessionManager;
 import service.UserProfileService;
 import utils.KeyboardNavigator;
@@ -43,6 +45,7 @@ public class SettingsController {
 
     private final UserProfileService userSettingsService = new UserProfileService();
     private ResourceBundle bundle;
+    private final AuditLogService auditlog=new AuditLogService();
 
         @FXML
         public void initialize() {
@@ -98,6 +101,7 @@ public class SettingsController {
         String newPhone = phoneField.getText().trim();
         if (!newPhone.isEmpty()) {
             userSettingsService.updatePhone(SessionManager.getInstance().getLoggedInUserId(), newPhone);
+            auditlog.log("UPDATE", "This user updated their phone number to: "+newPhone+"!");
         }
     }
 
@@ -111,6 +115,7 @@ public class SettingsController {
         if (file != null) {
             try {
                 userSettingsService.updateAvatar(SessionManager.getInstance().getLoggedInUserId(), file);
+                auditlog.log("UPDATE", "This user has updated their profile picture!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -140,26 +145,15 @@ public class SettingsController {
     @FXML
     private void disableAccount() {
         userSettingsService.disableUser(SessionManager.getInstance().getLoggedInUserId());
+        auditlog.log("DELETE", "This user deactivated their account!");
         SessionManager.getInstance().clearSession();
         Navigator.navigateTo("login.fxml", disableAccountButton);
     }
 
     @FXML
     private void onGoBackClicked() {
-        String role = SessionManager.getInstance().getLoggedInUserRole();
-
-        String fxml = switch (role.toUpperCase()) {
-            case "SUPER_ADMIN" -> "superadmin_dashboard.fxml";
-            case "ADMIN" -> "admin_dashboard.fxml";
-            case "STAFF" -> "staff_dashboard.fxml";
-            default -> null;
-        };
-
-        if (fxml != null) {
-            Navigator.navigateTo(fxml, goBackButton);
-        } else {
-            System.err.println("Unknown role or no dashboard assigned.");
-        }
+            Stage stage = (Stage) settingsPage.getScene().getWindow();
+            stage.close();
     }
 
 }

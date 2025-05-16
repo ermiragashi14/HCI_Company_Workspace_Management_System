@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import service.AuditLogService;
 import service.SessionManager;
 import service.WorkspaceService;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -43,6 +44,7 @@ public class WorkspaceManagementController {
     private final WorkspaceService service = new WorkspaceService();
     private ObservableList<WorkspaceResponseDTO> data;
     private ResourceBundle bundle;
+    private final AuditLogService auditlog=new AuditLogService();
 
     @FXML
     public void initialize() {
@@ -147,6 +149,7 @@ public class WorkspaceManagementController {
             controller.getResult().ifPresent(dto -> {
                 int companyId = SessionManager.getInstance().getLoggedInCompanyId();
                 service.createWorkspace(dto, companyId);
+                auditlog.log("CREATE","A new workspace named: "+dto.getName()+" was added!");
                 loadWorkspaces();
             });
 
@@ -164,6 +167,7 @@ public class WorkspaceManagementController {
             confirm.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
                     service.deleteWorkspace(selected.getId());
+                    auditlog.log("DELETE", "Workspace named: "+selected.getName()+ " was deleted!");
                     loadWorkspaces();
                 }
             });
@@ -173,5 +177,7 @@ public class WorkspaceManagementController {
     private void updateWorkspace(WorkspaceResponseDTO dto) {
         WorkspaceRequestDTO updated = new WorkspaceRequestDTO(dto.getName(), dto.getCapacity(), dto.getDescription());
         service.updateWorkspace(dto.getId(), updated);
+        auditlog.log("UPDATE", "Workspace named: "+updated.getName()+" was updated");
+
     }
 }

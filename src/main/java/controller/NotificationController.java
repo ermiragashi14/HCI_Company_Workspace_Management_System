@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.Notification;
 import service.NotificationService;
 import service.SessionManager;
@@ -121,20 +122,8 @@ public class NotificationController {
 
     @FXML
     private void handleGoBack() {
-        String role = SessionManager.getInstance().getLoggedInUserRole();
-
-        String fxml = switch (role.toUpperCase()) {
-            case "SUPER_ADMIN" -> "superadmin_dashboard.fxml";
-            case "ADMIN" -> "admin_dashboard.fxml";
-            case "STAFF" -> "staff_dashboard.fxml";
-            default -> null;
-        };
-
-        if (fxml != null) {
-            Navigator.navigateTo(fxml, goBackBtn);
-        } else {
-            System.err.println("Unknown role or no dashboard assigned.");
-        }
+        Stage stage = (Stage) notify.getScene().getWindow();
+        stage.close();
     }
 
     private void showAlert(String msg) {

@@ -9,6 +9,7 @@ module com.example.hci_company_workspace_management_system {
     requires mysql.connector.j;
     requires jakarta.mail;
     requires java.desktop;
+    requires itextpdf;
 
     opens controller to javafx.fxml;
     opens dto to javafx.base;

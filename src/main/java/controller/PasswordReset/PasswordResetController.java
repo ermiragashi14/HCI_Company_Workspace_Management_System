@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import service.AuditLogService;
 import service.PasswordResetService;
+import service.SessionManager;
 import utils.KeyboardNavigator;
 import utils.Navigator;
 import utils.TranslationManager;
@@ -28,6 +30,7 @@ public class PasswordResetController {
 
     private final PasswordResetService resetService = new PasswordResetService();
     ResourceBundle bundle;
+    private final AuditLogService auditlog= new AuditLogService();
 
     @FXML
     private void initialize() {
@@ -64,6 +67,7 @@ public class PasswordResetController {
 
         try {
             resetService.sendOtp(email);
+            auditlog.log("INFO", "An OTP code was sent to this user!");
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.otp_sent");
         } catch (IllegalArgumentException ex) {
             showAlert(Alert.AlertType.ERROR, "error.title", ex.getMessage());
@@ -91,6 +95,8 @@ public class PasswordResetController {
 
         try {
             resetService.resetPassword(dto);
+            String details="This user changed their password!";
+            auditlog.log("UPDATE",details);
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.password_reset");
             Navigator.navigateTo("login.fxml", submitButton);
         } catch (IllegalArgumentException ex) {

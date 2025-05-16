@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import service.AuditLogService;
 import service.CreateUserService;
 import service.SessionManager;
 import utils.KeyboardNavigator;
@@ -35,6 +36,7 @@ public class CreateUserDialogController {
     String role = SessionManager.getInstance().getLoggedInUserRole();
     int companyId = SessionManager.getInstance().getLoggedInCompanyId();
     ResourceBundle bundle;
+    private final AuditLogService auditlog=new AuditLogService();
 
     @FXML
     public void initialize() {
@@ -79,6 +81,8 @@ public class CreateUserDialogController {
             );
 
             createUserService.createUser(role, companyId,dto);
+            String details=dto.getRole()+" user named "+dto.getFullName()+" was created!";
+            auditlog.log("CREATE", details);
             showAlert(Alert.AlertType.INFORMATION, bundle.getString("create.user.dialog.userCreated"), bundle.getString("create.user.dialog.success"));
             goBackToManageUsers();
 

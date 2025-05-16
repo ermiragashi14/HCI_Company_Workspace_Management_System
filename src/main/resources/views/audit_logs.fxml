@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.AuditLogController"
+            prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #F4F4F4;">
+
+
+    <VBox spacing="10" layoutX="20" layoutY="20" prefWidth="660" prefHeight="460">
+        <Label text="Audit Logs" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Label text="Company:" />
+            <Label fx:id="companyNameLabel" text="-" />
+        <HBox spacing="10" alignment="CENTER_LEFT" >
+            <TextField fx:id="userIdFilter" promptText="User ID" />
+            <ComboBox fx:id="actionTypeFilter" promptText="Action Type" />
+            <DatePicker fx:id="startDateFilter" promptText="From" />
+            <DatePicker fx:id="endDateFilter" promptText="To" />
+            <Button text="Search" onAction="#onSearch" />
+            <Button text="Reset" onAction="#onResetFilters" />
+        </HBox>
+
+        <TableView fx:id="auditTable" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="userFullNameColumn" text="User Full Name" prefWidth="80"/>
+                <TableColumn fx:id="actionTypeColumn" text="Action Type" prefWidth="120"/>
+                <TableColumn fx:id="detailsColumn" text="Details" prefWidth="200"/>
+                <TableColumn fx:id="timestampColumn" text="Timestamp" prefWidth="150"/>
+            </columns>
+        </TableView>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Export to PDF" onAction="#exportToPDF" />
+            <Button text="Back" onAction="#goBack" />
+        </HBox>
+    </VBox>
+
+</AnchorPane>

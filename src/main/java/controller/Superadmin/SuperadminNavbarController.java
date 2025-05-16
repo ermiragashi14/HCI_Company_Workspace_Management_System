@@ -67,7 +67,7 @@ public class SuperadminNavbarController {
 
     @FXML
     private void goToAuditLog(ActionEvent event) {
-        Navigator.navigateTo("audit_log.fxml", (Node) event.getSource());
+        Navigator.navigateTo("audit_logs.fxml", (Node) event.getSource());
     }
 
     @FXML

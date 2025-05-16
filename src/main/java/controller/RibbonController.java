@@ -10,9 +10,6 @@ import utils.TranslationUtils;
 public class RibbonController {
 
     @FXML private ComboBox<String> languageSelector;
-    @FXML private Button goToSettings;
-    @FXML private Button goToNotifications;
-    @FXML private Button goToHelp;
     @FXML private Button goToLogout;
 
     @FXML
@@ -21,10 +18,13 @@ public class RibbonController {
     }
 
     @FXML
-    public void goToSettings() {Navigator.navigateTo("settings.fxml", goToSettings);}
+    public void goToSettings() {
+        Navigator.openPopupWindow("settings.fxml", "Settings");}
 
     @FXML
-    public void goToNotifications() {Navigator.navigateTo("notifications.fxml", goToNotifications);}
+    public void goToNotifications() {
+        Navigator.openPopupWindow("notifications.fxml", "Notifications");
+    }
 
     @FXML
     private void openHelp() {

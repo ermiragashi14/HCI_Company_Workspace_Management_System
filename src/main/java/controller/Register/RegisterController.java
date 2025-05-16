@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import service.AuditLogService;
 import service.SessionManager;
 import service.RegisterService;
 import utils.KeyboardNavigator;
@@ -32,6 +33,7 @@ public class RegisterController {
 
     private final RegisterService registerService = new RegisterService();
     ResourceBundle bundle;
+    private final AuditLogService auditlog=new AuditLogService();
 
     @FXML
     private void initialize() {
@@ -86,6 +88,7 @@ public class RegisterController {
             SessionManager.getInstance().setLoggedInUser(result.getUserId(), "SUPER_ADMIN", result.getCompanyId());
 
             showAlert(Alert.AlertType.INFORMATION, "success.title", "success.registration_successful");
+            auditlog.log("CREATE", "You have successfully registered the company "+companyDTO.getName()+" and yourself!");
             Navigator.navigateTo("superadmin_dashboard.fxml", registerButton);
 
         } catch (IllegalArgumentException ex) {

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -47,6 +48,23 @@ public class Navigator {
             e.printStackTrace();
         }
     }
+
+    public static void openPopupWindow(String fxmlFile, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Navigator.class.getResource("/views/" + fxmlFile));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL); // KJO bllokon parent window
+            stage.showAndWait(); // Wait derisa dialogu të mbyllet
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
 

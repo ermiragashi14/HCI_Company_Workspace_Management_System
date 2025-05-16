@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import model.User;
+import service.AuditLogService;
 import service.NotificationService;
 import service.SessionManager;
 import utils.KeyboardNavigator;
@@ -22,6 +23,7 @@ public class SendNotificationController {
     @FXML private VBox notificationsPage;
 
     private final NotificationService notificationService = new NotificationService();
+    private final AuditLogService auditlog=new AuditLogService();
 
     @FXML
     public void initialize() {
@@ -57,6 +59,7 @@ public class SendNotificationController {
             NotificationDTO dto = new NotificationDTO(-1, senderId, message, type);
             notificationService.sendToAll(dto);
             showAlert(Alert.AlertType.INFORMATION, "Notification sent to all users.");
+            auditlog.log("CREATE","A new notification was sent to all users!");
         } else {
             User selectedUser = userComboBox.getValue();
             if (selectedUser == null) {

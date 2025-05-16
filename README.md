@@ -46,18 +46,18 @@ This desktop application was developed as a semester project in the course **"Hu
 ## Screenshots
 - **Super admin dashboard:**
 
-![Screenshot (387)](https://github.com/user-attachments/assets/be40559f-7aa6-4e33-a996-539f55b90bb0)
+<img src="https://github.com/user-attachments/assets/be40559f-7aa6-4e33-a996-539f55b90bb0" alt="Screenshot (387)" width="600"/>
 
 - **Reservations Management:**
 
-![Screenshot (389)](https://github.com/user-attachments/assets/0160cfbc-45b6-4c99-ae78-e12cd9c6376f)
+<img src="https://github.com/user-attachments/assets/0160cfbc-45b6-4c99-ae78-e12cd9c6376f" alt="Screenshot (389)" width="600"/>
 
 - **Staff Dashboard:**
 
-![Screenshot (391)](https://github.com/user-attachments/assets/ec6222fe-da5b-4510-94f8-9bef7acaaee9)
+<img src="https://github.com/user-attachments/assets/ec6222fe-da5b-4510-94f8-9bef7acaaee9" alt="Screenshot (391)" width="600"/>
 
 
 ##  Contributors
 
-Ermira Gashi 
-Erëza Temaj
+**Ermira Gashi,** 
+**Erëza Temaj**

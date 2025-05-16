@@ -25,9 +25,9 @@
 }
 
 .navbar-button:hover {
-    -fx-background-color: #0f3c4c;
-    -fx-border-color: #4d0b22;
-    -fx-text-fill: white;
+    -fx-background-color: #d3eaf2;
+    -fx-border-color: #2187ab;
+    -fx-text-fill: #0f3c4c;
 
 }
 
@@ -62,6 +62,9 @@
     -fx-background-color: transparent;
     -fx-text-fill: #3ba1c5;
 }
+.ribbon-button:hover{
+    -fx-background-color: #d3eaf2;
+}
 .tabela{
     -fx-background-color: #d3eaf2;
 
@@ -79,6 +82,11 @@
     -fx-font-weight: bold;
 
 }
+.butonat:hover{
+    -fx-background-color: #d3eaf2;
+        -fx-border-color: #2187ab;
+        -fx-text-fill: #0f3c4c;
+}
 .dialogjet{
     -fx-background-color: #d3eaf2;
 }
@@ -94,18 +102,27 @@
     -fx-font-size: 14px;
 
 }
+.butonat-dialog:hover{
+    -fx-background-color: #d3eaf2;
+        -fx-border-color: #2187ab;
+        -fx-text-fill: #0f3c4c;
+
+}
 .login-register{
    -fx-background-color: linear-gradient(to bottom, #FBE5C0, #900C3F);
 }
 .title{
     -fx-text-fill: #0f3c4c;
     -fx-font-weight: bold;
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
 }
 .links{
     -fx-text-fill: white;
     -fx-font-style: italic;
     -fx-font-size: 14px;
+}
+.links:hover{
+    -fx-text-fill: #0f3c4c;
 }
 .button:focused {
     -fx-background-color: #d0e6f7;
@@ -159,8 +176,9 @@
 
 
 .butonat1:hover {
-    -fx-background-color: #a8164b;
-    -fx-border-color: #4d0b22;
+   -fx-background-color: #d3eaf2;
+       -fx-border-color: #2187ab;
+       -fx-text-fill: #0f3c4c;
 }
 
 
@@ -168,13 +186,6 @@
     -fx-background-color: #6c0a32;
     -fx-translate-y: 1;
     -fx-effect: none;
-}
-
-
-
-.butonat1:hover {
-    -fx-background-color: linear-gradient(to bottom, #B0E6D1, #92CCB9);
-    -fx-border-color: #3D6F65;
 }
 
 .butonat1:pressed {
@@ -197,9 +208,10 @@
     -fx-background-color: #a71d2a;
 }
 
+
 .labels {
     -fx-text-fill: #0f3c4c;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 

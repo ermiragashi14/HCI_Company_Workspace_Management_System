@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="notify" prefHeight="510.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NotificationController">
 
@@ -35,7 +36,10 @@
         <HBox alignment="CENTER_RIGHT" spacing="10" />
     </VBox>
 
-    <Label fx:id="pageTitleLabel" layoutX="220.0" layoutY="30.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="📬 Notifications Center" textFill="#1a6985" />
+    <Label fx:id="pageTitleLabel" layoutX="262.0" layoutY="31.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="📬 Notifications Center" textFill="#1a6985">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
 
     <Button fx:id="markReadBtn" layoutX="569.0" layoutY="453.0" onAction="#handleMarkAsRead" prefHeight="26.0" prefWidth="106.0" styleClass="butonat" stylesheets="@../css/style.css" text="Mark as Read" />
 

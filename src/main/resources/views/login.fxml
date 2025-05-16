@@ -31,7 +31,10 @@
          </children>
       </Pane>
        <Button fx:id="loginButton" layoutX="295.0" layoutY="302.0" maxWidth="110.0" minHeight="26.0" minWidth="110.0" mnemonicParsing="false" onAction="#login" styleClass="butonat-dialog" text="Log In" />
-      <Text fx:id="titleText" fill="#1a6985" layoutX="40.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Company Workspace Management System" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="619.3333740234375" />
+      <Text fx:id="titleText" fill="#1a6985" layoutX="40.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Company Workspace Management System" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="619.3333740234375">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Text>
       <Hyperlink fx:id="forgotYourPasswordLink" layoutX="410.0" layoutY="303.0" minWidth="146.0" onAction="#passwordReset" styleClass="links" stylesheets="@../css/style.css" text="Forgot your password?" />
       <Hyperlink fx:id="register" layoutX="483.0" layoutY="330.0" minWidth="70.0" onAction="#goToRegister" styleClass="links" stylesheets="@../css/style.css" text="Register" textFill="WHITE" />
        <ComboBox fx:id="languageSelector" layoutX="510.0" layoutY="13.0" minHeight="25.0" minWidth="92.0" prefHeight="25.0" prefWidth="92.0" />

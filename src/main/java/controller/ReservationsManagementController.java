@@ -71,7 +71,7 @@ public class ReservationsManagementController {
         loadNavbar();
         advancedfilterss.setFocusTraversable(true);
         KeyboardNavigator.enableTitledPaneKeyboardSupport(advancedfilterss, advancedFiltersContent);
-        KeyboardNavigator.enableAdvancedNavigation(ribbonContainer,navbarContainer,mainContentContainer,advancedfilterss,advancedFiltersContent);
+        KeyboardNavigator.enableAdvancedNavigation(false, ribbonContainer,navbarContainer,mainContentContainer,advancedfilterss,advancedFiltersContent);
     }
 
     public void updateLanguage() {

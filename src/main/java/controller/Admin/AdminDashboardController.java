@@ -43,7 +43,7 @@ public class AdminDashboardController {
         loadReservationTrendsChart();
         updateLanguage();
         TranslationManager.addListener(this::updateLanguage);
-        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
+        KeyboardNavigator.enableFullNavigation(false, navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

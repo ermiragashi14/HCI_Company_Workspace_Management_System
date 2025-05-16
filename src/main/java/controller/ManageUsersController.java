@@ -72,6 +72,7 @@ public class ManageUsersController {
         loadNavbar();
         KeyboardNavigator.enableTitledPaneKeyboardSupport(advancedFilters, advancedFiltersContent);
         KeyboardNavigator.enableAdvancedNavigation(
+                false,
                 navbarContainer,
                 ribbonContainer,
                 mainContentContainer,

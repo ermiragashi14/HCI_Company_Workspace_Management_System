@@ -55,7 +55,7 @@ public class AvailableWorkspacesController {
         checkAvailabilityButton.setOnAction(e -> checkAvailability());
 
         updateLanguage();
-        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
+        KeyboardNavigator.enableFullNavigation(false, navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

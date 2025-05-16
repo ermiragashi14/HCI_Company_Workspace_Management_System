@@ -13,7 +13,7 @@ import java.util.List;
 
 public class KeyboardNavigator {
 
-    public static void enableFullNavigation(Pane navbar, Pane ribbon, Pane content) {
+    public static void enableFullNavigation(boolean focusInitially, Pane navbar, Pane ribbon, Pane content) {
         List<Node> focusables = new ArrayList<>();
         focusables.addAll(getFocusableNodes(navbar));
         focusables.addAll(getFocusableNodes(ribbon));
@@ -21,12 +21,20 @@ public class KeyboardNavigator {
 
         addArrowKeyNavigation(focusables);
 
-        if (!focusables.isEmpty()) {
+        if (focusInitially && !focusables.isEmpty() && focusables.stream().noneMatch(Node::isFocused)) {
             Platform.runLater(() -> focusables.get(0).requestFocus());
         }
     }
 
-    public static void enableAdvancedNavigation(Pane navbar, Pane ribbon, Pane content, TitledPane advancedPane, Pane advancedFiltersContent) {
+
+    public static void enableAdvancedNavigation(
+            boolean focusInitially,
+            Pane navbar,
+            Pane ribbon,
+            Pane content,
+            TitledPane advancedPane,
+            Pane advancedFiltersContent) {
+
         List<Node> focusables = new ArrayList<>();
         focusables.addAll(getFocusableNodes(navbar));
         focusables.addAll(getFocusableNodes(ribbon));
@@ -34,7 +42,7 @@ public class KeyboardNavigator {
 
         addArrowKeyNavigation(focusables);
 
-        if (!focusables.isEmpty()) {
+        if (focusInitially && !focusables.isEmpty() && focusables.stream().noneMatch(Node::isFocused)) {
             Platform.runLater(() -> focusables.get(0).requestFocus());
         }
 
@@ -58,6 +66,7 @@ public class KeyboardNavigator {
         });
     }
 
+
     public static void enableNavigation(Pane... containers) {
         List<Node> focusables = new ArrayList<>();
         for (Pane container : containers) {
@@ -70,6 +79,8 @@ public class KeyboardNavigator {
             Platform.runLater(() -> focusables.get(0).requestFocus());
         }
     }
+
+
 
     public static void enableTitledPaneKeyboardSupport(TitledPane titledPane, Pane contentPane) {
         titledPane.setFocusTraversable(true);

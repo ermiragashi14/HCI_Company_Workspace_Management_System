@@ -44,7 +44,7 @@ public class StaffMyReservationsController {
         refreshButton.setOnAction(e -> loadUserReservations());
 
         updateLanguage();
-        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
+        KeyboardNavigator.enableFullNavigation(false, navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

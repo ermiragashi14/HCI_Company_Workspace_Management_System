@@ -54,7 +54,7 @@ public class ReportsAnalyticsController {
         loadMonthlyTrendsChart();
         setupTopUsersTable();
         loadTopUsers();
-        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
+        KeyboardNavigator.enableFullNavigation(false, navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

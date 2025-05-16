@@ -53,7 +53,7 @@ public class StaffDashboardController {
         loadUpcomingReminders(userId);
 
         updateLanguage();
-        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
+        KeyboardNavigator.enableFullNavigation(false, navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

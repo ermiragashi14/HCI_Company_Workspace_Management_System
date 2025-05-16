@@ -58,7 +58,7 @@ public class WorkspaceManagementController {
         loadNavbar();
         addButton.setOnAction(e -> handleAdd());
         deleteButton.setOnAction(e -> handleDelete());
-        KeyboardNavigator.enableFullNavigation(navbarContainer, ribbonContainer, mainContentContainer);
+        KeyboardNavigator.enableFullNavigation(false, navbarContainer, ribbonContainer, mainContentContainer);
     }
 
     private void updateLanguage() {

@@ -7,9 +7,11 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import model.User;
 import service.AuditLogService;
 import service.SessionManager;
+import utils.KeyboardNavigator;
 import utils.TranslationManager;
 
 import java.time.LocalDate;
@@ -30,6 +32,10 @@ public class AuditLogController {
         @FXML private Button searchButton;
         @FXML private Button resetButton;
         @FXML private Button exportButton;
+        @FXML private VBox navbarContainer;
+        @FXML private VBox ribbonContainer;
+        @FXML private VBox mainContentContainer;
+        @FXML private VBox filterContainer;
 
         private final AuditLogService service = new AuditLogService();
         private ResourceBundle bundle;
@@ -52,6 +58,14 @@ public class AuditLogController {
             actionTypeFilter.setItems(FXCollections.observableArrayList("INFO", "UPDATE", "DELETE", "CREATE"));
             setColumnFactories();
             loadLogs(null, null, null, null);
+
+            KeyboardNavigator.enableNavigation(
+                    navbarContainer,
+                    ribbonContainer,
+                    filterContainer,
+                    mainContentContainer
+            );
+
 
         }
 

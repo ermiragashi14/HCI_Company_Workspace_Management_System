@@ -11,6 +11,9 @@ import service.NotificationService;
 import service.SessionManager;
 import utils.KeyboardNavigator;
 import utils.Navigator;
+import utils.TranslationManager;
+
+import java.util.ResourceBundle;
 
 public class SendNotificationController {
 
@@ -21,9 +24,12 @@ public class SendNotificationController {
     @FXML private ComboBox<User> userComboBox;
     @FXML private Button backButton;
     @FXML private VBox notificationsPage;
+    @FXML private Label titleLabel;
+    @FXML private Button sendNotificationButton;
 
     private final NotificationService notificationService = new NotificationService();
     private final AuditLogService auditlog=new AuditLogService();
+    private ResourceBundle bundle;
 
     @FXML
     public void initialize() {
@@ -41,8 +47,26 @@ public class SendNotificationController {
         group.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
             userComboBox.setVisible(sendToOneRadio.isSelected());
         });
+
+        bundle = TranslationManager.getBundle();
+        TranslationManager.addListener(this::updateLanguage);
+        updateLanguage();
+
         KeyboardNavigator.enableNavigation(notificationsPage);
     }
+
+    private void updateLanguage() {
+        bundle=TranslationManager.getBundle();
+        titleLabel.setText(bundle.getString("sendNotification.title"));
+        messageField.setPromptText(bundle.getString("sendNotification.prompt.message"));
+        typeComboBox.setPromptText(bundle.getString("sendNotification.prompt.type"));
+        userComboBox.setPromptText(bundle.getString("sendNotification.prompt.user"));
+        sendNotificationButton.setText(bundle.getString("sendNotification.button.send"));
+        sendToAllRadio.setText(bundle.getString("sendNotification.radio.all"));
+        sendToOneRadio.setText(bundle.getString("sendNotification.radio.one"));
+        backButton.setText(bundle.getString("sendNotification.button.back"));
+    }
+
 
     @FXML
     private void handleSendNotification() {
@@ -51,24 +75,24 @@ public class SendNotificationController {
         int senderId = SessionManager.getInstance().getLoggedInUserId();
 
         if (message.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Message cannot be empty.");
+            showAlert(Alert.AlertType.WARNING, "sendNotification.alert.empty");
             return;
         }
 
         if (sendToAllRadio.isSelected()) {
             NotificationDTO dto = new NotificationDTO(-1, senderId, message, type);
             notificationService.sendToAll(dto);
-            showAlert(Alert.AlertType.INFORMATION, "Notification sent to all users.");
+            showAlert(Alert.AlertType.INFORMATION, "sendNotification.alert.successAll");
             auditlog.log("CREATE","A new notification was sent to all users!");
         } else {
             User selectedUser = userComboBox.getValue();
             if (selectedUser == null) {
-                showAlert(Alert.AlertType.WARNING, "Please select a user.");
+                showAlert(Alert.AlertType.WARNING, "sendNotification.alert.selectUser");
                 return;
             }
             NotificationDTO dto = new NotificationDTO(selectedUser.getId(), senderId, message, type);
             notificationService.sendToUser(dto);
-            showAlert(Alert.AlertType.INFORMATION, "Notification sent to selected user.");
+            showAlert(Alert.AlertType.INFORMATION, "sendNotification.alert.successOne");
         }
         resetForm();
     }
@@ -87,7 +111,7 @@ public class SendNotificationController {
 
     private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
-        alert.setTitle("Notification");
+        alert.setTitle(bundle.getString("sendNotification.alert.title"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

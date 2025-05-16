@@ -9,7 +9,7 @@
       fx:controller="controller.SendNotificationController"
       spacing="15" alignment="CENTER" style="-fx-padding: 20;">
 
-    <Label text="Send Notification" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <Label fx:id="titleLabel" text="Send Notification" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
     <TextArea fx:id="messageField" promptText="Enter your message..." prefRowCount="4" wrapText="true" />
 
@@ -22,7 +22,7 @@
 
     <ComboBox fx:id="userComboBox" promptText="Select user" visible="false" />
 
-    <Button text="Send Notification" onAction="#handleSendNotification"
+    <Button fx:id="sendNotificationButton" text="Send Notification" onAction="#handleSendNotification"
             style="-fx-background-color: #2e8b57; -fx-text-fill: white;" />
     <Button text="Back" onAction="#handleBackButton" fx:id="backButton"
             style="-fx-background-color: #2e8b57; -fx-text-fill: white;" />

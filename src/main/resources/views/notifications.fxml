@@ -20,8 +20,8 @@
         <ComboBox fx:id="typeFilter" prefHeight="25.0" prefWidth="75.0" promptText="Type" />
         <ComboBox fx:id="readStatusFilter" prefHeight="25.0" prefWidth="75.0" promptText="Status" />
         <DatePicker fx:id="dateFilter" minWidth="120.0" prefWidth="120.0" promptText="Sent date" />
-        <Button minWidth="120.0" onAction="#applyFilters" prefWidth="120.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Apply Filters" />
-        <Button onAction="#clearFilters" text="Clear" />
+        <Button fx:id="applyFiltersBtn" minWidth="120.0" onAction="#applyFilters" prefWidth="120.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Apply Filters" />
+        <Button fx:id="clearFiltersBtn" onAction="#clearFilters" text="Clear" />
     </HBox>
 
     <TableView fx:id="notificationsTable" prefHeight="392.0" prefWidth="701.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 8;">
@@ -38,7 +38,7 @@
     <HBox alignment="CENTER_RIGHT" spacing="10" />
 </VBox>
 
- <Label layoutX="220.0" layoutY="30.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="📬 Notifications Center" />
+ <Label fx:id="pageTitleLabel" layoutX="220.0" layoutY="30.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="📬 Notifications Center" />
   <Button fx:id="markReadBtn" layoutX="604.0" layoutY="466.0" onAction="#handleMarkAsRead" text="Mark as Read" />
   <Button fx:id="sendBtn" layoutX="489.0" layoutY="466.0" onAction="#goToSendNotification" text="Send Notification" />
     <Button fx:id="goBackBtn" layoutX="20.0" layoutY="466.0" onAction="#handleGoBack" text="← Go Back" />

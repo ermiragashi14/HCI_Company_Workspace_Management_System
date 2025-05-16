@@ -1,13 +1,13 @@
 package repository;
 
 import dto.AuditLogDTO;
+import model.User;
 import utils.DBConnector;
-
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AuditLogRepository {
 
@@ -98,5 +98,29 @@ public class AuditLogRepository {
             e.printStackTrace();
         }
         return "Unknown";
+    }
+
+    public List<User> getUsersByCompany(int companyId) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT id, full_name FROM user WHERE company_id = ?";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, companyId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setFullName(rs.getString("full_name"));
+                users.add(u);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return users;
     }
 }

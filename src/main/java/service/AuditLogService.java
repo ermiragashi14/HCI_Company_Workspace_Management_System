@@ -1,6 +1,9 @@
 package service;
 
 import dto.AuditLogDTO;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import model.User;
 import repository.AuditLogRepository;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -8,6 +11,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
@@ -41,33 +45,37 @@ public class AuditLogService {
         }
     }
 
-    public List<AuditLogDTO> getAuditLogs(int companyId, String userText, String actionType, LocalDate from, LocalDate to) {
-        try {
-            Integer userId = null;
-            if (userText != null && !userText.isBlank()) {
-                try {
-                    userId = Integer.parseInt(userText);
-                } catch (NumberFormatException e) {
-                    System.err.println("Invalid user ID entered: " + userText);
-                    return Collections.emptyList(); // or show alert
-                }
-            }
-            return repository.getLogsWithFilters(userId, actionType, from, to, companyId);
-        } catch (SQLException e) {
-            System.err.println("Error fetching audit logs: " + e.getMessage());
-            return Collections.emptyList();
-        }
+    public String getCompanyName(int companyId) {
+        return repository.getCompanyName(companyId);
     }
 
-    public void exportToPDF(List<AuditLogDTO> logs) {
+    public List<User> getUsersByCompany(int companyId) {
+        return repository.getUsersByCompany(companyId);
+    }
+
+    public void exportToPDF(List<AuditLogDTO> logs, Window parentWindow) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Audit Logs PDF");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+        fileChooser.setInitialFileName("audit_logs.pdf");
+
+        File file = fileChooser.showSaveDialog(parentWindow);
+        if (file == null) return;
+
         try {
+            int companyId = SessionManager.getInstance().getLoggedInCompanyId();
+            String companyName = getCompanyName(companyId);
+            String today = LocalDate.now().toString(); // You can replace this with a selected filter date if needed
+
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("audit_logs.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(file));
             document.open();
 
-            document.add(new Paragraph("Audit Logs"));
+            // Header
+            document.add(new Paragraph("Audit Logs for " + companyName + " on " + today));
             document.add(Chunk.NEWLINE);
 
+            // Table
             PdfPTable table = new PdfPTable(4);
             table.setWidthPercentage(100);
             table.addCell("User");
@@ -84,16 +92,12 @@ public class AuditLogService {
 
             document.add(table);
             document.close();
-            System.out.println("Audit logs exported.");
+
+            System.out.println("Audit logs exported to: " + file.getAbsolutePath());
+
         } catch (Exception e) {
             System.err.println("Failed to export audit logs: " + e.getMessage());
         }
     }
-
-    public String getCompanyName(int companyId) {
-        return repository.getCompanyName(companyId);
-    }
-
-
 
 }

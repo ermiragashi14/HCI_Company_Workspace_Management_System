@@ -14,7 +14,10 @@ import service.NotificationService;
 import service.SessionManager;
 import utils.KeyboardNavigator;
 import utils.Navigator;
+import utils.TranslationManager;
+
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class NotificationController {
 
@@ -34,9 +37,14 @@ public class NotificationController {
     @FXML private Button sendBtn;
     @FXML private Button goBackBtn;
     @FXML private AnchorPane notify;
+    @FXML private Button markReadBtn;
+    @FXML private Button applyFiltersBtn;
+    @FXML private Button clearFiltersBtn;
+    @FXML private Label pageTitleLabel;
 
     private NotificationService notificationService=new NotificationService();
     private FilteredList<Notification> filteredData;
+    private ResourceBundle bundle;
 
     @FXML
     public void initialize() {
@@ -46,7 +54,32 @@ public class NotificationController {
         setupTable();
         loadNotifications();
         setupFilters();
+        bundle = TranslationManager.getBundle();
+        TranslationManager.addListener(this::updateLanguage);
+        updateLanguage();
         KeyboardNavigator.enableNavigation(notify);
+    }
+
+    private void updateLanguage() {
+        bundle = TranslationManager.getBundle();
+        senderFilter.setPromptText(bundle.getString("notifications.sender"));
+        receiverFilter.setPromptText(bundle.getString("notifications.receiver"));
+        typeFilter.setPromptText(bundle.getString("notifications.type"));
+        readStatusFilter.setPromptText(bundle.getString("notifications.status"));
+        dateFilter.setPromptText(bundle.getString("notifications.date"));
+        sendBtn.setText(bundle.getString("notifications.send"));
+        goBackBtn.setText(bundle.getString("notifications.back"));
+        markReadBtn.setText(bundle.getString("notifications.markRead"));
+        applyFiltersBtn.setText(bundle.getString("notifications.apply"));
+        clearFiltersBtn.setText(bundle.getString("notifications.clear"));
+        fromColumn.setText(bundle.getString("notifications.column.from"));
+        toColumn.setText(bundle.getString("notifications.column.to"));
+        messageColumn.setText(bundle.getString("notifications.column.message"));
+        typeColumn.setText(bundle.getString("notifications.column.type"));
+        readColumn.setText(bundle.getString("notifications.column.status"));
+        sentAtColumn.setText(bundle.getString("notifications.column.date"));
+        pageTitleLabel.setText(bundle.getString("notifications.title"));
+
     }
 
     private void setupTable() {
@@ -110,7 +143,7 @@ public class NotificationController {
                 selected.setReadStatus(true);
                 notificationsTable.refresh();
             } else {
-                showAlert("You can't mark this as read. You're not the receiver.");
+                showAlert("notifications.alert.notReceiver");
             }
         }
     }
@@ -128,7 +161,7 @@ public class NotificationController {
 
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
+        alert.setTitle("notifications.alert.title");
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();

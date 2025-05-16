@@ -20,7 +20,7 @@ public class AdminRepository {
 
     public int countTotalUsers() {
         int companyId = SessionManager.getInstance().getLoggedInCompanyId();
-        String query = "SELECT COUNT(*) FROM user WHERE company_id = ?";
+        String query = "SELECT COUNT(*) FROM user WHERE company_id = ? AND status = 'ACTIVE'";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, companyId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -31,6 +31,7 @@ public class AdminRepository {
         }
         return 0;
     }
+
 
     public int countTotalWorkspaces() {
         int companyId = SessionManager.getInstance().getLoggedInCompanyId();
@@ -46,14 +47,15 @@ public class AdminRepository {
         return 0;
     }
 
-    public int countTotalActiveReservations() {
+    public int countTotalReservations() {
         int companyId = SessionManager.getInstance().getLoggedInCompanyId();
-        int adminId = SessionManager.getInstance().getLoggedInUserId();
-        String query = "SELECT COUNT(*) FROM reservation r JOIN user u ON r.user_id = u.id " +
-                "WHERE r.status = 'CONFIRMED' AND u.company_id = ? AND (u.role = 'STAFF' OR u.id = ?)";
+        String query = """
+        SELECT COUNT(*) FROM reservation r
+        JOIN user u ON r.user_id = u.id
+        WHERE u.company_id = ? AND r.status != 'CANCELED'
+    """;
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, companyId);
-            stmt.setInt(2, adminId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) return rs.getInt(1);
             }
@@ -61,44 +63,6 @@ public class AdminRepository {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    public Map<String, Integer> getWorkspaceUsageStats() {
-        int companyId = SessionManager.getInstance().getLoggedInCompanyId();
-        int adminId = SessionManager.getInstance().getLoggedInUserId();
-        Map<String, Integer> stats = new HashMap<>();
-        String occupiedQuery = "SELECT COUNT(*) FROM reservation r JOIN workspace w ON r.workspace_id = w.id " +
-                "JOIN user u ON r.user_id = u.id WHERE r.status = 'CONFIRMED' AND w.company_id = ? " +
-                "AND (u.role = 'STAFF' OR u.id = ?) AND r.date = CURDATE()";
-        String totalQuery = "SELECT COUNT(*) FROM workspace WHERE company_id = ?";
-
-        try (PreparedStatement occupiedStmt = connection.prepareStatement(occupiedQuery);
-             PreparedStatement totalStmt = connection.prepareStatement(totalQuery)) {
-
-            occupiedStmt.setInt(1, companyId);
-            occupiedStmt.setInt(2, adminId);
-            totalStmt.setInt(1, companyId);
-
-            int occupied = 0;
-            int total = 0;
-
-            try (ResultSet rs = occupiedStmt.executeQuery()) {
-                if (rs.next()) occupied = rs.getInt(1);
-            }
-
-            try (ResultSet rs = totalStmt.executeQuery()) {
-                if (rs.next()) total = rs.getInt(1);
-            }
-
-            int available = Math.max(total - occupied, 0);
-            stats.put("Occupied", occupied);
-            stats.put("Available", available);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return stats;
     }
 
     public Map<String, Integer> getMonthlyReservationTrends() {

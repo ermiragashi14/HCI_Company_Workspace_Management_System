@@ -35,11 +35,11 @@ public class SuperadminRepository {
     }
 
     public int countAdmins(int companyId) {
-        return countByQuery("SELECT COUNT(*) FROM user WHERE role = 'ADMIN' AND company_id = ?", companyId);
+        return countByQuery("SELECT COUNT(*) FROM user WHERE role = 'ADMIN' AND company_id = ? AND status = 'ACTIVE'", companyId);
     }
 
     public int countStaff(int companyId) {
-        return countByQuery("SELECT COUNT(*) FROM user WHERE role = 'STAFF' AND company_id = ?", companyId);
+        return countByQuery("SELECT COUNT(*) FROM user WHERE role = 'STAFF' AND company_id = ? AND status = 'ACTIVE'", companyId);
     }
 
     public int countWorkspaces(int companyId) {
@@ -47,7 +47,7 @@ public class SuperadminRepository {
     }
 
     public int countActiveReservations(int companyId) {
-        return countByQuery("SELECT COUNT(*) FROM reservation r JOIN user u ON r.user_id = u.id WHERE r.status = 'CONFIRMED' AND u.company_id = ?", companyId);
+        return countByQuery("SELECT COUNT(*) FROM reservation r JOIN user u ON r.user_id = u.id WHERE r.status = 'CONFIRMED' AND u.company_id = ? AND u.status = 'ACTIVE'", companyId);
     }
 
     public Map<String, Integer> getMonthlyReservationTrends(int companyId) {

@@ -61,7 +61,8 @@ public class AdminDashboardController {
 
         staffCountLabel.setText(String.valueOf(adminRepository.countTotalUsers()));
         workspaceCountLabel.setText(String.valueOf(adminRepository.countTotalWorkspaces()));
-        reservationCountLabel.setText(String.valueOf(adminRepository.countTotalActiveReservations()));
+        reservationCountLabel.setText(String.valueOf(adminRepository.countTotalReservations()));
+
     }
 
     private void loadMostUsedWorkspacesChart() {

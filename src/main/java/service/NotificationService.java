@@ -51,4 +51,8 @@ public class NotificationService {
         notificationRepository.createNotification(receiverId, systemSenderId, message, type);
     }
 
+    public int countUnreadNotifications(int userId) {
+        return notificationRepository.countUnreadNotifications(userId);
+    }
+
 }

@@ -5,6 +5,7 @@ public class SessionManager {
     private int loggedInUserId;
     private String loggedInUserRole;
     private int loggedInCompanyId;
+    private boolean notificationAlertShown = false;
 
     private SessionManager() {
         this.loggedInUserId = -1;
@@ -37,10 +38,18 @@ public class SessionManager {
     public int getLoggedInCompanyId(){
         return loggedInCompanyId;
     }
+    public boolean isNotificationAlertShown() {
+        return notificationAlertShown;
+    }
+
+    public void setNotificationAlertShown(boolean notificationAlertShown) {
+        this.notificationAlertShown = notificationAlertShown;
+    }
 
     public void clearSession() {
         this.loggedInUserId = -1;
         this.loggedInUserRole = null;
         this.loggedInCompanyId = -1;
+        this.notificationAlertShown = false;
     }
 }

@@ -58,6 +58,8 @@ public class ManageReservationsRepository {
             params.add(Date.valueOf(modifiedDate));
         }
 
+        sql.append(" ORDER BY r.date DESC");
+
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 

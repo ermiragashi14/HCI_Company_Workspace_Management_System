@@ -30,7 +30,7 @@ public class UserRepository {
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        return generatedKeys.getInt(1); // userId i sapo krijuar
+                        return generatedKeys.getInt(1);
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class UserRepository {
 
     public List<User> getAllUsersExceptInCompany(int excludedId, int companyId) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM user WHERE id != ? AND company_id = ?";
+        String sql = "SELECT * FROM user WHERE id != ? AND company_id = ? AND status = 'ACTIVE'";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

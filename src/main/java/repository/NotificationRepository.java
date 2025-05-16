@@ -26,7 +26,8 @@ public class NotificationRepository {
 
     public List<Notification> getNotificationsForUser(int userId) {
         List<Notification> notifications = new ArrayList<>();
-        String sql = "SELECT * FROM notification WHERE sender_id = ? OR receiver_id = ?";
+        String sql = "SELECT * FROM notification WHERE sender_id = ? OR receiver_id = ? " +
+                "ORDER BY (CASE WHEN read_status = FALSE THEN 0 ELSE 1 END), sent_at DESC";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -94,7 +95,7 @@ public class NotificationRepository {
             while (rs.next()) {
                 User u = new User();
                 u.setId(rs.getInt("id"));
-                u.setFullName(rs.getString("full_name")); // Adjust if your column name differs
+                u.setFullName(rs.getString("full_name"));
                 map.put(u.getId(), u);
             }
 
@@ -117,6 +118,22 @@ public class NotificationRepository {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public int countUnreadNotifications(int userId) {
+        String sql = "SELECT COUNT(*) FROM notification WHERE receiver_id = ? AND read_status = FALSE";
+
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

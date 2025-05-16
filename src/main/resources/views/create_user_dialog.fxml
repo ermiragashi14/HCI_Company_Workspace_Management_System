@@ -46,7 +46,7 @@
                 </GridPane>
          </children>
         </VBox>
-          <Text fx:id="createNewUserText" fill="#ae3f3f" layoutX="178.0" layoutY="53.0" styleClass="labels" text="Create New User" wrappingWidth="139.388671875">
+          <Text fx:id="createNewUserText" fill="#1a6985" layoutX="178.0" layoutY="53.0" styleClass="labels" text="Create New User" wrappingWidth="139.388671875">
          <font>
             <Font size="17.0" />
          </font></Text>

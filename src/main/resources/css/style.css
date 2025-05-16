@@ -1,19 +1,19 @@
-/*
-pink light #FBE5C0
-pinkish #FF5733
-#C70039 vishnje
-#900C3F purp
-#581845 dark
-*/
 
+/*
+#d3eaf2 blue metal e lehte
+#3ba1c5 blue e lehte
+#2187ab blue
+#1a6985 blue e mbyllet
+#0f3c4c blue e erret
+*/
 .navbar-container {
-    -fx-background-color: linear-gradient(to bottom, #900C3F, #FBE5C0);
+    -fx-background-color: linear-gradient(to bottom, #1a6985, #d3eaf2);
     -fx-padding: 10px;
     -fx-spacing: 15px;
 }
 
 .navbar-button {
-    -fx-text-fill: #581845;
+    -fx-text-fill: #0f3c4c;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-background-color: transparent;
@@ -25,8 +25,9 @@ pinkish #FF5733
 }
 
 .navbar-button:hover {
-    -fx-background-color: #a8164b;
+    -fx-background-color: #0f3c4c;
     -fx-border-color: #4d0b22;
+    -fx-text-fill: white;
 
 }
 
@@ -42,7 +43,7 @@ pinkish #FF5733
 }
 
 .admin-h {
- -fx-background-color: linear-gradient(to bottom, #C70039, #FF5733);
+ -fx-background-color: linear-gradient(to bottom, #3ba1c5, #d3eaf2);
  -fx-border-radius: 5px;
  -fx-font-weight: bold;
 }
@@ -54,40 +55,40 @@ pinkish #FF5733
 
 /* Ribbon */
 .ribbon {
-    -fx-background-color: #900C3F;
+    -fx-background-color: #3ba1c5;
 }
 
 .ribbon-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #900C3F;
+    -fx-text-fill: #3ba1c5;
 }
 .tabela{
-    -fx-background-color: #FBE5C0;
+    -fx-background-color: #d3eaf2;
 
 }
 .titujt-tabela{
 
-    -fx-background-color: #FBE5C0;
+    -fx-background-color: #d3eaf2;
     -fx-border-color:  white;
 
 
 }
 .butonat{
-    -fx-background-color: #900C3F;
+    -fx-background-color: #0f3c4c;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 
 }
 .dialogjet{
-    -fx-background-color: #FBE5C0;
+    -fx-background-color: #d3eaf2;
 }
 .labels{
-    -fx-text-fill: #900C3F;
+    -fx-text-fill: #0f3c4c;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
 }
 .butonat-dialog{
-    -fx-background-color: #900C3F;
+    -fx-background-color: #0f3c4c;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -97,7 +98,7 @@ pinkish #FF5733
    -fx-background-color: linear-gradient(to bottom, #FBE5C0, #900C3F);
 }
 .title{
-    -fx-text-fill: #900C3F;
+    -fx-text-fill: #0f3c4c;
     -fx-font-weight: bold;
     -fx-font-size: 20px;
 }
@@ -143,7 +144,7 @@ pinkish #FF5733
 
 
 .butonat1 {
-    -fx-background-color: #900c3f;
+    -fx-background-color: #0f3c4c;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 8px;
@@ -197,7 +198,7 @@ pinkish #FF5733
 }
 
 .labels {
-    -fx-text-fill: #900c3f;
+    -fx-text-fill: #0f3c4c;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }

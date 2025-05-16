@@ -41,7 +41,7 @@
             <Button fx:id="changePasswordButton" minWidth="110.0" onAction="#changePassword" styleClass="butonat" text="Change Password" />
         </HBox>
 
-        <TitledPane fx:id="companyInfoPane" expanded="true" prefHeight="99.0" prefWidth="370.0" style="-fx-background-color: #C7D8CC;" text="Company Info" textFill="#8f0d41">
+        <TitledPane fx:id="companyInfoPane" expanded="true" prefHeight="99.0" prefWidth="370.0" style="-fx-background-color: #C7D8CC;" text="Company Info" textFill="#1a6985">
             <GridPane hgap="10" prefHeight="71.0" prefWidth="368.0" style="-fx-background-color: #C7D8CC;" vgap="10">
                 <Label fx:id="companyNameTextLabel" styleClass="labels" text="Company Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                 <Label fx:id="companyNameLabel" styleClass="value-label" GridPane.columnIndex="1" GridPane.rowIndex="0" />

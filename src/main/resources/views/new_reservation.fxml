@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="NewRez" minWidth="650.0" prefHeight="532.0" prefWidth="700.0" style="-fx-background-color: #B9CCBF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
+<AnchorPane fx:id="NewRez" minWidth="650.0" prefHeight="532.0" prefWidth="700.0" style="-fx-background-color: #B9CCBF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewReservationController">
 
     <children>
         <VBox layoutX="254.0" layoutY="121.0" prefHeight="337.0" prefWidth="253.0" spacing="10.0" styleClass="vbox-container" stylesheets="@../css/style.css" AnchorPane.leftAnchor="254.0" AnchorPane.topAnchor="121.0">
          <VBox prefHeight="219.0" prefWidth="221.0">
             <children>
                    <DatePicker fx:id="datePicker" minWidth="221.0" prefHeight="25.0" prefWidth="119.0" styleClass="butonat" />
-                   <ComboBox fx:id="startTimeCombo" minWidth="221.0" prefHeight="25.0" prefWidth="126.0" promptText="Start Time" styleClass="butonat" />
+                   <ComboBox fx:id="startTimeCombo" minWidth="221.0" prefHeight="25.0" prefWidth="126.0" promptText="Start Time" styleClass="butonat1" />
                    <ComboBox fx:id="endTimeCombo" minWidth="221.0" prefHeight="25.0" prefWidth="126.0" promptText="End Time" styleClass="butonat">
                   <padding>
                      <Insets right="10.0" />
